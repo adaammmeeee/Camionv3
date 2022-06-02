@@ -10,19 +10,42 @@ int main()
 
 	for (int i = 0; i < 2; i++)
 	{
-		printf("NOUVEL entrepot ---------------------------------------------------------------\n");
-		affichage(a[i].LR);
+		// printf("NOUVEL entrepot ---------------------------------------------------------------\n");
+		// affichage_entrepot(a[i]);
 	}
 
-	int graphe[3][3] = {{9, 5, 3},
-						{4, 7, 2},
-						{4, 3, 9}};
+	int **graphe = malloc(nb_entrepots * sizeof(int *));
+	for (int i = 0; i < nb_entrepots; i++)
+	{
+		graphe[i] = malloc(nb_entrepots * sizeof(int));
+	}
 
+	for (int i = 0; i < nb_entrepots; i++)
+	{
+		for (int j = 0; j < nb_entrepots; j++)
+		{
+			graphe[i][j] = 3;
+		}
+	}
 
+	//faire_course(a[0].liste_camion[1], 'A', 'B', graphe);
+	//faire_course(a[0].liste_camion[2], 'A', 'B', graphe);
+
+	//faire_course(a[0].liste_camion[6], 'A', 'B', graphe);
+
+	printf("COUT RAPPORTE %d\n",course_basique(graphe,a[0]));
+
+	affichage_entrepot(a[0]);
 
 	for (int i = 0; i < 2; i++)
-		liberation(a[i].LR);
+		libere_acteur(a[i]);
 	free(a);
+
+	for (int i = 0; i < nb_entrepots; i++)
+	{
+		free(graphe[i]);
+	}
+	free(graphe);
 
 	return 0;
 }

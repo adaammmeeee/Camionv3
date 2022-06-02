@@ -1,3 +1,5 @@
+#define DISTANCE_MAX 630
+
 typedef struct requete
 {
     char origine;
@@ -18,6 +20,7 @@ typedef struct camion
 {
     int id_entrepot;
     int distance_parcouru;
+    char * trajet;
 
 } camion;
 
@@ -25,9 +28,11 @@ typedef struct entrepot
 {
     int id_entrepot;
     int nb_requete;
+    int nb_camion;
     liste_requete *LR;
-    camion *liste_camion;
+    camion **liste_camion;
 } entrepot;
+
 
 void charge_requete(FILE *f, liste_requete *LR);
 
@@ -39,4 +44,14 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
 
 void liberation(liste_requete *LR);
 
+void libere_acteur(entrepot a);
+
 void affichage(liste_requete *LR);
+
+void affichage_entrepot(entrepot a);
+
+int calcul_cout_trajet(int d);
+
+int faire_course(camion * c, char origine, char destination, int **graphe);
+
+int course_basique(int **graphe, entrepot a);
