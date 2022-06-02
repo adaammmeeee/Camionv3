@@ -1,0 +1,30 @@
+nombre d'entrepot : 2
+
+entrepot : 1
+nombre de camion : 8
+nombre de requete : 2
+
+origine : a
+destination : e
+gains : 300
+perte : 200
+
+origine : a
+destination : e
+gains : 300
+perte : 200
+
+
+entrepot : 2
+nombre de camion : 8
+nombre de requete : 2
+
+origine : z
+destination : d
+gains : 300
+perte : 200
+
+origine : a
+destination : e
+gains : 300
+perte : 200
