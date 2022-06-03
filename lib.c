@@ -25,9 +25,10 @@ entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
 
     for (int i = 0; i < nb_entrepot_buff; i++)
     {
-        fscanf(f, "\nentrepot : %d", &a[i].id_entrepot);
+        char c = 'a';
+        fscanf(f, "\nentrepot : %c", &c);
         fscanf(f, "\nnombre de camion :%d\n", &a[i].nb_camion);
-        a[i].id_entrepot = i;
+        a[i].id_entrepot = c;
 
         a[i].liste_camion = malloc(a[i].nb_camion * sizeof(camion *));
         for (int j = 0; j < a[i].nb_camion; j++)
@@ -39,7 +40,7 @@ entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
         {
             a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot;
             a[i].liste_camion[j]->distance_parcouru = 0;
-            a[i].liste_camion[j]->trajet = malloc(sizeof(char) * DISTANCE_MAX);
+            a[i].liste_camion[j]->trajet = malloc(sizeof(char) * 64);
             a[i].liste_camion[j]->trajet[0] = '\0';
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
