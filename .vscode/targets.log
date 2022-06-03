@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun  3 08:33:53 2022
+# Make data base, printed on Fri Jun  3 08:54:00 2022
 
 # Variables
 
@@ -51,7 +51,7 @@ SNAP_DATA = /var/snap/code/97
 # environment
 VSCODE_NLS_CONFIG = {"locale":"fr","availableLanguages":{"*":"fr"},"_languagePackId":"25fe6a3290ec415596628d4afc87a88c.fr","_translationsConfigFile":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr/tcf.json","_cacheRoot":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr","_resolvedLanguagePackCoreLocation":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr/corrupted.info","_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:36762
+JOURNAL_STREAM = 8:42652
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -75,9 +75,9 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 955
+MANAGERPID = 969
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-138a3305-f3f0-4651-81bd-e02a1b4d6d87.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-3ce3a631-c193-4500-b00d-195c56828913.sock
 # environment
 VSCODE_CWD = /home/adame
 # environment
@@ -89,7 +89,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/adame:@/tmp/.ICE-unix/1259,unix/adame:/tmp/.ICE-unix/1259
+SESSION_MANAGER = local/adame:@/tmp/.ICE-unix/1273,unix/adame:/tmp/.ICE-unix/1273
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -107,7 +107,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 943505caf1cb42168767b59b77315526
+INVOCATION_ID = 44471a0913a144dbbcd92b5fe855adb1
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -117,7 +117,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 1854
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2674
 # automatic
 %F = $(notdir $%)
 # environment
@@ -131,7 +131,7 @@ PWD = /home/adame/Bureau/Camionv3
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1220
+SSH_AGENT_PID = 1229
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = Unity
 # environment
@@ -247,7 +247,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2925
+VSCODE_PID = 2887
 # variable set hash-table stats:
 # Load=118/1024=12%, Rehash=0, Collisions=16/143=11%
 
@@ -290,7 +290,6 @@ compil: lib.o main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  recipe to execute (from 'makefile', line 14):
 	gcc -Wall -o main main.o lib.o
 
@@ -319,6 +318,7 @@ lib.o: lib.c lib.h
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 run: compil
@@ -363,6 +363,6 @@ lib.c:
 # strcache performance: lookups = 41 / hit rate = 43%
 # hash-table stats:
 # Load=23/8192=0%, Rehash=0, Collisions=1/41=2%
-# Finished Make data base on Fri Jun  3 08:33:53 2022
+# Finished Make data base on Fri Jun  3 08:54:00 2022
 
  
