@@ -24,20 +24,17 @@ int main()
 	{
 		for (int j = 0; j < nb_entrepots; j++)
 		{
-			graphe[i][j] = 3;
+			graphe[i][j] = 10;
 		}
 	}
 
-	//faire_course(a[0].liste_camion[1], 'A', 'B', graphe);
-	//faire_course(a[0].liste_camion[2], 'A', 'B', graphe);
+	for (int i = 0; i < nb_entrepots;i++)
+	{
+		course_basique(graphe, a[i]);
+	}
 
-	//faire_course(a[0].liste_camion[6], 'A', 'B', graphe);
 
-	printf("COUT RAPPORTE %d\n",course_basique(graphe,a[0]));
-
-	affichage_entrepot(a[0]);
-
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
 	free(a);
 

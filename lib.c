@@ -100,7 +100,7 @@ void liberation(liste_requete *LR)
 
 void libere_acteur(entrepot a)
 {
-    liberation(a.LR);
+    free(a.LR);
     for (int i = 0; i < a.nb_camion; i++)
     {
         free(a.liste_camion[i]->trajet);
@@ -149,19 +149,21 @@ int course_basique(int **graphe, entrepot a)
 {
     int gain = 0;
     requete *actuelle = a.LR->prem;
+    requete *suppression = actuelle;
     int cpt_camion = 0;
     while (actuelle)
     {
+        suppression = actuelle;
         int cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
         int cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
 
         printf("%s\n", a.liste_camion[cpt_camion]->trajet);
-
+        int premier_test = cpt_camion;
         while (cout_course == 0 || cout_retour == 0) // Impossible de faire l'aller ou le retour, on passe au camion suivant
         {
             cpt_camion++;
             cpt_camion %= a.nb_camion;
-            if (cpt_camion == a.nb_camion)
+            if (cpt_camion == premier_test)
                 return 0;
             cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
             cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
@@ -171,6 +173,27 @@ int course_basique(int **graphe, entrepot a)
         cpt_camion++;
         cpt_camion %= a.nb_camion;
         actuelle = actuelle->suiv;
+        
+        if (!actuelle) // Fin de liste
+        {
+            a.LR->dern = suppression->prec;
+            free(suppression);
+        }
+
+        else if (!suppression->prec) // Debut de liste
+        {
+            free(suppression);
+            a.LR->prem = actuelle;
+        }
+
+        // On supprime la requete milieu de la liste
+        else if (suppression->prec && suppression->suiv)
+        {
+            suppression->prec->suiv = actuelle;
+            suppression->suiv->prec = suppression->prec;
+            free(suppression);
+        }
+        
     }
     return gain;
 }
@@ -208,4 +231,10 @@ int faire_course(camion *c, char origine, char destination, int **graphe)
     c->distance_parcouru += graphe[origine - 'A'][destination - 'A'];
     printf("%d\n", c->distance_parcouru);
     return calcul_cout_trajet(graphe[origine - 'A'][destination - 'A']);
+}
+
+
+int evalution_meilleure_solution(liste_requete *LR, int nb_camion)
+{
+    return 0;
 }
