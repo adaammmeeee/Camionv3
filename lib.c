@@ -153,7 +153,7 @@ int course_basique(int **graphe, entrepot a)
     {
         printf("%s\n", a.liste_camion[cpt_camion]->trajet);
         int cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
-        
+        cout_course += faire_course(a.liste_camion[cpt_camion], actuelle->destination, actuelle->origine, graphe);
         while (cout_course == 0)
         {
             cpt_camion++;
