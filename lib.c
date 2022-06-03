@@ -156,11 +156,16 @@ int course_basique(int **graphe, entrepot a)
         int cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, actuelle->origine, graphe);
         while (cout_course == 0 || cout_retour == 0) // Impossible de faire l'aller ou le retour, on passe au camion suivant
         {
+            if (cout_course != 0 && cout_retour == 0)
+            {
+                //annule_dernier_trajet() todo
+            }
+            
             cpt_camion++;
             if (cpt_camion == a.nb_camion)
                 return 0;
             cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
-            cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, actuelle->origine, graphe);
+            cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
         }
         gain += actuelle->gain;
         gain -= cout_course + cout_retour;
