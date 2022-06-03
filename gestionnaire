@@ -1,6 +1,6 @@
 nombre d'entrepot : 2
 
-entrepot : 1
+entrepot : A
 nombre de camion : 8
 nombre de requete : 2
 
@@ -15,7 +15,7 @@ gains : 300
 perte : 200
 
 
-entrepot : 2
+entrepot : B
 nombre de camion : 8
 nombre de requete : 2
 

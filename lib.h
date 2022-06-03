@@ -18,7 +18,7 @@ typedef struct liste_requete
 
 typedef struct camion
 {
-    int id_entrepot;
+    char id_entrepot;
     int distance_parcouru;
     char * trajet;
 
@@ -52,6 +52,6 @@ void affichage_entrepot(entrepot a);
 
 int calcul_cout_trajet(int d);
 
-int faire_course(camion * c, char origine, char destination, int **graphe);
+int faire_course(camion *c, char origine, char destination, int **graphe);
 
 int course_basique(int **graphe, entrepot a);

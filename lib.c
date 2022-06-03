@@ -39,7 +39,7 @@ entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
         {
             a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot;
             a[i].liste_camion[j]->distance_parcouru = 0;
-            a[i].liste_camion[j]->trajet = malloc(sizeof(char) * 64);
+            a[i].liste_camion[j]->trajet = malloc(sizeof(char) * DISTANCE_MAX);
             a[i].liste_camion[j]->trajet[0] = '\0';
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
@@ -151,20 +151,15 @@ int course_basique(int **graphe, entrepot a)
     int cpt_camion = 0;
     while (actuelle)
     {
-        printf("%s\n", a.liste_camion[cpt_camion]->trajet);
-        //int cout_course = calcul_cout_trajet(graphe[actuelle->origine - 'A'][actuelle->destination - 'A']);
-        //int cout_retour = calcul_cout_trajet(graphe[actuelle->destination - 'A'][a.id_entrepot]);
+        int cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
+        int cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
 
-        faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
-        int cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, actuelle->origine, graphe);
+        printf("%s\n", a.liste_camion[cpt_camion]->trajet);
+
         while (cout_course == 0 || cout_retour == 0) // Impossible de faire l'aller ou le retour, on passe au camion suivant
         {
-            if (cout_course != 0 && cout_retour == 0)
-            {
-                //annule_dernier_trajet() todo
-            }
-            
             cpt_camion++;
+            cpt_camion %= a.nb_camion;
             if (cpt_camion == a.nb_camion)
                 return 0;
             cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
@@ -187,9 +182,15 @@ int calcul_cout_trajet(int d)
 // Renvoi le coût de la course effectuée par le camion
 int faire_course(camion *c, char origine, char destination, int **graphe)
 {
-
-    if ((c->distance_parcouru + graphe[origine - 'A'][destination - 'A']) > DISTANCE_MAX)
+    if (destination == c->id_entrepot && c->distance_parcouru + graphe[origine - 'A'][destination - 'A'] > DISTANCE_MAX)
+    {
         return 0;
+    }
+    if ((c->distance_parcouru + graphe[origine - 'A'][destination - 'A'] + graphe[destination - 'A'][c->id_entrepot - 'A']) > DISTANCE_MAX)
+    {
+        return 0;
+    }
+
     int t = strlen(c->trajet);
 
     if (t == 0)
