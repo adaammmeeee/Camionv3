@@ -77,6 +77,9 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
     nouv->prec = LR->dern;
     nouv->suiv = NULL;
 
+    requete * comparateur = LR->dern;
+
+    while (nouv->gain < comparateur->gain) // Je ne l'insère pas en dernier
     if (LR->dern)
         LR->dern->suiv = nouv;
     else
@@ -173,7 +176,7 @@ int course_basique(int **graphe, entrepot a)
         cpt_camion++;
         cpt_camion %= a.nb_camion;
         actuelle = actuelle->suiv;
-        
+
         if (!actuelle) // Fin de liste
         {
             a.LR->dern = suppression->prec;
@@ -193,7 +196,6 @@ int course_basique(int **graphe, entrepot a)
             suppression->suiv->prec = suppression->prec;
             free(suppression);
         }
-        
     }
     return gain;
 }
@@ -232,7 +234,6 @@ int faire_course(camion *c, char origine, char destination, int **graphe)
     printf("%d\n", c->distance_parcouru);
     return calcul_cout_trajet(graphe[origine - 'A'][destination - 'A']);
 }
-
 
 int evalution_meilleure_solution(liste_requete *LR, int nb_camion)
 {
