@@ -41,7 +41,8 @@ entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
             a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot;
             a[i].liste_camion[j]->distance_parcouru = 0;
             a[i].liste_camion[j]->trajet = malloc(sizeof(char) * 64);
-            a[i].liste_camion[j]->trajet[0] = '\0';
+            a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
+            a[i].liste_camion[j]->trajet[1] = '\0';
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
 
@@ -292,13 +293,13 @@ int faire_course(camion *c, char origine, char destination, int **graphe)
         c->trajet[t + 1] = '\0';
     }
     c->distance_parcouru += graphe[origine - 'A'][destination - 'A'];
-    printf("%d\n", c->distance_parcouru);
     return calcul_cout_trajet(graphe[origine - 'A'][destination - 'A']);
 }
 
 int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe)
 {
     int gain_total = 0;
+    int old_gain = 0;
     requete *actuelle = a.LR->prem;
     while (actuelle)
     {
@@ -311,15 +312,19 @@ int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe)
             int destination = actuelle->destination - 'A';
             int distance_parcouru = a.liste_camion[i]->distance_parcouru;
 
-            if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] > DISTANCE_MAX)
+            if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
             {
+                old_gain = gain_total;
+                printf("le camion %d a fait l'itinéraire %c->%c->%c\n", i, pos_camion + 'A', origine + 'A', destination + 'A');
                 gain_total -= faire_course(a.liste_camion[i], a.liste_camion[i]->trajet[taille_trajet - 1], actuelle->origine, graphe);
                 gain_total -= faire_course(a.liste_camion[i], actuelle->origine, actuelle->destination, graphe);
                 gain_total += actuelle->gain;
+                printf("le cout apporté est le suivant : %d\n", gain_total-old_gain);
+
                 break;
             }
         }
         actuelle = actuelle->suiv;
     }
-    return 0;
+    return gain_total;
 }

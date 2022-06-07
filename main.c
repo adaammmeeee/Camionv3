@@ -29,8 +29,9 @@ int main()
 
 	for (int i = 0; i < nb_entrepots;i++)
 	{
-		evaluation_meilleure_solution(a[i],a[i].nb_camion,graphe);
+		printf("rentabilité de l'acteur : %d\n",evaluation_meilleure_solution(a[i],a[i].nb_camion,graphe));
 	}
+	printf("trajet camion 0 : %s\n",a[0].liste_camion[0]->trajet);
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
