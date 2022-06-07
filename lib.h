@@ -20,7 +20,7 @@ typedef struct camion
 {
     char id_entrepot;
     int distance_parcouru;
-    char * trajet;
+    char *trajet;
 
 } camion;
 
@@ -32,7 +32,6 @@ typedef struct entrepot
     liste_requete *LR;
     camion **liste_camion;
 } entrepot;
-
 
 void charge_requete(FILE *f, liste_requete *LR);
 
@@ -46,7 +45,7 @@ void liberation(liste_requete *LR);
 
 void libere_acteur(entrepot a);
 
-void affichage(liste_requete *LR);
+void affichage_requete(liste_requete *LR);
 
 void affichage_entrepot(entrepot a);
 
@@ -55,3 +54,5 @@ int calcul_cout_trajet(int d);
 int faire_course(camion *c, char origine, char destination, int **graphe);
 
 int course_basique(int **graphe, entrepot a);
+
+int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe);

@@ -4,15 +4,17 @@ entrepot : A
 nombre de camion : 8
 nombre de requete : 2
 
+
 origine : A
 destination : B
-gains : 600
+gains : 1000
 perte : 200
 
 origine : A
 destination : B
-gains : 300
+gains : 900
 perte : 200
+
 
 
 entrepot : B
@@ -24,7 +26,10 @@ destination : B
 gains : 300
 perte : 200
 
+
 origine : A
 destination : B
 gains : 300
 perte : 200
+
+

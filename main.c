@@ -8,12 +8,11 @@ int main()
 	int nb_entrepots;
 	a = charge_entrepots("gestionnaire", &nb_entrepots);
 
-	for (int i = 0; i < 2; i++)
+/*	for (int i = 0; i < 2; i++)
 	{
-		// printf("NOUVEL entrepot ---------------------------------------------------------------\n");
-		// affichage_entrepot(a[i]);
+		affichage_requete(a[i].LR);
 	}
-
+*/
 	int **graphe = malloc(nb_entrepots * sizeof(int *));
 	for (int i = 0; i < nb_entrepots; i++)
 	{
@@ -30,9 +29,8 @@ int main()
 
 	for (int i = 0; i < nb_entrepots;i++)
 	{
-		course_basique(graphe, a[i]);
+		evaluation_meilleure_solution(a[i],a[i].nb_camion,graphe);
 	}
-
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
