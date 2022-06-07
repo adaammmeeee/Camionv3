@@ -1,8 +1,8 @@
-nombre d'entrepot : 2
+nombre d'entrepot : 5
 
 entrepot : A
 nombre de camion : 8
-nombre de requete : 2
+nombre de requete : 8
 
 
 origine : A
@@ -14,6 +14,37 @@ origine : A
 destination : B
 gains : 900
 perte : 200
+
+origine : A
+destination : B
+gains : 1000
+perte : 200
+
+origine : A
+destination : B
+gains : 900
+perte : 200
+
+origine : A
+destination : B
+gains : 1000
+perte : 200
+
+origine : A
+destination : B
+gains : 900
+perte : 200
+
+origine : A
+destination : B
+gains : 1000
+perte : 200
+
+origine : A
+destination : B
+gains : 900
+perte : 200
+
 
 
 
@@ -31,5 +62,20 @@ origine : A
 destination : B
 gains : 300
 perte : 200
+
+
+entrepot : C
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : D
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : E
+nombre de camion : 8
+nombre de requete : 0
 
 

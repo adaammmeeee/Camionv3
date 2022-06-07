@@ -43,6 +43,7 @@ entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
             a[i].liste_camion[j]->trajet = malloc(sizeof(char) * 64);
             a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
             a[i].liste_camion[j]->trajet[1] = '\0';
+            a[i].liste_camion[j]->id_camion = j;
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
 
@@ -303,6 +304,7 @@ int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe)
     requete *actuelle = a.LR->prem;
     while (actuelle)
     {
+        printf("ccccc\n");
         tri_fusion_camion_proximite(graphe, a.id_entrepot, a.liste_camion, 0, a.nb_camion - 1);
         for (int i = 0; i < a.nb_camion; i++)
         {
@@ -315,12 +317,11 @@ int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe)
             if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
             {
                 old_gain = gain_total;
-                printf("le camion %d a fait l'itinéraire %c->%c->%c\n", i, pos_camion + 'A', origine + 'A', destination + 'A');
+                printf("le camion %d a fait l'itinéraire %c->%c->%c\n", a.liste_camion[i]->id_camion, pos_camion + 'A', origine + 'A', destination + 'A');
                 gain_total -= faire_course(a.liste_camion[i], a.liste_camion[i]->trajet[taille_trajet - 1], actuelle->origine, graphe);
                 gain_total -= faire_course(a.liste_camion[i], actuelle->origine, actuelle->destination, graphe);
                 gain_total += actuelle->gain;
                 printf("le cout apporté est le suivant : %d\n", gain_total-old_gain);
-
                 break;
             }
         }

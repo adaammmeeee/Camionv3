@@ -23,7 +23,11 @@ int main()
 	{
 		for (int j = 0; j < nb_entrepots; j++)
 		{
-			graphe[i][j] = 10;
+			graphe[i][j] = 20;
+			if (i == j)
+			{
+				graphe[i][j] = 0;
+			}
 		}
 	}
 
@@ -31,7 +35,15 @@ int main()
 	{
 		printf("rentabilité de l'acteur : %d\n",evaluation_meilleure_solution(a[i],a[i].nb_camion,graphe));
 	}
-	printf("trajet camion 0 : %s\n",a[0].liste_camion[0]->trajet);
+
+
+
+/*
+	for (int i = 0; i < a[0].nb_camion; i++)
+	{
+		printf("trajet du camion : %s\n",a[0].liste_camion[i]->trajet);
+	}
+*/
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
