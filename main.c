@@ -5,13 +5,16 @@
 
 int main()
 {
-	struct entrepot *a = NULL;
-	int nb_entrepots;
-	printf("recuperation des informations sur les entrepots dans le fichier gestionnaire...\n");
-	a = charge_entrepots("gestionnaire", &nb_entrepots);
+	
+	int nb_entrepots = charge_nombre_entrepots("gestionnaire");
 
+	
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	int **graphe = charge_graphe("matrice_distance.csv", nb_entrepots);
+
+	struct entrepot *a = NULL;
+	printf("recuperation des informations sur les entrepots dans le fichier gestionnaire...\n");
+	a = charge_entrepots("gestionnaire", graphe);
 
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
 	for (int i = 0; i < nb_entrepots; i++)

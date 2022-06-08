@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "lib.h"
 
-void charge_requete(FILE *f, liste_requete *LR)
+void charge_requete(FILE *f, liste_requete *LR, int ** graphe)
 {
     char origine, destination;
     int gain, perte;
@@ -11,7 +11,7 @@ void charge_requete(FILE *f, liste_requete *LR)
     fscanf(f, "\ndestination : %c", &destination);
     fscanf(f, "\ngains : %d", &gain);
     fscanf(f, "\nperte : %d", &perte);
-    ajout_requete(LR, origine, destination, gain, perte);
+    ajout_requete(LR, origine, destination, gain, perte, graphe);
 }
 
 int **charge_graphe(char *nomfic, int nb_entrepots)
@@ -54,13 +54,22 @@ int **charge_graphe(char *nomfic, int nb_entrepots)
     return graphe;
 }
 
-entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
+
+int charge_nombre_entrepots(char * nomfic)
+{
+    int nb_entrepot_buff = 0;
+    FILE *f = fopen("gestionnaire", "r");
+    fscanf(f, "\nnombre d'entrepot :%d", &nb_entrepot_buff);
+    fclose(f);
+    return nb_entrepot_buff;
+}
+
+entrepot *charge_entrepots(char *nomfic, int ** graphe)
 {
     int nb_entrepot_buff = 0;
     entrepot *a = NULL;
     FILE *f = fopen("gestionnaire", "r");
     fscanf(f, "\nnombre d'entrepot :%d", &nb_entrepot_buff);
-    *nb_entrepot = nb_entrepot_buff;
     a = malloc(sizeof(struct entrepot) * nb_entrepot_buff);
 
     for (int i = 0; i < nb_entrepot_buff; i++)
@@ -91,7 +100,7 @@ entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
         init_liste_requete(a[i].LR);
         for (int j = 0; j < a[i].nb_requete; j++)
         {
-            charge_requete(f, a[i].LR);
+            charge_requete(f, a[i].LR, graphe);
         }
     }
 
@@ -105,7 +114,7 @@ void init_liste_requete(liste_requete *LR)
     LR->prem = NULL;
 }
 
-void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte)
+void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int ** graphe)
 {
     requete *nouv = malloc(sizeof(requete));
     if (!nouv)
@@ -128,7 +137,7 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
 
     requete *comparateur = LR->dern;
     int test = 0;
-    while (nouv->gain < comparateur->gain)
+    while (nouv->gain/graphe[nouv->origine- 'A'][nouv->destination- 'A'] < comparateur->gain/graphe[comparateur->origine- 'A'][comparateur->destination- 'A'])
     {
         if (comparateur->prec)
         {

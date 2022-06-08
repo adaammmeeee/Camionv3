@@ -34,13 +34,13 @@ typedef struct entrepot
     camion **liste_camion;
 } entrepot;
 
-void charge_requete(FILE *f, liste_requete *LR);
+void charge_requete(FILE *f, liste_requete *LR, int ** graphe);
 
-entrepot *charge_entrepots(char *nomfic, int *nb_entrepot);
+entrepot *charge_entrepots(char *nomfic, int ** graphe);
 
 void init_liste_requete(liste_requete *LR);
 
-void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte);
+void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int ** graphe);
 
 void liberation(liste_requete *LR);
 
@@ -59,3 +59,5 @@ int course_basique(int **graphe, entrepot a);
 int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe);
 
 int ** charge_graphe( char *nomfic, int nb_entrepots);
+
+int charge_nombre_entrepots(char * nomfic);
