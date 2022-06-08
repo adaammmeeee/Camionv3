@@ -14,6 +14,46 @@ void charge_requete(FILE *f, liste_requete *LR)
     ajout_requete(LR, origine, destination, gain, perte);
 }
 
+int **charge_graphe(char *nomfic, int nb_entrepots)
+{
+    int **graphe = malloc(nb_entrepots * sizeof(int *));
+
+    for (int i = 0; i < nb_entrepots; i++)
+    {
+        graphe[i] = malloc(nb_entrepots * sizeof(int));
+    }
+
+    FILE *f = fopen(nomfic, "r");
+    int cpt = 0;
+    char nombre[10];
+    memset(nombre, 0, 10);
+
+    for (int i = 0; i < nb_entrepots; i++)
+    {
+        for (int j = 0; j < nb_entrepots; j++)
+        {
+            nombre[0] = fgetc(f);
+            while (1)
+            {
+                if (nombre[cpt] == '\n' || nombre[cpt] == ',')
+                {
+                    nombre[cpt] = '\0';
+                    break;
+                }
+                cpt++;
+                nombre[cpt] = fgetc(f);
+            }
+
+            graphe[i][j] =  atoi(nombre);
+            memset(nombre, 0, 10);
+            cpt = 0;
+        }
+    }
+
+    fclose(f);
+    return graphe;
+}
+
 entrepot *charge_entrepots(char *nomfic, int *nb_entrepot)
 {
     int nb_entrepot_buff = 0;
@@ -321,7 +361,7 @@ int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe)
                 gain_total -= faire_course(a.liste_camion[i], a.liste_camion[i]->trajet[taille_trajet - 1], actuelle->origine, graphe);
                 gain_total -= faire_course(a.liste_camion[i], actuelle->origine, actuelle->destination, graphe);
                 gain_total += actuelle->gain;
-                printf("le cout apporté est le suivant : %d\n", gain_total-old_gain);
+                printf("le cout apporté est le suivant : %d\n", gain_total - old_gain);
                 break;
             }
         }

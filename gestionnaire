@@ -1,67 +1,13 @@
-nombre d'entrepot : 5
+nombre d'entrepot : 20
 
 entrepot : A
 nombre de camion : 8
-nombre de requete : 8
-
-
-origine : A
-destination : B
-gains : 1000
-perte : 200
-
-origine : A
-destination : B
-gains : 900
-perte : 200
-
-origine : A
-destination : B
-gains : 1000
-perte : 200
-
-origine : A
-destination : B
-gains : 900
-perte : 200
-
-origine : A
-destination : B
-gains : 1000
-perte : 200
-
-origine : A
-destination : B
-gains : 900
-perte : 200
-
-origine : A
-destination : B
-gains : 1000
-perte : 200
-
-origine : A
-destination : B
-gains : 900
-perte : 200
-
-
+nombre de requete : 0
 
 
 entrepot : B
 nombre de camion : 8
-nombre de requete : 2
-
-origine : A
-destination : B
-gains : 300
-perte : 200
-
-
-origine : A
-destination : B
-gains : 300
-perte : 200
+nombre de requete : 0
 
 
 entrepot : C
@@ -79,3 +25,74 @@ nombre de camion : 8
 nombre de requete : 0
 
 
+entrepot : F
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : G
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : H
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : I
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : J
+nombre de camion : 8
+nombre de requete : 0
+
+entrepot : K
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : L
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : M
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : N
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : O
+nombre de camion : 8
+nombre de requete : 0
+
+entrepot : P
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : Q
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : R
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : S
+nombre de camion : 8
+nombre de requete : 0
+
+
+entrepot : T
+nombre de camion : 8
+nombre de requete : 0

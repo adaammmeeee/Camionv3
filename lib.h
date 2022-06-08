@@ -57,3 +57,5 @@ int faire_course(camion *c, char origine, char destination, int **graphe);
 int course_basique(int **graphe, entrepot a);
 
 int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe);
+
+int ** charge_graphe( char *nomfic, int nb_entrepots);
