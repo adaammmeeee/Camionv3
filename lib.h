@@ -1,4 +1,4 @@
-#define DISTANCE_MAX 630
+#define DISTANCE_MAX 2300
 
 typedef struct requete
 {
@@ -37,6 +37,12 @@ typedef struct entrepot
     camion **liste_camion;
 } entrepot;
 
+typedef struct enchere
+{
+    camion* camion_gerant;
+    int prix;
+} enchere;
+
 void charge_requete(FILE *f, liste_requete *LR, int ** graphe);
 
 entrepot *charge_entrepots(char *nomfic, int ** graphe);
@@ -59,8 +65,13 @@ int faire_course(camion *c, char origine, char destination, int **graphe);
 
 int course_basique(int **graphe, entrepot a);
 
-int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe);
+int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe);
 
 int ** charge_graphe( char *nomfic, int nb_entrepots);
 
 int charge_nombre_entrepots(char * nomfic);
+
+void proposer_prix(camion *c, int prix, enchere * offre, int nb_offre);
+
+int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe);
+

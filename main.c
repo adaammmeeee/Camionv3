@@ -19,8 +19,19 @@ int main()
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
 	for (int i = 0; i < nb_entrepots; i++)
 	{
-		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, evaluation_meilleure_solution(a[i], a[i].nb_camion, graphe));
+		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe));
 	}
+
+	requete * nouv = malloc(sizeof(struct requete));
+	nouv->origine = 'A';
+	nouv->destination = 'B';
+	nouv->prec = NULL;
+	nouv->suiv = NULL;
+	nouv->gain = 350;
+	nouv->perte = 600;
+
+	printf("voici le cout de la requete à la fin :%d\n", cout_requete_fin_trajet(nouv, a[0],graphe));
+
 
 	char buffer[2];
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");

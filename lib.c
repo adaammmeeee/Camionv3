@@ -348,12 +348,12 @@ int faire_course(camion *c, char origine, char destination, int **graphe)
     return calcul_cout_trajet(graphe[origine - 'A'][destination - 'A']);
 }
 
-int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe)
+int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe)
 {
     int gain_total = 0;
     int old_gain = 0;
-    requete *actuelle = a.LR->prem;
-    while (actuelle)
+    requete *actuelle = LR->prem;
+    while (actuelle && nb_requete)
     {
         printf("ccccc\n");
         tri_fusion_camion_proximite(graphe, a.id_entrepot, a.liste_camion, 0, a.nb_camion - 1);
@@ -377,6 +377,43 @@ int evaluation_meilleure_solution(entrepot a, int nb_camion, int **graphe)
             }
         }
         actuelle = actuelle->suiv;
+        nb_requete --;
+    }
+    if (nb_requete != 0 && actuelle == NULL) 
+    {
+        printf("Attention la liste de requete contient moins de requete que le nombre indiqué en argument\n");
+        return -1;
     }
     return gain_total;
+}
+
+void proposer_prix(camion *c, int prix, enchere * offre, int nb_offre)
+{
+    offre[nb_offre].camion_gerant = c;
+    offre[nb_offre].prix = prix;
+}
+
+
+int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe)
+{
+    int cout = 0;
+    tri_fusion_camion_proximite(graphe, nouv->origine, a.liste_camion, 0, a.nb_camion - 1);
+    for(int i = 0; i < a.nb_camion; i++)
+    {
+        int taille_trajet = strlen(a.liste_camion[i]->trajet);
+        int pos_camion = a.liste_camion[i]->trajet[taille_trajet - 1] - 'A';
+        int origine = nouv->origine - 'A';
+        int destination = nouv->destination - 'A';
+        int distance_parcouru = a.liste_camion[i]->distance_parcouru;
+
+        if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
+        {
+            printf("le camion %d a fait l'itinéraire %c->%c->%c\n", a.liste_camion[i]->id_camion, pos_camion + 'A', nouv->origine, nouv->destination);
+            cout += calcul_cout_trajet(graphe[pos_camion][origine]);
+            cout += calcul_cout_trajet(graphe[origine][destination]);
+            cout += calcul_cout_trajet(graphe[destination][a.id_entrepot - 'A']);
+            break;
+        }
+    }
+    return cout;
 }
