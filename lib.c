@@ -78,6 +78,8 @@ entrepot *charge_entrepots(char *nomfic, int ** graphe)
         fscanf(f, "\nentrepot : %c", &c);
         fscanf(f, "\nnombre de camion :%d\n", &a[i].nb_camion);
         a[i].id_entrepot = c;
+        a[i].cout_total = 0;
+        a[i].gain_total = 0;
 
         a[i].liste_camion = malloc(a[i].nb_camion * sizeof(camion *));
         for (int j = 0; j < a[i].nb_camion; j++)

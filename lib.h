@@ -22,12 +22,15 @@ typedef struct camion
     char id_camion;
     int distance_parcouru;
     char *trajet;
+    char *charge;
 
 } camion;
 
 typedef struct entrepot
 {
     int id_entrepot;
+    int gain_total;
+    int cout_total;
     int nb_requete;
     int nb_camion;
     liste_requete *LR;
