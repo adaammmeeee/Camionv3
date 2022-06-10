@@ -18,8 +18,12 @@ int main()
 	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
 	requete liste_vente[nb_entrepots];
 
-	copie_requete(a[0].LR->dern);
-	
+	for (int i = 0; i < nb_entrepots; i++)
+	{
+		if (a[i].nb_requete)
+			liste_vente[i] = copie_requete(a[i].LR->dern);
+	}
+
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
 	for (int i = 0; i < nb_entrepots; i++)
 	{
@@ -35,6 +39,8 @@ int main()
 	nouv->perte = 600;
 
 	printf("voici le cout de la requete à la fin :%d\n", cout_requete_fin_trajet(nouv, a[0], graphe));
+
+	free(nouv);
 
 	char buffer[2];
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");

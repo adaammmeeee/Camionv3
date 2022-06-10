@@ -351,7 +351,7 @@ int faire_course(camion *c, char origine, char destination, int **graphe)
 int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe)
 {
     int gain_total = 0;
-    int old_gain = 0;
+    //int old_gain = 0;
     requete *actuelle = LR->prem;
     while (actuelle && nb_requete)
     {
@@ -366,7 +366,7 @@ int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete
 
             if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
             {
-                old_gain = gain_total;
+                //old_gain = gain_total;
                 //printf("le camion %d a fait l'itinéraire %c->%c->%c\n", a.liste_camion[i]->id_camion, pos_camion + 'A', origine + 'A', destination + 'A');
                 gain_total -= faire_course(a.liste_camion[i], a.liste_camion[i]->trajet[taille_trajet - 1], actuelle->origine, graphe);
                 gain_total -= faire_course(a.liste_camion[i], actuelle->origine, actuelle->destination, graphe);
