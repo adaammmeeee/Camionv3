@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun  9 14:42:50 2022
+# Make data base, printed on Fri Jun 10 10:11:47 2022
 
 # Variables
 
@@ -51,7 +51,7 @@ VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"fr","availableLanguages":{"*":"fr"},"_languagePackId":"25fe6a3290ec415596628d4afc87a88c.fr","_translationsConfigFile":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr/tcf.json","_cacheRoot":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr","_resolvedLanguagePackCoreLocation":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"/home/adame/.config/Code/clp/25fe6a3290ec415596628d4afc87a88c.fr/corrupted.info","_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:43375
+JOURNAL_STREAM = 8:44157
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -71,11 +71,11 @@ MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=fc6b5e75474d30dcbf4dc01262a1e84d
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=c71f57068c9736e185699c2962a2fba7
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 950
+MANAGERPID = 987
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -89,7 +89,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/adame:@/tmp/.ICE-unix/1249,unix/adame:/tmp/.ICE-unix/1249
+SESSION_MANAGER = local/adame:@/tmp/.ICE-unix/1294,unix/adame:/tmp/.ICE-unix/1294
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -107,7 +107,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 5a61aac30ee446dc8384570e3058ee51
+INVOCATION_ID = 9704503e1cbd46999bed29ec169d09a1
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -131,7 +131,7 @@ PWD = /home/adame/Camionv3
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1207
+SSH_AGENT_PID = 1227
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -183,7 +183,7 @@ SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-fa05a615-2baf-4379-ad6e-52e8ed91316b.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-7a51f409-226d-45ee-8852-a0f8e69a99cf.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -233,11 +233,11 @@ LC_ALL = C
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/e1b6ed1e_0acb_4159_b7ea_16f9f4bdcdc6
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/7c6d1c9a_189b_492f_ba96_5e4158acd31d
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.158
+GNOME_TERMINAL_SERVICE = :1.137
 # default
 SUFFIXES := 
 # environment
@@ -255,9 +255,9 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 3966
+VSCODE_PID = 3395
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=fc6b5e75474d30dcbf4dc01262a1e84d
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=c71f57068c9736e185699c2962a2fba7
 # variable set hash-table stats:
 # Load=123/1024=12%, Rehash=0, Collisions=15/148=10%
 
@@ -305,7 +305,6 @@ compil: lib.o main.o
 
 debug: compil
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 5):
@@ -314,6 +313,7 @@ debug: compil
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-06-09 14:42:30.236017522
 #  File has been updated.
 #  Successfully updated.
@@ -373,6 +373,6 @@ lib.c:
 # strcache performance: lookups = 45 / hit rate = 44%
 # hash-table stats:
 # Load=25/8192=0%, Rehash=0, Collisions=1/45=2%
-# Finished Make data base on Thu Jun  9 14:42:50 2022
+# Finished Make data base on Fri Jun 10 10:11:47 2022
 
  

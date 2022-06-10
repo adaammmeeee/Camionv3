@@ -267,7 +267,7 @@ int course_basique(int **graphe, entrepot a)
 
 int calcul_cout_trajet(int d)
 {
-    return 0.8 * d + 20;
+    return d?( 0.8 * d + 20):(0);
 }
 
 int proximite(int **graphe, camion cam, char origine_requete)
@@ -355,7 +355,6 @@ int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete
     requete *actuelle = LR->prem;
     while (actuelle && nb_requete)
     {
-        printf("ccccc\n");
         tri_fusion_camion_proximite(graphe, a.id_entrepot, a.liste_camion, 0, a.nb_camion - 1);
         for (int i = 0; i < a.nb_camion; i++)
         {
@@ -368,11 +367,11 @@ int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete
             if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
             {
                 old_gain = gain_total;
-                printf("le camion %d a fait l'itinéraire %c->%c->%c\n", a.liste_camion[i]->id_camion, pos_camion + 'A', origine + 'A', destination + 'A');
+                //printf("le camion %d a fait l'itinéraire %c->%c->%c\n", a.liste_camion[i]->id_camion, pos_camion + 'A', origine + 'A', destination + 'A');
                 gain_total -= faire_course(a.liste_camion[i], a.liste_camion[i]->trajet[taille_trajet - 1], actuelle->origine, graphe);
                 gain_total -= faire_course(a.liste_camion[i], actuelle->origine, actuelle->destination, graphe);
                 gain_total += actuelle->gain;
-                printf("le cout apporté est le suivant : %d\n", gain_total - old_gain);
+                //printf("le cout apporté est le suivant : %d\n", gain_total - old_gain);
                 break;
             }
         }
@@ -408,7 +407,7 @@ int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe)
 
         if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
         {
-            printf("le camion %d a fait l'itinéraire %c->%c->%c\n", a.liste_camion[i]->id_camion, pos_camion + 'A', nouv->origine, nouv->destination);
+            //printf("le camion %d a fait l'itinéraire %c->%c->%c\n", a.liste_camion[i]->id_camion, pos_camion + 'A', nouv->origine, nouv->destination);
             cout += calcul_cout_trajet(graphe[pos_camion][origine]);
             cout += calcul_cout_trajet(graphe[origine][destination]);
             cout += calcul_cout_trajet(graphe[destination][a.id_entrepot - 'A']);
@@ -416,4 +415,24 @@ int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe)
         }
     }
     return cout;
+}
+
+
+void retour_a_la_casa(entrepot a)
+{
+    for (int i = 0; i < a.nb_camion; i++)
+    {
+        a.liste_camion[i]->trajet = 0;
+    }
+}
+
+
+requete copie_requete(requete * r)
+{
+    requete nouv;
+    nouv.origine = r->origine;
+    nouv.destination = r->destination;
+    nouv.gain = r->gain;
+    nouv.perte = r->perte;
+    return nouv;
 }

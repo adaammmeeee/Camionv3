@@ -5,10 +5,9 @@
 
 int main()
 {
-	
+
 	int nb_entrepots = charge_nombre_entrepots("gestionnaire");
 
-	
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	int **graphe = charge_graphe("matrice_distance.csv", nb_entrepots);
 
@@ -16,13 +15,18 @@ int main()
 	printf("recuperation des informations sur les entrepots dans le fichier gestionnaire...\n");
 	a = charge_entrepots("gestionnaire", graphe);
 
+	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
+	requete liste_vente[nb_entrepots];
+
+	copie_requete(a[0].LR->dern);
+	
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe));
 	}
 
-	requete * nouv = malloc(sizeof(struct requete));
+	requete *nouv = malloc(sizeof(struct requete));
 	nouv->origine = 'A';
 	nouv->destination = 'B';
 	nouv->prec = NULL;
@@ -30,8 +34,7 @@ int main()
 	nouv->gain = 350;
 	nouv->perte = 600;
 
-	printf("voici le cout de la requete à la fin :%d\n", cout_requete_fin_trajet(nouv, a[0],graphe));
-
+	printf("voici le cout de la requete à la fin :%d\n", cout_requete_fin_trajet(nouv, a[0], graphe));
 
 	char buffer[2];
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");

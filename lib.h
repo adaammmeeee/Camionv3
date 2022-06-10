@@ -75,3 +75,6 @@ void proposer_prix(camion *c, int prix, enchere * offre, int nb_offre);
 
 int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe);
 
+void retour_a_la_casa(entrepot a);
+
+requete copie_requete(requete * r);
