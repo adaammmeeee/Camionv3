@@ -93,7 +93,7 @@ entrepot *charge_entrepots(char *nomfic, int ** graphe)
             a[i].liste_camion[j]->trajet = malloc(sizeof(char) * 64);
             a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
             a[i].liste_camion[j]->trajet[1] = '\0';
-            a[i].liste_camion[j]->id_camion = j;
+            a[i].liste_camion[j]->id_camion = j + '1';
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
 
