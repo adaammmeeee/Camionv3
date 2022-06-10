@@ -31,18 +31,18 @@ int main()
 		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
 	}
 
-	requete *nouv = malloc(sizeof(struct requete));
-	nouv->origine = 'A';
-	nouv->destination = 'B';
-	nouv->prec = NULL;
-	nouv->suiv = NULL;
-	nouv->gain = 350;
-	nouv->perte = 600;
+	requete nouv;
+	nouv.origine = 'A';
+	nouv.destination = 'B';
+	nouv.prec = NULL;
+	nouv.suiv = NULL;
+	nouv.gain = 350;
+	nouv.perte = 600;
 
-	printf("voici le cout de la requete à la fin :%d\n", cout_requete_fin_trajet(nouv, a[0], graphe));
-
-	free(nouv);
-
+	char camion = '\0';
+	printf("id_camion avant : %c\n", camion);
+	printf("voici le cout de la requete à la fin : %d\n", cout_requete_fin_trajet(nouv, a[0], &camion, graphe));
+	printf("id_camion : %c\n", camion);
 
 	for (int i = 0; i < nb_entrepots; i++)
 	{

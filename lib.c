@@ -395,17 +395,18 @@ void proposer_prix(camion *c, int prix, enchere * offre, int nb_offre)
 }
 
 
-int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe)
+int cout_requete_fin_trajet(requete nouv, entrepot a, char *id_camion, int **graphe)
 {
     int cout = 0;
-    tri_fusion_camion_proximite(graphe, nouv->origine, a.liste_camion, 0, a.nb_camion - 1);
+    tri_fusion_camion_proximite(graphe, nouv.origine, a.liste_camion, 0, a.nb_camion - 1);
     for(int i = 0; i < a.nb_camion; i++)
     {
         int taille_trajet = strlen(a.liste_camion[i]->trajet);
         int pos_camion = a.liste_camion[i]->trajet[taille_trajet - 1] - 'A';
-        int origine = nouv->origine - 'A';
-        int destination = nouv->destination - 'A';
+        int origine = nouv.origine - 'A';
+        int destination = nouv.destination - 'A';
         int distance_parcouru = a.liste_camion[i]->distance_parcouru;
+        *id_camion = a.liste_camion[i]->id_camion;
 
         if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
         {
@@ -416,7 +417,6 @@ int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe)
             break;
         }
     }
-    a.gain_total = cout;
     return cout;
 }
 
@@ -442,3 +442,32 @@ requete copie_requete(requete * r, int prix_propose)
     nouv.perte = r->perte;
     return nouv;
 }
+
+entrepot recupere_par_id(char id_entrepot, int nb_entrepot, entrepot *a)
+{
+    entrepot vide;
+    vide.id_entrepot = -1;
+
+    for(int i = 0; i < nb_entrepot; i++)
+    {
+        if(a[i].id_entrepot == id_entrepot)
+            return a[i];
+    }
+
+    return vide;
+}
+
+
+/*
+void enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+{
+    for(int i = 0; i< nb_requete_vendre; i++)
+    {
+        char entrepot_offre = rv[i].id_entrepot;
+        char entrepot_demande = rv[(i+1%nb_requete_vendre].id_entrepot;
+        int cout_requete = cout_requete_fin_trajet(rv[i],recupere_par_id(entrepot_demande,nb_entrepot,a),graphe);
+        if(cout_requete <= rv[i].gain)
+            proposer_prix()
+    }
+        
+}*/

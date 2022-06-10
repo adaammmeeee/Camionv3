@@ -73,7 +73,7 @@ int charge_nombre_entrepots(char * nomfic);
 
 void proposer_prix(camion *c, int prix, enchere * offre, int nb_offre);
 
-int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe);
+int cout_requete_fin_trajet(requete nouv, entrepot a, char *id_camion, int **graphe);
 
 void retour_a_la_casa(entrepot a, int ** graphe);
 
