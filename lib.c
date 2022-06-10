@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "lib.h"
 
-void charge_requete(FILE *f, liste_requete *LR, int ** graphe)
+void charge_requete(FILE *f, liste_requete *LR, int ** graphe, char id_entrepot)
 {
     char origine, destination;
     int gain, perte;
@@ -11,7 +11,7 @@ void charge_requete(FILE *f, liste_requete *LR, int ** graphe)
     fscanf(f, "\ndestination : %c", &destination);
     fscanf(f, "\ngains : %d", &gain);
     fscanf(f, "\nperte : %d", &perte);
-    ajout_requete(LR, origine, destination, gain, perte, graphe);
+    ajout_requete(LR, origine, destination, gain, perte, graphe, id_entrepot);
 }
 
 int **charge_graphe(char *nomfic, int nb_entrepots)
@@ -78,7 +78,6 @@ entrepot *charge_entrepots(char *nomfic, int ** graphe)
         fscanf(f, "\nentrepot : %c", &c);
         fscanf(f, "\nnombre de camion :%d\n", &a[i].nb_camion);
         a[i].id_entrepot = c;
-        a[i].cout_total = 0;
         a[i].gain_total = 0;
 
         a[i].liste_camion = malloc(a[i].nb_camion * sizeof(camion *));
@@ -102,7 +101,7 @@ entrepot *charge_entrepots(char *nomfic, int ** graphe)
         init_liste_requete(a[i].LR);
         for (int j = 0; j < a[i].nb_requete; j++)
         {
-            charge_requete(f, a[i].LR, graphe);
+            charge_requete(f, a[i].LR, graphe, a[i].id_entrepot);
         }
     }
 
@@ -116,7 +115,7 @@ void init_liste_requete(liste_requete *LR)
     LR->prem = NULL;
 }
 
-void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int ** graphe)
+void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int ** graphe, char id_entrepot)
 {
     requete *nouv = malloc(sizeof(requete));
     if (!nouv)
@@ -126,6 +125,7 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
     nouv->gain = gain;
     nouv->perte = perte;
     nouv->origine = origine;
+    nouv->id_entrepot = id_entrepot;
 
     nouv->prec = NULL;
     nouv->suiv = NULL;
@@ -330,7 +330,8 @@ void tri_fusion_camion_proximite(int **graphe, char origine_requete, camion **li
 // Renvoi le coût de la course effectuée par le camion
 int faire_course(camion *c, char origine, char destination, int **graphe)
 {
-
+    if (origine == destination)
+        return 0;
     int t = strlen(c->trajet);
 
     if (t == 0)
@@ -348,7 +349,7 @@ int faire_course(camion *c, char origine, char destination, int **graphe)
     return calcul_cout_trajet(graphe[origine - 'A'][destination - 'A']);
 }
 
-int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe)
+entrepot evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe)
 {
     int gain_total = 0;
     //int old_gain = 0;
@@ -381,9 +382,10 @@ int evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete
     if (nb_requete != 0 && actuelle == NULL) 
     {
         printf("Attention la liste de requete contient moins de requete que le nombre indiqué en argument\n");
-        return -1;
+        exit(1);
     }
-    return gain_total;
+    a.gain_total = gain_total;
+    return a;
 }
 
 void proposer_prix(camion *c, int prix, enchere * offre, int nb_offre)
@@ -414,25 +416,29 @@ int cout_requete_fin_trajet(requete *nouv, entrepot a, int **graphe)
             break;
         }
     }
+    a.gain_total = cout;
     return cout;
 }
 
 
-void retour_a_la_casa(entrepot a)
+void retour_a_la_casa(entrepot a, int ** graphe)
 {
+    int taille = 0;
     for (int i = 0; i < a.nb_camion; i++)
     {
-        a.liste_camion[i]->trajet = 0;
+        taille = strlen(a.liste_camion[i]->trajet);
+        char origine = a.liste_camion[i]->trajet[taille-1];
+        faire_course(a.liste_camion[i],origine,a.id_entrepot,graphe);
     }
 }
 
 
-requete copie_requete(requete * r)
+requete copie_requete(requete * r, int prix_propose)
 {
     requete nouv;
     nouv.origine = r->origine;
     nouv.destination = r->destination;
-    nouv.gain = r->gain;
+    nouv.gain = prix_propose;
     nouv.perte = r->perte;
     return nouv;
 }

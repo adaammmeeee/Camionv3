@@ -24,7 +24,6 @@ destination : E
 gains : 600
 perte : 200
 
-
 entrepot : B
 nombre de camion : 8
 nombre de requete : 0

@@ -21,13 +21,14 @@ int main()
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		if (a[i].nb_requete)
-			liste_vente[i] = copie_requete(a[i].LR->dern);
+			liste_vente[i] = copie_requete(a[i].LR->dern,200);
 	}
 
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
 	for (int i = 0; i < nb_entrepots; i++)
 	{
-		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe));
+		a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
+		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
 	}
 
 	requete *nouv = malloc(sizeof(struct requete));
@@ -41,6 +42,12 @@ int main()
 	printf("voici le cout de la requete à la fin :%d\n", cout_requete_fin_trajet(nouv, a[0], graphe));
 
 	free(nouv);
+
+
+	for (int i = 0; i < nb_entrepots; i++)
+	{
+		retour_a_la_casa(a[i],graphe);
+	}
 
 	char buffer[2];
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");
