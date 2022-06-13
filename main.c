@@ -84,14 +84,6 @@ int main()
 	int indice_trajet;
 	char id_camion[2];
 	memset(id_camion, 0, 2);
-
-	requete nouv;
-	nouv.origine = 'A';
-	nouv.destination = 'B';
-	nouv.prec = NULL;
-	nouv.suiv = NULL;
-	nouv.gain = 350;
-	nouv.perte = 600;
 	
 	insertion(&indice_trajet, id_camion, a[0], nouv, graphe);
 	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %s et elle serait incruster à l'étape %d \n",nouv.origine, nouv.destination, nouv.gain, id_camion,indice_trajet);
