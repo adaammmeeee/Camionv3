@@ -8,6 +8,7 @@ typedef struct requete
     char destination;
     int gain;
     int perte;
+    int prix_propose_vente;
     struct requete *suiv;
     struct requete *prec;
 } requete;
@@ -40,7 +41,8 @@ typedef struct entrepot
 
 typedef struct enchere
 {
-    camion* camion_gerant;
+    entrepot *entrepot_offre;
+    camion *camion_gerant;
     int prix;
 } enchere;
 
@@ -72,7 +74,7 @@ int ** charge_graphe( char *nomfic, int nb_entrepots);
 
 int charge_nombre_entrepots(char * nomfic);
 
-void proposer_prix(camion *c, int prix, enchere * offre, int nb_offre);
+void proposer_prix(camion c, int prix, enchere * offre, int nb_offre);
 
 int cout_requete_fin_trajet(requete nouv, entrepot a, char *id_camion, int **graphe);
 

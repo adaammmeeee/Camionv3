@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "lib.h"
 
-void charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot)
+void charge_requete(FILE *f, liste_requete *LR, int ** graphe, char id_entrepot)
 {
     char origine, destination;
     int gain, perte;
@@ -114,7 +114,7 @@ void init_liste_requete(liste_requete *LR)
     LR->prem = NULL;
 }
 
-void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int **graphe, char id_entrepot)
+void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int ** graphe, char id_entrepot)
 {
     requete *nouv = malloc(sizeof(requete));
     if (!nouv)
@@ -123,6 +123,7 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
     nouv->destination = destination;
     nouv->gain = gain;
     nouv->perte = perte;
+    nouv->prix_propose_vente = 0;
     nouv->origine = origine;
     nouv->id_entrepot = id_entrepot;
 
@@ -348,7 +349,7 @@ int faire_course(camion *c, char origine, char destination, int **graphe)
     return calcul_cout_trajet(graphe[origine - 'A'][destination - 'A']);
 }
 
-entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_requete, int **graphe)
+entrepot evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe)
 {
     int gain_total = 0;
     // int old_gain = 0;
@@ -387,17 +388,12 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     return a;
 }
 
-void proposer_prix(camion *c, int prix, enchere *offre, int nb_offre)
-{
-    offre[nb_offre].camion_gerant = c;
-    offre[nb_offre].prix = prix;
-}
 
 int cout_requete_fin_trajet(requete nouv, entrepot a, char *id_camion, int **graphe)
 {
     int cout = 0;
     tri_fusion_camion_proximite(graphe, nouv.origine, a.liste_camion, 0, a.nb_camion - 1);
-    for (int i = 0; i < a.nb_camion; i++)
+    for(int i = 0; i < a.nb_camion; i++)
     {
         int taille_trajet = strlen(a.liste_camion[i]->trajet);
         int pos_camion = a.liste_camion[i]->trajet[taille_trajet - 1] - 'A';
@@ -418,54 +414,29 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, char *id_camion, int **gra
     return cout;
 }
 
-void retour_a_la_casa(entrepot a, int **graphe)
+
+void retour_a_la_casa(entrepot a, int ** graphe)
 {
     int taille = 0;
     for (int i = 0; i < a.nb_camion; i++)
     {
         taille = strlen(a.liste_camion[i]->trajet);
-        char origine = a.liste_camion[i]->trajet[taille - 1];
-        faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe);
+        char origine = a.liste_camion[i]->trajet[taille-1];
+        faire_course(a.liste_camion[i],origine,a.id_entrepot,graphe);
     }
 }
 
-requete copie_requete(requete *r, int prix_propose)
+
+requete copie_requete(requete * r, int prix_propose)
 {
     requete nouv;
     nouv.origine = r->origine;
     nouv.destination = r->destination;
-    nouv.gain = prix_propose;
+    nouv.gain = r->gain;
+    nouv.prix_propose_vente = prix_propose;
     nouv.perte = r->perte;
     return nouv;
 }
-
-entrepot recupere_par_id(char id_entrepot, int nb_entrepot, entrepot *a)
-{
-    entrepot vide;
-    vide.id_entrepot = -1;
-
-    for (int i = 0; i < nb_entrepot; i++)
-    {
-        if (a[i].id_entrepot == id_entrepot)
-            return a[i];
-    }
-
-    return vide;
-}
-
-/*
-void enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
-{
-    for(int i = 0; i< nb_requete_vendre; i++)
-    {
-        char entrepot_offre = rv[i].id_entrepot;
-        char entrepot_demande = rv[(i+1%nb_requete_vendre].id_entrepot;
-        int cout_requete = cout_requete_fin_trajet(rv[i],recupere_par_id(entrepot_demande,nb_entrepot,a),graphe);
-        if(cout_requete <= rv[i].gain)
-            proposer_prix()
-    }
-
-}*/
 
 int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int **graphe)
 {
@@ -502,3 +473,100 @@ int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int 
     
 
 }
+
+entrepot *recupere_par_id_entrepot(char id_entrepot, int nb_entrepot, entrepot **a)
+{
+    for(int i = 0; i < nb_entrepot; i++)
+        if(a[i]->id_entrepot == id_entrepot)
+            return a[i];
+
+    return NULL;
+}
+
+camion *recupere_par_id_camion(char id_camion, int nb_camion, camion **lc)
+{
+    for(int i = 0; i < nb_camion; i++)
+        if(lc[i]->id_camion == id_camion)
+            return lc[i];
+
+    return NULL;
+}
+
+void enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot **a, int **graphe)
+{
+    enchere offre[nb_entrepot];
+
+    for(int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
+    {
+        char entrepot_demande = rv[cpt_requete].id_entrepot;
+        int cpt_offre = 0;
+        for(int cpt_entrepot = 0; cpt_entrepot < nb_entrepot; cpt_entrepot++)
+        {
+            char entrepot_offre = a[cpt_entrepot]->id_entrepot;
+            if(entrepot_demande != entrepot_offre)
+            {
+                char camion_offre = '\0';
+                entrepot *e = recupere_par_id_entrepot(entrepot_offre,nb_entrepot,a);
+                int cout_requete = cout_requete_fin_trajet(rv[cpt_requete],*e,&camion_offre,graphe);
+                if(cout_requete <= rv[cpt_requete].gain)
+                {
+                    offre[cpt_offre].entrepot_offre = e;
+                    offre[cpt_offre].camion_gerant = recupere_par_id_camion(camion_offre,e->nb_camion,e->liste_camion);
+                    offre[cpt_offre].prix = cout_requete + 1;
+                    cpt_offre++;
+                }
+            }    
+        }
+
+        int min = MAX;
+        int indice_offre_min;
+        for(cpt_offre = 0; cpt_offre < nb_entrepot; cpt_offre++)
+        {
+            if(offre[cpt_offre].prix < min)
+            {
+                min = offre[cpt_offre].prix;
+                indice_offre_min = cpt_offre;
+            }
+        }
+        if(min != MAX)
+        {
+            (offre[indice_offre_min].entrepot_offre)->gain_total -= faire_course(offre[indice_offre_min].camion_gerant,rv[cpt_requete].origine,rv[cpt_requete].destination,graphe);
+            (offre[indice_offre_min].entrepot_offre)->gain_total += offre[indice_offre_min].prix;
+            a[cpt_requete]->gain_total -= offre[indice_offre_min].prix;
+        }
+        else
+        {
+            char camion_demande = '\0';
+            int cout_requete = cout_requete_fin_trajet(rv[cpt_requete],*a[cpt_requete],&camion_demande,graphe);
+            camion *camion_dem = recupere_par_id_camion(camion_demande,a[cpt_requete]->nb_camion,a[cpt_requete]->liste_camion);
+            a[cpt_requete]->gain_total -= faire_course(camion_dem,rv[cpt_requete].origine,rv[cpt_requete].destination,graphe);
+        }
+
+    }
+        
+}
+/*
+while (actuelle)
+    {
+        int cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
+        int cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
+
+        printf("Le camion %d de l'entrepot %c fait le trajet %s\n", cpt_camion, a.id_entrepot, a.liste_camion[cpt_camion]->trajet);
+        int premier_test = cpt_camion;
+        while (cout_course == 0 || cout_retour == 0) // Impossible de faire l'aller ou le retour, on passe au camion suivant
+        {
+            cpt_camion++;
+            cpt_camion %= a.nb_camion;
+            if (cpt_camion == premier_test)
+                return 0;
+            cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
+            cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
+        }
+        gain += actuelle->gain;
+        gain -= cout_course + cout_retour;
+        cpt_camion++;
+        cpt_camion %= a.nb_camion;
+        actuelle = actuelle->suiv;
+    }
+    return gain;
+*/

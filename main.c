@@ -28,7 +28,7 @@ int main()
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
-		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
+        printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
 	}
 
 	requete nouv;
