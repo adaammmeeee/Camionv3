@@ -41,8 +41,8 @@ typedef struct entrepot
 
 typedef struct enchere
 {
-    entrepot *entrepot_offre;
-    camion *camion_gerant;
+    int indice_e_offre;
+    int indice_c_offre;
     int prix;
 } enchere;
 
