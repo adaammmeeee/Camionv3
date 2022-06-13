@@ -46,28 +46,49 @@ typedef struct enchere
     int prix;
 } enchere;
 
+/* 
+Initialise à partir du fichier f une requete qui est ajoutée dans la liste chainée LR 
+La requête n'est pas ajouté à la fin mais dans l'ordre croissant : gain_requete  - cout_trajet_requete
+*/
 void charge_requete(FILE *f, liste_requete *LR, int ** graphe, char id_entrepot);
 
+/*
+Renvoi un tableau d'entrepot à partir du fichier nomfic
+*/
 entrepot *charge_entrepots(char *nomfic, int ** graphe);
 
+/*
+initialise une liste chainée de requete
+*/
 void init_liste_requete(liste_requete *LR);
 
+/*
+Ajoute une requete à LR toujours dans l'ordre croissant : gain_requete - cout_trajet_requete
+*/
 void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int ** graphe, char id_entrepot);
 
+/*
+Libère LR
+*/
 void liberation(liste_requete *LR);
 
+// Libère un entrepot
 void libere_acteur(entrepot a);
 
+// Affiche une liste de requete LR
 void affichage_requete(liste_requete *LR);
 
+// Affiche la structure entrepot
 void affichage_entrepot(entrepot a);
 
+// Calcul le coût d'un trajet à partir de la distance d avec une fonction affine
 int calcul_cout_trajet(int d);
 
+// Modifie le trajet de c en lui faisant faire la course chargé (ou pas) d'origine jusqu'à destination
+// Renvoi le cout de cette course
 int faire_course(camion *c, char origine, char destination, int **graphe, int plein);
 
-int course_basique(int **graphe, entrepot a);
-
+// Baser sur un algo glouton : choisit un trajet pour chaque camion c, en essayant d'optimiser le gain total
 entrepot evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe);
 
 int ** charge_graphe( char *nomfic, int nb_entrepots);

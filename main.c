@@ -21,32 +21,19 @@ int main()
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		if (a[i].nb_requete)
-			liste_vente[i] = copie_requete(a[i].LR->dern,200);
+			liste_vente[i] = copie_requete(a[i].LR->dern, 200);
 	}
 
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
-        printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
+		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
 	}
-
-	requete nouv;
-	nouv.origine = 'A';
-	nouv.destination = 'B';
-	nouv.prec = NULL;
-	nouv.suiv = NULL;
-	nouv.gain = 350;
-	nouv.perte = 600;
-
-	char camion = '\0';
-	printf("id_camion avant : %c\n", camion);
-	printf("voici le cout de la requete à la fin : %d\n", cout_requete_fin_trajet(nouv, a[0], &camion, graphe));
-	printf("id_camion : %c\n", camion);
 
 	for (int i = 0; i < nb_entrepots; i++)
 	{
-		retour_a_la_casa(a[i],graphe);
+		retour_a_la_casa(a[i], graphe);
 	}
 
 	char buffer[2];
@@ -76,9 +63,17 @@ int main()
 	int indice_trajet;
 	char id_camion[2];
 	memset(id_camion, 0, 2);
+
+	requete nouv;
+	nouv.origine = 'A';
+	nouv.destination = 'B';
+	nouv.prec = NULL;
+	nouv.suiv = NULL;
+	nouv.gain = 350;
+	nouv.perte = 600;
 	
 	insertion(&indice_trajet, id_camion, a[0], nouv, graphe);
-	printf("VOICICCICI %d %s \n", indice_trajet, id_camion);
+	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %s et elle serait incruster à l'étape %d \n",nouv.origine, nouv.destination, nouv.gain, id_camion,indice_trajet);
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);

@@ -237,37 +237,7 @@ int gain_theorique(entrepot a)
     }
     return gain;
 }
-/*
-int course_basique(int **graphe, entrepot a)
-{
-    int gain = 0;
-    requete *actuelle = a.LR->prem;
-    int cpt_camion = 0;
-    while (actuelle)
-    {
-        int cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
-        int cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
 
-        printf("Le camion %d de l'entrepot %c fait le trajet %s\n", cpt_camion, a.id_entrepot, a.liste_camion[cpt_camion]->trajet);
-        int premier_test = cpt_camion;
-        while (cout_course == 0 || cout_retour == 0) // Impossible de faire l'aller ou le retour, on passe au camion suivant
-        {
-            cpt_camion++;
-            cpt_camion %= a.nb_camion;
-            if (cpt_camion == premier_test)
-                return 0;
-            cout_course = faire_course(a.liste_camion[cpt_camion], actuelle->origine, actuelle->destination, graphe);
-            cout_retour = faire_course(a.liste_camion[cpt_camion], actuelle->destination, a.id_entrepot, graphe);
-        }
-        gain += actuelle->gain;
-        gain -= cout_course + cout_retour;
-        cpt_camion++;
-        cpt_camion %= a.nb_camion;
-        actuelle = actuelle->suiv;
-    }
-    return gain;
-}
-*/
 int calcul_cout_trajet(int d)
 {
     return d ? (0.8 * d + 20) : (0);
@@ -330,7 +300,6 @@ void tri_fusion_camion_proximite(int **graphe, char origine_requete, camion **li
     }
 }
 
-// Renvoi le coût de la course effectuée par le camion
 int faire_course(camion *c, char origine, char destination, int **graphe, int plein)
 {
     if (origine == destination)
@@ -437,6 +406,7 @@ requete copie_requete(requete * r, int prix_propose)
     nouv.gain = r->gain;
     nouv.prix_propose_vente = prix_propose;
     nouv.perte = r->perte;
+    nouv.id_entrepot = r->id_entrepot;
     return nouv;
 }
 
