@@ -38,8 +38,8 @@ destination : D
 gains : 400
 perte : 200
 
-origine : A
-destination : B
+origine : B
+destination : A
 gains : 500
 perte : 200
 
@@ -47,8 +47,6 @@ origine : B
 destination : E
 gains : 600
 perte : 200
-
-
 
 entrepot : C
 nombre de camion : 8

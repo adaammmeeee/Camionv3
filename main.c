@@ -47,15 +47,11 @@ int main()
 	nouv.gain = 350;
 	nouv.perte = 600;
 
-	int camion = -1;
-	printf("id_camion avant : %d\n", camion);
-	printf("voici le cout de la requete à la fin : %d\n", cout_requete_fin_trajet(nouv, a[0], &camion, graphe));
-	printf("id_camion : %d\n", camion);
+	for (int i = 0; i < nb_entrepots; i++)
+		retour_a_la_casa(a[i],graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
-	{
-		retour_a_la_casa(a[i], graphe);
-	}
+		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
 
 	char buffer[2];
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");
