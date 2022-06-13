@@ -1,4 +1,5 @@
 #define DISTANCE_MAX 2300
+#define MAX 0x7fffffff                  // Valeur maximale pour une variable de type int
 
 typedef struct requete
 {
@@ -78,3 +79,7 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, char *id_camion, int **gra
 void retour_a_la_casa(entrepot a, int ** graphe);
 
 requete copie_requete(requete * r, int prix_propose);
+
+int test_insertion(entrepot a, requete r, int ** graphe);
+
+int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int **graphe);

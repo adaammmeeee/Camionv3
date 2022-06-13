@@ -72,6 +72,12 @@ int main()
 		fgetc(stdin);
 	}
 
+	int indice_trajet;
+	char id_camion[2];
+	
+	insertion(&indice_trajet, id_camion, a[0], nouv, graphe);
+	printf("VOICICCICI %d %s \n", indice_trajet, id_camion);
+
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
 	free(a);
