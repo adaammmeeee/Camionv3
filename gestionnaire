@@ -26,7 +26,28 @@ perte : 200
 
 entrepot : B
 nombre de camion : 8
-nombre de requete : 0
+nombre de requete : 4
+
+origine : B
+destination : C
+gains : 300
+perte : 200
+
+origine : B
+destination : D
+gains : 400
+perte : 200
+
+origine : A
+destination : B
+gains : 500
+perte : 200
+
+origine : B
+destination : E
+gains : 600
+perte : 200
+
 
 
 entrepot : C

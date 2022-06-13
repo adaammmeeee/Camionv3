@@ -24,7 +24,7 @@ int main()
 	{
 		if (a[i].nb_requete)
 		{
-			a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete-1, graphe);
+			a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
         	printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
 			int camion = -1;
 			int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion,graphe);
