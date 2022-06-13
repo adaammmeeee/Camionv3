@@ -65,6 +65,7 @@ int main()
 		for (int i = 0; i < a[id].nb_camion; i++)
 		{
 			printf("trajet du camion : %s\n", a[id].liste_camion[i]->trajet);
+			printf("charge du camion : %s\n", a[id].liste_camion[i]->charge);
 		}
 		printf("Souhaitez vous voir les trajets d'un autre acteur ? (y/n) \n");
 		fflush(stdout);
@@ -74,6 +75,7 @@ int main()
 
 	int indice_trajet;
 	char id_camion[2];
+	memset(id_camion, 0, 2);
 	
 	insertion(&indice_trajet, id_camion, a[0], nouv, graphe);
 	printf("VOICICCICI %d %s \n", indice_trajet, id_camion);

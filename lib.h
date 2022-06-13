@@ -64,7 +64,7 @@ void affichage_entrepot(entrepot a);
 
 int calcul_cout_trajet(int d);
 
-int faire_course(camion *c, char origine, char destination, int **graphe);
+int faire_course(camion *c, char origine, char destination, int **graphe, int plein);
 
 int course_basique(int **graphe, entrepot a);
 
