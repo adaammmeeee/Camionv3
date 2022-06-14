@@ -24,19 +24,19 @@ int main()
 	{
 		if (a[i].nb_requete)
 		{
-			a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
-        	printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
+			a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
+			printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
 			int camion = -1;
-			int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion,graphe);
-			liste_vente[i] = copie_requete(a[i].LR->dern,cout_requete);
+			int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
+			liste_vente[i] = copie_requete(a[i].LR->dern, cout_requete);
 			nb_requete_vente++;
 		}
 	}
 
-	a = enchere_echange(liste_vente,nb_requete_vente,nb_entrepots,a,graphe);
-	for(int i = 0; i < nb_requete_vente; i++)
+	a = enchere_echange(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+	for (int i = 0; i < nb_requete_vente; i++)
 	{
-    	printf("test %c %c %c %d %d %d\n", liste_vente[i].id_entrepot, liste_vente[i].origine, liste_vente[i].destination, liste_vente[i].gain, liste_vente[i].perte, liste_vente[i].prix_propose_vente);
+		printf("test %c %c %c %d %d %d\n", liste_vente[i].id_entrepot, liste_vente[i].origine, liste_vente[i].destination, liste_vente[i].gain, liste_vente[i].perte, liste_vente[i].prix_propose_vente);
 	}
 
 	requete nouv;
@@ -48,7 +48,7 @@ int main()
 	nouv.perte = 600;
 
 	for (int i = 0; i < nb_entrepots; i++)
-		retour_a_la_casa(a[i],graphe);
+		retour_a_la_casa(a[i], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
 		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
@@ -80,9 +80,9 @@ int main()
 	int indice_trajet;
 	char id_camion[2];
 	memset(id_camion, 0, 2);
-	
+
 	insertion(&indice_trajet, id_camion, a[0], nouv, graphe);
-	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %s et elle serait incruster à l'étape %d \n",nouv.origine, nouv.destination, nouv.gain, id_camion,indice_trajet);
+	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %s et elle serait incruster à l'étape %d \n", nouv.origine, nouv.destination, nouv.gain, id_camion, indice_trajet);
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
