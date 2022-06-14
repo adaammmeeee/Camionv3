@@ -34,7 +34,6 @@ int **charge_graphe(char *nomfic, int nb_entrepots)
             char car = fgetc(f);
             while (!(car == '\n' || car == ','))
             {
-                {
                 nombre[cpt] = car;
                 car = fgetc(f);
                 cpt++;
@@ -79,25 +78,25 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
         a[i].id_entrepot = buf;
         a[i].gain_total = 0;
 
-        a[i].liste_camion = malloc(a[i].nb_camion * sizeof(camion *));
+        a[i].liste_camion = calloc(a[i].nb_camion,sizeof(camion *));
         for (int j = 0; j < a[i].nb_camion; j++)
         {
-            a[i].liste_camion[j] = malloc(sizeof(camion) * NB_MAX_CAMION);
+            a[i].liste_camion[j] = calloc(NB_MAX_CAMION, sizeof(camion));
         }
 
         for (int j = 0; j < a[i].nb_camion; j++)
         {
             a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot;
             a[i].liste_camion[j]->distance_parcouru = 0;
-            a[i].liste_camion[j]->trajet = malloc(sizeof(char) * TAILLE_MAX_TRAJET);
+            a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(char));
             a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
             a[i].liste_camion[j]->trajet[1] = '\0';
-            a[i].liste_camion[j]->charge = malloc(sizeof(char) * TAILLE_MAX_TRAJET-1);
+            a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET-1 , sizeof(char));
             a[i].liste_camion[j]->id_camion = j + '1';
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
 
-        a[i].LR = malloc(sizeof(liste_requete));
+        a[i].LR = calloc(1, sizeof(liste_requete));
         init_liste_requete(a[i].LR);
         for (int j = 0; j < a[i].nb_requete; j++)
         {
@@ -117,7 +116,7 @@ void init_liste_requete(liste_requete *LR)
 
 int ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int **graphe, char id_entrepot)
 {
-    requete *nouv = malloc(sizeof(requete));
+    requete *nouv = calloc(1,sizeof(requete));
     if (!nouv)
     {
         printf("Erreur dans l'allocation : fonction %s\n", __FUNCTION__);
@@ -237,6 +236,7 @@ int calcul_cout_trajet(int d)
     return d ? (0.8 * d + 20) : (0);
 }
 
+// Renvoi la distance entre un camion cam et un sommet du graphe (originie_requete) 
 int proximite(int **graphe, camion cam, char origine_requete)
 {
     int taille_trajet = strlen(cam.trajet);
@@ -253,7 +253,7 @@ void fusion(int **graphe, char origine_requete, camion **liste_camion, int deb1,
     int compt2 = deb2;
     int i;
 
-    liste_tmp = malloc((fin1 - deb1 + 1) * sizeof(camion));
+    liste_tmp = calloc((fin1 - deb1 + 1), sizeof(camion));
 
     for (i = deb1; i <= fin1; i++)
     {
@@ -302,6 +302,7 @@ int faire_course(camion *c, char origine, char destination, int **graphe, int pl
 
     if (taille == 0)
     {
+        printf("Erreur probable dans l'initialisation des trajet, le trajet doit au moins contenir l'entrepot de départ\n");
         return -1;
     }
     else
@@ -343,9 +344,9 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
 
             if (distance_parcouru + graphe[pos_camion][origine] + graphe[origine][destination] + graphe[destination][a.id_entrepot - 'A'] <= DISTANCE_MAX)
             {
-                // Trajet à vide
+                // Trajet à vide, le camion quitte sa position pour aller vers l'origine de la requete
                 gain_total -= faire_course(a.liste_camion[i], a.liste_camion[i]->trajet[taille_trajet - 1], actuelle->origine, graphe, 0);
-                // Trajet plein
+                // Trajet plein le camion part de l'origine vers la destination de la requête
                 gain_total -= faire_course(a.liste_camion[i], actuelle->origine, actuelle->destination, graphe, 1);
                 gain_total += actuelle->gain;
                 break;
