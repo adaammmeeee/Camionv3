@@ -463,14 +463,6 @@ int insertion(int *indice_trajet, char *id_camion, entrepot a, requete r, int **
     return 0;
 }
 
-int recupere_par_id_entrepot(char id_entrepot, int nb_entrepot, entrepot *a)
-{
-    for (int i = 0; i < nb_entrepot; i++)
-        if (a[i].id_entrepot == id_entrepot)
-            return i;
-
-    return -1;
-}
 
 entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
 {
