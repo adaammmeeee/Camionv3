@@ -423,6 +423,18 @@ int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int 
         for (int j = 0; j < taille_trajet-1; j++)
         {
             char position = a.liste_camion[i]->trajet[j];
+            
+            
+            // Le sommet sur lequel le camion se situe est le départ d'un trajet vide
+            if (a.liste_camion[i]->charge[j] == '0')
+            {
+
+            }
+
+
+
+
+
             actuel_cout += calcul_cout_trajet(graphe[position-'A'][r.origine-'A']);
             actuel_cout += calcul_cout_trajet(graphe[r.origine- 'A'][r.destination- 'A']);
             actuel_cout += calcul_cout_trajet(graphe[r.destination- 'A'][position-'A']);
@@ -433,12 +445,14 @@ int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int 
                 position_insertion = j;
                 indice_camion = i;
             }
-            else
             actuel_cout = 0;
         }
     }
     if (meilleur_cout == MAX)
+    {
+        printf("Erreur, aucun cout pertinent n'a été trouvé\n");
         return -1;
+    }
    
     id_camion[0] = a.liste_camion[indice_camion]->id_camion;
     *indice_trajet = position_insertion;
