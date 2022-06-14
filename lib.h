@@ -23,8 +23,6 @@ typedef struct liste_requete
 
 typedef struct camion
 {
-    char id_entrepot;
-    char id_camion;
     int distance_parcouru;
     char *trajet;
     char *charge;
@@ -33,7 +31,7 @@ typedef struct camion
 
 typedef struct entrepot
 {
-    int id_entrepot;
+    char id_entrepot;
     int gain_total;
     int nb_requete;
     int nb_camion;

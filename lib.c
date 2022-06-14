@@ -86,13 +86,13 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
 
         for (int j = 0; j < a[i].nb_camion; j++)
         {
-            a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot;
+            //a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot; c'était pour debug
             a[i].liste_camion[j]->distance_parcouru = 0;
             a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(char));
             a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
             a[i].liste_camion[j]->trajet[1] = '\0';
             a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET-1 , sizeof(char));
-            a[i].liste_camion[j]->id_camion = j + '1';
+            //a[i].liste_camion[j]->id_camion = j + '1'; // pareil c'est pour debug
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
 
@@ -460,7 +460,7 @@ int insertion(int *indice_trajet, char *id_camion, entrepot a, requete r, int **
         printf("Erreur, aucun cout pertinent n'a été trouvé\n");
         return -1;
     }
-    id_camion[0] = a.liste_camion[indice_camion]->id_camion;
+    id_camion[0] = indice_camion + '0';
     *indice_trajet = position_insertion;
     return 0;
 }
