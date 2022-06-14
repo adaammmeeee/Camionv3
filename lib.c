@@ -175,6 +175,8 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
         comparateur->suiv->prec = nouv;
         comparateur->suiv = nouv;
     }
+    affichage_requete(LR);
+    printf("----------------------------------------------------\n");
 }
 
 void liberation(liste_requete *LR)
@@ -210,7 +212,7 @@ void affichage_requete(liste_requete *LR)
     requete *actuelle = LR->prem;
     while (actuelle)
     {
-        printf("origine : %c\ndestination : %c\ngains : %d\nperte : %d\n\n",
+        printf("origine : %c\ndestination : %c\ngains : %d\nperte : %d \n\n",
                actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
         actuelle = actuelle->suiv;
     }
