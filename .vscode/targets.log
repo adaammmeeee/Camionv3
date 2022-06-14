@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun 14 10:08:35 2022
+# Make data base, printed on Tue Jun 14 11:08:20 2022
 
 # Variables
 
@@ -183,7 +181,7 @@ SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-0c81c6f8-25e6-42dd-af64-8d35069792af.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-edca3935-15ec-4175-8bfa-179424cbbc6e.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -233,11 +231,11 @@ LC_ALL = C
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/525a330f_304f_4271_bd55_db2e10a754dd
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/4931a871_4f50_43f2_8696_95a6b00b7d58
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.112
+GNOME_TERMINAL_SERVICE = :1.524
 # default
 SUFFIXES := 
 # environment
@@ -255,7 +253,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 2590
+VSCODE_PID = 9638
 # environment
 DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=81a829106bf1782633ba12d462a84199
 # variable set hash-table stats:
@@ -267,9 +265,9 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=81a829106bf1782633ba12d
 
 # Directories
 
-# . (device 66309, inode 925697): 13 files, no impossibilities.
+# . (device 66309, inode 925697): 16 files, no impossibilities.
 
-# 13 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -313,7 +311,6 @@ debug: compil
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-06-07 16:01:24
 #  File has been updated.
 #  Successfully updated.
@@ -346,6 +343,9 @@ clean:
 #  recipe to execute (from 'makefile', line 17):
 	rm -f *.o main a.out
 
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 main.o: main.c lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -367,12 +367,12 @@ lib.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 205 B / avg = 8 B
-# current buf: size = 8162 B / used = 205 B / count = 24 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 25 / storage = 210 B / avg = 8 B
+# current buf: size = 8162 B / used = 210 B / count = 25 / avg = 8 B
 
-# strcache performance: lookups = 42 / hit rate = 42%
+# strcache performance: lookups = 45 / hit rate = 44%
 # hash-table stats:
-# Load=24/8192=0%, Rehash=0, Collisions=1/42=2%
-# Finished Make data base on Tue Jun 14 10:08:35 2022
+# Load=25/8192=0%, Rehash=0, Collisions=1/45=2%
+# Finished Make data base on Tue Jun 14 11:08:20 2022
 
  
