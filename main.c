@@ -45,7 +45,7 @@ int main()
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
 				int camion = -1;
 				int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
-				liste_vente[i] = copie_requete(a[i].LR->dern, cout_requete);
+				liste_vente[i] = copie_requete(*(a[i].LR->dern), cout_requete);
 				nb_requete_vente++;
 			}
 		}

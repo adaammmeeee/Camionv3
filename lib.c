@@ -400,16 +400,17 @@ entrepot retour_a_la_casa(entrepot a, int ** graphe)
 }
 
 
-requete copie_requete(requete * r, int prix_propose)
+requete copie_requete(requete r, int prix_propose)
 {
     requete nouv;
-    nouv.id_entrepot = r->id_entrepot;
-    nouv.origine = r->origine;
-    nouv.destination = r->destination;
-    nouv.gain = r->gain;
+    nouv.id_entrepot = r.id_entrepot;
+    nouv.origine = r.origine;
+    nouv.destination = r.destination;
+    nouv.gain = r.gain;
     nouv.prix_propose_vente = prix_propose;
-    nouv.perte = r->perte;
-    nouv.id_entrepot = r->id_entrepot;
+    nouv.perte = r.perte;
+    nouv.id_entrepot = r.id_entrepot;
+    
     return nouv;
 }
 

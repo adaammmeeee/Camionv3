@@ -105,7 +105,7 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, int **
 entrepot retour_a_la_casa(entrepot a, int ** graphe);
 
 // Renvoi une copie de *r avec le champ prix_propose_vente rempli
-requete copie_requete(requete * r, int prix_propose);
+requete copie_requete(requete r, int prix_propose);
 
 // Pour chaque trajet de chaque camion de l'entrepot A, on verifie à chaque escale si il est possible d'effectuer la requete r
 // Si oui, on simule la requete r et on renvoi le cout de la meilleure simulation.
