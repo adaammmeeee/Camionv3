@@ -16,11 +16,11 @@ int charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot)
 
 int **charge_graphe(char *nomfic, int nb_entrepots)
 {
-    int **graphe = malloc(nb_entrepots * sizeof(int *));
+    int **graphe = calloc(nb_entrepots,sizeof(int *));
 
     for (int i = 0; i < nb_entrepots; i++)
     {
-        graphe[i] = malloc(nb_entrepots * sizeof(int));
+        graphe[i] = calloc(nb_entrepots,sizeof(int));
     }
 
     FILE *f = fopen(nomfic, "r");
@@ -63,7 +63,7 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
     entrepot *a = NULL;
     FILE *f = fopen("gestionnaire", "r");
     fscanf(f, "\nnombre d'entrepot :%d", &nb_entrepot_buff);
-    a = malloc(sizeof(struct entrepot) * nb_entrepot_buff);
+    a = calloc(nb_entrepot_buff,sizeof(struct entrepot));
     if (!a)
         {
             printf("Problème d'allocation : fonction %s", __FUNCTION__);

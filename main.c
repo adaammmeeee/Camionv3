@@ -35,8 +35,9 @@ int main()
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
 		}
 	}
-	if (buffer[0] == 'y')
+	else if (buffer[0] == 'y')
 	{
+		printf("On va maintenant faire l'enchère\n");
 		int nb_requete_vente = 0;
 		for (int i = 0; i < nb_entrepots; i++)
 		{
@@ -49,18 +50,12 @@ int main()
 				nb_requete_vente++;
 			}
 		}
-
-		printf("On va maintenant faire l'enchère\n");
 		a = enchere_echange(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 	}
-
-	requete nouv;
-	nouv.origine = 'A';
-	nouv.destination = 'B';
-	nouv.prec = NULL;
-	nouv.suiv = NULL;
-	nouv.gain = 350;
-	nouv.perte = 600;
+	else
+	{
+		printf("Je ne comprend pas ce que tu me demandes, j'arrête\n");
+	}
 
 	for (int i = 0; i < nb_entrepots; i++)
 		a[i] = retour_a_la_casa(a[i], graphe);
@@ -90,10 +85,19 @@ int main()
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
 	}
-
+	//////////////////////// On test la fonction insertion
+	printf("\n\n\nTest insertion\n");
 	int indice_trajet;
 	char id_camion[2];
 	memset(id_camion, 0, 2);
+
+	requete nouv;
+	nouv.origine = 'A';
+	nouv.destination = 'B';
+	nouv.prec = NULL;
+	nouv.suiv = NULL;
+	nouv.gain = 350;
+	nouv.perte = 600;
 
 	insertion(&indice_trajet, id_camion, a[0], nouv, graphe);
 	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %s et elle serait incruster à l'étape %d \n", nouv.origine, nouv.destination, nouv.gain, id_camion, indice_trajet);
