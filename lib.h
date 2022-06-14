@@ -88,7 +88,10 @@ int calcul_cout_trajet(int d);
 // Renvoi le cout de cette course
 int faire_course(camion *c, char origine, char destination, int **graphe, int plein);
 
-// Baser sur un algo glouton : choisit un trajet pour chaque camion c, en essayant d'optimiser le gain total
+/* Baser sur un algo glouton : choisit un trajet pour chaque camion c, en essayant d'optimiser le gain total
+    l'algo glouton est le suivant :
+    Trie les requêtes par gain - cout du trajet croissant
+*/
 entrepot evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, int **graphe);
 
 int ** charge_graphe( char *nomfic, int nb_entrepots);
