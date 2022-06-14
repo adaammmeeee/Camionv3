@@ -465,14 +465,6 @@ int insertion(int *indice_trajet, char *id_camion, entrepot a, requete r, int **
     return 0;
 }
 
-int recupere_par_id_entrepot(char id_entrepot, int nb_entrepot, entrepot *a)
-{
-    for (int i = 0; i < nb_entrepot; i++)
-        if (a[i].id_entrepot == id_entrepot)
-            return i;
-
-    return -1;
-}
 
 entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
 {
@@ -480,7 +472,7 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
     for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
     {
         char entrepot_demande = rv[cpt_requete].id_entrepot;
-        int indice_e_demande = recupere_par_id_entrepot(entrepot_demande, nb_entrepot, a);
+        int indice_e_demande = entrepot_demande - 'A';
         int cpt_offre = 0;
 
         int indice_c_offre_min;
@@ -493,7 +485,7 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
             if (entrepot_demande != entrepot_offre)
             {
                 int camion_offre = -1;
-                int indice_e_offre = recupere_par_id_entrepot(entrepot_offre, nb_entrepot, a);
+                int indice_e_offre = entrepot_offre - 'A';
                 int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
                 if (cout_requete < cout_requete_min)
                 {
@@ -514,7 +506,7 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
         else
         {
             int camion_demande = -1;
-            int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_demande], &camion_demande, graphe);
+            cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_demande], &camion_demande, graphe);
             int indice_c_demande = camion_demande;
             a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], rv[cpt_requete].origine, rv[cpt_requete].destination, graphe, 1);
         }
