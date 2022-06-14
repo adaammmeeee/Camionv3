@@ -6,22 +6,22 @@ nombre de requete : 4
 
 origine : A
 destination : C
-gains : 300
+gains : 900
 perte : 200
 
 origine : A
 destination : D
-gains : 400
+gains : 1200
 perte : 200
 
 origine : D
 destination : B
-gains : 500
+gains : 1500
 perte : 200
 
 origine : A
 destination : E
-gains : 600
+gains : 1800
 perte : 200
 
 entrepot : B
@@ -30,22 +30,22 @@ nombre de requete : 4
 
 origine : B
 destination : C
-gains : 300
+gains : 900
 perte : 200
 
 origine : B
 destination : D
-gains : 400
+gains : 1200
 perte : 200
 
 origine : B
 destination : A
-gains : 500
+gains : 1500
 perte : 200
 
 origine : B
 destination : E
-gains : 600
+gains : 1800
 perte : 200
 
 

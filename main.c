@@ -19,31 +19,40 @@ int main()
 	requete liste_vente[nb_entrepots];
 
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
-	int nb_requete_vente = 0;
-	for (int i = 0; i < nb_entrepots; i++)
-	{
-		if (a[i].nb_requete)
-		{
-			a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
-			int camion = -1;
-			int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
-			liste_vente[i] = copie_requete(a[i].LR->dern, cout_requete);
-			nb_requete_vente++;
-		}
-	}
+
 	char buffer[2];
 	printf("Souhaitez vous utilisé l'enchère ? (y/n)\n");
 	fflush(stdout);
 	scanf("%[^\n]", buffer);
 	fgetc(stdin);
+
+	if (buffer[0] == 'n')
+	{
+		printf("On procède sans enchères\n");
+		for (int i = 0; i < nb_entrepots; i++)
+		{
+			if (a[i].nb_requete)
+				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
+		}
+	}
 	if (buffer[0] == 'y')
 	{
+		int nb_requete_vente = 0;
+		for (int i = 0; i < nb_entrepots; i++)
+		{
+			if (a[i].nb_requete)
+			{
+				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
+				int camion = -1;
+				int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
+				liste_vente[i] = copie_requete(a[i].LR->dern, cout_requete);
+				nb_requete_vente++;
+			}
+		}
+
 		printf("On va maintenant faire l'enchère\n");
 		a = enchere_echange(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 	}
-	else
-		printf("On va maintenant faire la simulation sans enchère\n");
-	
 
 	requete nouv;
 	nouv.origine = 'A';

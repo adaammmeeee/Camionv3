@@ -142,7 +142,7 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
     requete *comparateur = LR->dern;
     int test = 0;
     // C'est ici qu'on parcourt notre liste chainée pour insérer notre nouvelle requete conformément au tri
-    while (nouv->gain - graphe[nouv->origine - 'A'][nouv->destination - 'A'] > comparateur->gain - graphe[comparateur->origine - 'A'][comparateur->destination - 'A'])
+    while (graphe[nouv->origine - 'A'][nouv->destination - 'A'] > graphe[comparateur->origine - 'A'][comparateur->destination - 'A'])
     {
         if (comparateur->prec)
         {

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun 14 11:08:20 2022
+# Make data base, printed on Tue Jun 14 13:22:23 2022
 
 # Variables
 
@@ -181,7 +181,7 @@ SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-edca3935-15ec-4175-8bfa-179424cbbc6e.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-670af839-88f4-44a0-ae13-5572ad561e48.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -231,11 +231,11 @@ LC_ALL = C
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/4931a871_4f50_43f2_8696_95a6b00b7d58
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/71395001_30ec_495b_ae81_a7a33976340a
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.524
+GNOME_TERMINAL_SERVICE = :1.1103
 # default
 SUFFIXES := 
 # environment
@@ -253,7 +253,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 9638
+VSCODE_PID = 19276
 # environment
 DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=81a829106bf1782633ba12d462a84199
 # variable set hash-table stats:
@@ -311,6 +311,9 @@ debug: compil
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 #  Last modified 2022-06-07 16:01:24
 #  File has been updated.
 #  Successfully updated.
@@ -343,9 +346,6 @@ clean:
 #  recipe to execute (from 'makefile', line 17):
 	rm -f *.o main a.out
 
- 
-make: *** No rule to make target 'all'.  Stop.
-
 main.o: main.c lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -373,6 +373,6 @@ lib.c:
 # strcache performance: lookups = 45 / hit rate = 44%
 # hash-table stats:
 # Load=25/8192=0%, Rehash=0, Collisions=1/45=2%
-# Finished Make data base on Tue Jun 14 11:08:20 2022
+# Finished Make data base on Tue Jun 14 13:22:23 2022
 
  
