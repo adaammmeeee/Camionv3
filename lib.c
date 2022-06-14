@@ -324,14 +324,17 @@ int faire_course(camion *c, char origine, char destination, int **graphe, int pl
 
 entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_requete, int **graphe)
 {
+    // Gestion d'erreur
     entrepot err;
     err.gain_total = -1;
-    if (!LR)
+
+    if (!LR || nb_requete == 0)
     {
         printf("Aucune requête a evalué, error in %s\n", __FUNCTION__) ;
         return err;
     }
-       
+    
+    // Debut du glouton miam
     int gain_total = 0;
     requete *actuelle = LR->prem;
     while (actuelle && nb_requete)
@@ -361,6 +364,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     if (nb_requete != 0 && actuelle == NULL)
     {
         printf("Attention la liste de requete contient moins de requete que le nombre indiqué en argument\n");
+        return err;
     }
     a.gain_total = gain_total;
     return a;
