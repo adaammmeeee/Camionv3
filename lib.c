@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "lib.h"
 
-void charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot)
+int charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot)
 {
     char origine, destination;
     int gain, perte;
@@ -11,7 +11,7 @@ void charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot)
     fscanf(f, "\ndestination : %c", &destination);
     fscanf(f, "\ngains : %d", &gain);
     fscanf(f, "\nperte : %d", &perte);
-    ajout_requete(LR, origine, destination, gain, perte, graphe, id_entrepot);
+    return ajout_requete(LR, origine, destination, gain, perte, graphe, id_entrepot);
 }
 
 int **charge_graphe(char *nomfic, int nb_entrepots)
@@ -24,29 +24,24 @@ int **charge_graphe(char *nomfic, int nb_entrepots)
     }
 
     FILE *f = fopen(nomfic, "r");
-    int cpt = 0;
     char nombre[10];
-    memset(nombre, 0, 10);
 
     for (int i = 0; i < nb_entrepots; i++)
     {
         for (int j = 0; j < nb_entrepots; j++)
         {
-            nombre[0] = fgetc(f);
-            while (1)
+            int cpt = 0;
+            char car = fgetc(f);
+            while (!(car == '\n' || car == ','))
             {
-                if (nombre[cpt] == '\n' || nombre[cpt] == ',')
                 {
-                    nombre[cpt] = '\0';
-                    break;
-                }
+                nombre[cpt] = car;
+                car = fgetc(f);
                 cpt++;
-                nombre[cpt] = fgetc(f);
             }
+            nombre[cpt] = '\0';
 
             graphe[i][j] = atoi(nombre);
-            memset(nombre, 0, 10);
-            cpt = 0;
         }
     }
 
@@ -70,30 +65,34 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
     FILE *f = fopen("gestionnaire", "r");
     fscanf(f, "\nnombre d'entrepot :%d", &nb_entrepot_buff);
     a = malloc(sizeof(struct entrepot) * nb_entrepot_buff);
+    if (!a)
+        {
+            printf("Problème d'allocation : fonction %s", __FUNCTION__);
+            return NULL;
+        }
 
     for (int i = 0; i < nb_entrepot_buff; i++)
     {
-        char c = 'a';
-        fscanf(f, "\nentrepot : %c", &c);
+        char buf = 'a';
+        fscanf(f, "\nentrepot : %c", &buf);
         fscanf(f, "\nnombre de camion :%d\n", &a[i].nb_camion);
-        a[i].id_entrepot = c;
+        a[i].id_entrepot = buf;
         a[i].gain_total = 0;
 
         a[i].liste_camion = malloc(a[i].nb_camion * sizeof(camion *));
         for (int j = 0; j < a[i].nb_camion; j++)
         {
-            a[i].liste_camion[j] = malloc(sizeof(camion) * 64);
+            a[i].liste_camion[j] = malloc(sizeof(camion) * NB_MAX_CAMION);
         }
 
         for (int j = 0; j < a[i].nb_camion; j++)
         {
             a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot;
             a[i].liste_camion[j]->distance_parcouru = 0;
-            a[i].liste_camion[j]->trajet = malloc(sizeof(char) * 64);
+            a[i].liste_camion[j]->trajet = malloc(sizeof(char) * TAILLE_MAX_TRAJET);
             a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
             a[i].liste_camion[j]->trajet[1] = '\0';
-            a[i].liste_camion[j]->charge = malloc(sizeof(char) * 64);
-            memset(a[i].liste_camion[j]->charge, 0, 64);
+            a[i].liste_camion[j]->charge = malloc(sizeof(char) * TAILLE_MAX_TRAJET-1);
             a[i].liste_camion[j]->id_camion = j + '1';
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
@@ -116,11 +115,15 @@ void init_liste_requete(liste_requete *LR)
     LR->prem = NULL;
 }
 
-void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int **graphe, char id_entrepot)
+int ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int **graphe, char id_entrepot)
 {
     requete *nouv = malloc(sizeof(requete));
     if (!nouv)
-        exit(EXIT_FAILURE);
+    {
+        printf("Erreur dans l'allocation : fonction %s\n", __FUNCTION__);
+        return 1;
+    }
+       
 
     nouv->destination = destination;
     nouv->gain = gain;
@@ -136,7 +139,7 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
     {
         LR->prem = nouv;
         LR->dern = nouv;
-        return;
+        return 0;
     }
 
     requete *comparateur = LR->dern;
@@ -176,6 +179,8 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
         comparateur->suiv->prec = nouv;
         comparateur->suiv = nouv;
     }
+
+    return 0;
 }
 
 void liberation(liste_requete *LR)
@@ -225,18 +230,6 @@ void affichage_entrepot(entrepot a)
         printf("\nid_camion : %d\ndistance_parcouru : %d\nTrajet effectué :%s\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
     }
     affichage_requete(a.LR);
-}
-
-int gain_theorique(entrepot a)
-{
-    int gain = 0;
-    requete *actuelle = a.LR->prem;
-    while (actuelle)
-    {
-        gain += actuelle->gain;
-        actuelle = actuelle->suiv;
-    }
-    return gain;
 }
 
 int calcul_cout_trajet(int d)
@@ -361,6 +354,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
         actuelle = actuelle->suiv;
         nb_requete--;
     }
+
     if (nb_requete != 0 && actuelle == NULL)
     {
         printf("Attention la liste de requete contient moins de requete que le nombre indiqué en argument\n");

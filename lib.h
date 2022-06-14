@@ -1,6 +1,7 @@
 #define DISTANCE_MAX 2300
 #define MAX 0x7fffffff                  // Valeur maximale pour une variable de type int
-
+#define NB_MAX_CAMION 64
+#define TAILLE_MAX_TRAJET 64
 
 typedef struct requete
 {
@@ -51,7 +52,7 @@ typedef struct enchere
 Initialise à partir du fichier f une requete qui est ajoutée dans la liste chainée LR 
 La requête n'est pas ajouté à la fin mais dans l'ordre croissant : gain_requete  - cout_trajet_requete
 */
-void charge_requete(FILE *f, liste_requete *LR, int ** graphe, char id_entrepot);
+int charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot);
 
 /*
 Renvoi un tableau d'entrepot à partir du fichier nomfic
@@ -66,7 +67,7 @@ void init_liste_requete(liste_requete *LR);
 /*
 Ajoute une requete à LR toujours dans l'ordre croissant : gain_requete - cout_trajet_requete
 */
-void ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int ** graphe, char id_entrepot);
+int ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int **graphe, char id_entrepot);
 
 /*
 Libère LR
