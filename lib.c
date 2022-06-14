@@ -141,6 +141,7 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
 
     requete *comparateur = LR->dern;
     int test = 0;
+    // C'est ici qu'on parcourt notre liste chainée pour insérer notre nouvelle requete conformément au tri
     while (nouv->gain - graphe[nouv->origine - 'A'][nouv->destination - 'A'] > comparateur->gain - graphe[comparateur->origine - 'A'][comparateur->destination - 'A'])
     {
         if (comparateur->prec)
@@ -386,15 +387,16 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, int **
 }
 
 
-void retour_a_la_casa(entrepot a, int ** graphe)
+entrepot retour_a_la_casa(entrepot a, int ** graphe)
 {
     int taille = 0;
     for (int i = 0; i < a.nb_camion; i++)
     {
         taille = strlen(a.liste_camion[i]->trajet);
         char origine = a.liste_camion[i]->trajet[taille-1];
-        faire_course(a.liste_camion[i],origine,a.id_entrepot,graphe,0);
+        a.gain_total -= faire_course(a.liste_camion[i],origine,a.id_entrepot,graphe,0);
     }
+    return a;
 }
 
 
@@ -461,15 +463,6 @@ int insertion(int *indice_trajet, char *id_camion, entrepot a, requete r, int **
     return 0;
 }
 
-int recupere_par_id_entrepot(char id_entrepot, int nb_entrepot, entrepot *a)
-{
-    for(int i = 0; i < nb_entrepot; i++)
-        if(a[i].id_entrepot == id_entrepot)
-            return i;
-
-    return -1;
-}
-
 
 entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
 {
@@ -477,7 +470,7 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
     for(int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
     {
         char entrepot_demande = rv[cpt_requete].id_entrepot;
-        int indice_e_demande = recupere_par_id_entrepot(entrepot_demande,nb_entrepot,a);
+        int indice_e_demande = entrepot_demande - 'A';
         int cpt_offre = 0;
 
         int indice_c_offre_min;
@@ -490,9 +483,9 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
             if(entrepot_demande != entrepot_offre)
             {
                 int camion_offre = -1;
-                int indice_e_offre = recupere_par_id_entrepot(entrepot_offre,nb_entrepot,a);
+                int indice_e_offre = entrepot_offre - 'A';
                 int cout_requete = cout_requete_fin_trajet(rv[cpt_requete],a[indice_e_offre],&camion_offre,graphe);
-                if(cout_requete < cout_requete_min)
+                if(cout_requete && cout_requete < cout_requete_min)
                 {
                     cout_requete_min = cout_requete;
                     indice_e_offre_min = indice_e_offre;
@@ -504,6 +497,10 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
 
         if(cpt_offre)
         {
+            int taille_trajet = strlen(a[indice_e_offre_min].liste_camion[indice_c_offre_min]->trajet);
+            char pos_camion = a[indice_e_offre_min].liste_camion[indice_c_offre_min]->trajet[taille_trajet - 1];
+            
+            a[indice_e_offre_min].gain_total -= faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min],pos_camion,rv[cpt_requete].origine,graphe,0);
             a[indice_e_offre_min].gain_total -= faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min],rv[cpt_requete].origine,rv[cpt_requete].destination,graphe,1);
             a[indice_e_offre_min].gain_total += cout_requete_min + 1;
             a[indice_e_demande].gain_total -= cout_requete_min + 1;
@@ -511,8 +508,12 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
         else
         {
             int camion_demande = -1;
-            int cout_requete = cout_requete_fin_trajet(rv[cpt_requete],a[indice_e_demande],&camion_demande,graphe);
+            cout_requete_fin_trajet(rv[cpt_requete],a[indice_e_demande],&camion_demande,graphe);
             int indice_c_demande = camion_demande;
+            int taille_trajet = strlen(a[indice_e_demande].liste_camion[indice_c_demande]->trajet);
+            char pos_camion = a[indice_e_demande].liste_camion[indice_c_demande]->trajet[taille_trajet - 1];
+            
+            a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande],pos_camion,rv[cpt_requete].origine,graphe,0);
             a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande],rv[cpt_requete].origine,rv[cpt_requete].destination,graphe,1);
         }
         a[indice_e_demande].gain_total += rv[cpt_requete].gain;
