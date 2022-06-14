@@ -411,7 +411,7 @@ requete copie_requete(requete * r, int prix_propose)
     return nouv;
 }
 
-int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int **graphe)
+int insertion(int *indice_trajet, char *id_camion, entrepot a, requete r, int **graphe)
 {
     int meilleur_cout = MAX;
     int actuel_cout = 0;
@@ -420,12 +420,27 @@ int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int 
     for (int i = 0; i < a.nb_camion; i++)
     {
         int taille_trajet = strlen(a.liste_camion[i]->trajet);
-        for (int j = 0; j < taille_trajet-1; j++)
+        for (int j = 0; j < taille_trajet - 1; j++)
         {
-            char position = a.liste_camion[i]->trajet[j];
-            actuel_cout += calcul_cout_trajet(graphe[position-'A'][r.origine-'A']);
-            actuel_cout += calcul_cout_trajet(graphe[r.origine- 'A'][r.destination- 'A']);
-            actuel_cout += calcul_cout_trajet(graphe[r.destination- 'A'][position-'A']);
+            char position_initiale = a.liste_camion[i]->trajet[j];
+            char position_suivante = a.liste_camion[i]->trajet[j + 1];
+            // On part de notre sommet, et on va effectuer la requête que l'on souhaite intégrer
+            actuel_cout += calcul_cout_trajet(graphe[position_initiale - 'A'][r.origine - 'A']);
+            actuel_cout += calcul_cout_trajet(graphe[r.origine - 'A'][r.destination - 'A']);
+            /* Maintenant on souhaite faire revenir notre camion dans le trajet normal
+             Soit on le fait revenir sur le sommet initial d'où il est parti
+             Soit on le fait revenir sur le sommet suivant lequel il est parti, 
+             dans ce cas la le trajet entre l'initial et le suivant doit être fait à vide 
+             Pour ne pas rater de requête.
+            */
+            if (a.liste_camion[i]->charge[j] == '0') // Sommet initial -> Sommet suivant fait à vide
+            {
+                actuel_cout += calcul_cout_trajet(graphe[r.destination - 'A'][position_suivante - 'A']);
+            }
+            else // Sommet initial -> Sommet suivant fait à plein
+            {
+                actuel_cout += calcul_cout_trajet(graphe[r.destination - 'A'][position_insertion - 'A']);
+            }
             // Actuel cout = cout de la deviation, c'est la valeur qu'on cherche à minimiser
             if (actuel_cout < meilleur_cout)
             {
@@ -433,18 +448,17 @@ int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int 
                 position_insertion = j;
                 indice_camion = i;
             }
-            else
             actuel_cout = 0;
         }
     }
     if (meilleur_cout == MAX)
+    {
+        printf("Erreur, aucun cout pertinent n'a été trouvé\n");
         return -1;
-   
+    }
     id_camion[0] = a.liste_camion[indice_camion]->id_camion;
     *indice_trajet = position_insertion;
-    return  0;
-    
-
+    return 0;
 }
 
 int recupere_par_id_entrepot(char id_entrepot, int nb_entrepot, entrepot *a)
