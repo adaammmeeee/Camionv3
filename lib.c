@@ -141,7 +141,7 @@ void ajout_requete(liste_requete *LR, char origine, char destination, int gain, 
 
     requete *comparateur = LR->dern;
     int test = 0;
-    while (nouv->gain - graphe[nouv->origine - 'A'][nouv->destination - 'A'] < comparateur->gain - graphe[comparateur->origine - 'A'][comparateur->destination - 'A'])
+    while (nouv->gain - calcul_cout_trajet(graphe[nouv->origine - 'A'][nouv->destination - 'A']) > comparateur->gain - calcul_cout_trajet(graphe[comparateur->origine - 'A'][comparateur->destination - 'A']))
     {
         if (comparateur->prec)
         {
