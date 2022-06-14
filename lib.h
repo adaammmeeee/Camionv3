@@ -98,7 +98,7 @@ int ** charge_graphe( char *nomfic, int nb_entrepots);
 // Renvoi le nombre d'entrepot total
 int charge_nombre_entrepots(char * nomfic);
 
-// todo
+// commentaire à faire
 int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, int **graphe);
 
 // Tous les camions de l'entrepot a retourne à leurs positions initiales (l'id de l'entrepot a)
@@ -113,5 +113,5 @@ requete copie_requete(requete r, int prix_propose);
 // id_camion est l'id du camion qui effectuera potentiellement la nouvelle insertion
 int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int **graphe);
 
-// todo
+// commentaire à faire
 entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe);
