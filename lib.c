@@ -16,11 +16,11 @@ int charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot)
 
 int **charge_graphe(char *nomfic, int nb_entrepots)
 {
-    int **graphe = calloc(nb_entrepots,sizeof(int *));
+    int **graphe = calloc(nb_entrepots, sizeof(int *));
 
     for (int i = 0; i < nb_entrepots; i++)
     {
-        graphe[i] = calloc(nb_entrepots,sizeof(int));
+        graphe[i] = calloc(nb_entrepots, sizeof(int));
     }
 
     FILE *f = fopen(nomfic, "r");
@@ -63,12 +63,12 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
     entrepot *a = NULL;
     FILE *f = fopen("gestionnaire", "r");
     fscanf(f, "\nnombre d'entrepot :%d", &nb_entrepot_buff);
-    a = calloc(nb_entrepot_buff,sizeof(struct entrepot));
+    a = calloc(nb_entrepot_buff, sizeof(struct entrepot));
     if (!a)
-        {
-            printf("Problème d'allocation : fonction %s", __FUNCTION__);
-            return NULL;
-        }
+    {
+        printf("Problème d'allocation : fonction %s", __FUNCTION__);
+        return NULL;
+    }
 
     for (int i = 0; i < nb_entrepot_buff; i++)
     {
@@ -78,7 +78,7 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
         a[i].id_entrepot = buf;
         a[i].gain_total = 0;
 
-        a[i].liste_camion = calloc(a[i].nb_camion,sizeof(camion *));
+        a[i].liste_camion = calloc(a[i].nb_camion, sizeof(camion *));
         for (int j = 0; j < a[i].nb_camion; j++)
         {
             a[i].liste_camion[j] = calloc(NB_MAX_CAMION, sizeof(camion));
@@ -86,13 +86,13 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
 
         for (int j = 0; j < a[i].nb_camion; j++)
         {
-            //a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot; c'était pour debug
+            // a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot; c'était pour debug
             a[i].liste_camion[j]->distance_parcouru = 0;
             a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(char));
             a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
             a[i].liste_camion[j]->trajet[1] = '\0';
-            a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET-1 , sizeof(char));
-            //a[i].liste_camion[j]->id_camion = j + '1'; // pareil c'est pour debug
+            a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(char));
+            // a[i].liste_camion[j]->id_camion = j + '1'; // pareil c'est pour debug
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
 
@@ -116,13 +116,12 @@ void init_liste_requete(liste_requete *LR)
 
 int ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int **graphe, char id_entrepot)
 {
-    requete *nouv = calloc(1,sizeof(requete));
+    requete *nouv = calloc(1, sizeof(requete));
     if (!nouv)
     {
         printf("Erreur dans l'allocation : fonction %s\n", __FUNCTION__);
         return 1;
     }
-       
 
     nouv->destination = destination;
     nouv->gain = gain;
@@ -236,7 +235,7 @@ int calcul_cout_trajet(int d)
     return d ? (0.8 * d + 20) : (0);
 }
 
-// Renvoi la distance entre un camion cam et un sommet du graphe (originie_requete) 
+// Renvoi la distance entre un camion cam et un sommet du graphe (originie_requete)
 int proximite(int **graphe, camion cam, char origine_requete)
 {
     int taille_trajet = strlen(cam.trajet);
@@ -324,10 +323,10 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
 
     if (!LR || nb_requete == 0)
     {
-        printf("Aucune requête a evalué, error in %s\n", __FUNCTION__) ;
+        printf("Aucune requête a evalué, error in %s\n", __FUNCTION__);
         return err;
     }
-    
+
     // Debut du glouton miam
     int gain_total = 0;
     requete *actuelle = LR->prem;
@@ -415,54 +414,69 @@ requete copie_requete(requete r, int prix_propose)
     return nouv;
 }
 
-int insertion(int *indice_trajet, char *id_camion, entrepot a, requete r, int **graphe)
+int insertion(int *id_camion, char *new_trajet, entrepot a, requete r, int **graphe)
 {
     int meilleur_cout = MAX;
     int actuel_cout = 0;
     int position_insertion = 0;
     int indice_camion = 0;
+    char *trajet_a_inserer = calloc(8, sizeof(char)); // la deviation du camion
+    trajet_a_inserer[0] = r.origine;
+    trajet_a_inserer[1] = r.destination;
+    int bool = 0;
     for (int i = 0; i < a.nb_camion; i++)
     {
         int taille_trajet = strlen(a.liste_camion[i]->trajet);
         for (int j = 0; j < taille_trajet - 1; j++)
         {
+            actuel_cout = 0;
+            bool = 0;
             char position_initiale = a.liste_camion[i]->trajet[j];
             char position_suivante = a.liste_camion[i]->trajet[j + 1];
-            // On part de notre sommet, et on va effectuer la requête que l'on souhaite intégrer
+            // On part de notre sommet initial (j), et on va effectuer la requête que l'on souhaite intégrer
             actuel_cout += calcul_cout_trajet(graphe[position_initiale - 'A'][r.origine - 'A']);
             actuel_cout += calcul_cout_trajet(graphe[r.origine - 'A'][r.destination - 'A']);
             /* Maintenant on souhaite faire revenir notre camion dans le trajet normal
              Soit on le fait revenir sur le sommet initial d'où il est parti
              Soit on le fait revenir sur le sommet suivant lequel il est parti,
-             dans ce cas la le trajet entre l'initial et le suivant doit être fait à vide
+             dans ce cas la le trajet entre j et le suivant doit être fait à vide
              Pour ne pas rater de requête.
             */
             if (a.liste_camion[i]->charge[j] == '0') // Sommet initial -> Sommet suivant fait à vide
             {
                 actuel_cout += calcul_cout_trajet(graphe[r.destination - 'A'][position_suivante - 'A']);
+                
+                // On soustrait le trajet fait à vide puisqu'on ne le fait plus
+                actuel_cout -= calcul_cout_trajet(graphe[position_initiale - 'A'][position_suivante - 'A']);
+                bool = 1;
             }
             else // Sommet initial -> Sommet suivant fait à plein
             {
-                actuel_cout += calcul_cout_trajet(graphe[r.destination - 'A'][position_insertion - 'A']);
+                // On revient simplement sur le sommet initial
+                actuel_cout += calcul_cout_trajet(graphe[r.destination - 'A'][position_initiale - 'A']);
             }
             // Actuel cout = cout de la deviation, c'est la valeur qu'on cherche à minimiser
             if (actuel_cout < meilleur_cout)
             {
+                memset(new_trajet, 0, TAILLE_MAX_TRAJET);
                 meilleur_cout = actuel_cout;
                 position_insertion = j;
+                strncpy(new_trajet, a.liste_camion[i]->trajet, position_insertion);
+                strcat(new_trajet, trajet_a_inserer);
+                strcat(new_trajet, a.liste_camion[i]->trajet + position_insertion + bool);
                 indice_camion = i;
             }
-            actuel_cout = 0;
         }
     }
     if (meilleur_cout == MAX)
     {
+        free(trajet_a_inserer);
         printf("Erreur, aucun cout pertinent n'a été trouvé\n");
         return -1;
     }
-    id_camion[0] = indice_camion + '0';
-    *indice_trajet = position_insertion;
-    return 0;
+    free(trajet_a_inserer);
+    *id_camion = indice_camion;
+    return actuel_cout;
 }
 
 entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)

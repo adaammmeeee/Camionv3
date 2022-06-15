@@ -110,7 +110,7 @@ requete copie_requete(requete r, int prix_propose);
 // Si oui, on simule la requete r et on renvoi le cout de la meilleure simulation.
 // Indice trajet indique l'etape à laquelle on à simuler la meilleure insertion
 // id_camion est l'id du camion qui effectuera potentiellement la nouvelle insertion
-int insertion(int * indice_trajet, char * id_camion, entrepot a, requete r, int **graphe);
+int insertion(int *id_camion, char * new_trajet, entrepot a, requete r, int **graphe);
 
 // commentaire à faire
 entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe);

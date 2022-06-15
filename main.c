@@ -87,9 +87,8 @@ int main()
 	}
 	//////////////////////// On test la fonction insertion
 	printf("\n\n\nTest insertion\n");
-	int indice_trajet;
-	char id_camion[2];
-	memset(id_camion, 0, 2);
+	int id_camion = 0;
+	char *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(char));
 
 	requete nouv;
 	nouv.origine = 'A';
@@ -98,9 +97,13 @@ int main()
 	nouv.suiv = NULL;
 	nouv.gain = 350;
 	nouv.perte = 600;
+	int cout = 0;
 
-	insertion(&indice_trajet, id_camion, a[0], nouv, graphe);
-	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %s et elle serait incrusté à l'étape %d \n", nouv.origine, nouv.destination, nouv.gain, id_camion, indice_trajet);
+	cout = insertion(&id_camion, new_trajet, a[0], nouv, graphe);
+	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %d et son nouveau trajet serait : %s\nCela nous rapportera : %d\n",
+		   nouv.origine, nouv.destination, nouv.gain, id_camion, new_trajet, nouv.gain - cout);
+
+	free(new_trajet);
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
