@@ -91,8 +91,8 @@ int main()
 	char *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(char));
 
 	requete nouv;
-	nouv.origine = 'A';
-	nouv.destination = 'B';
+	nouv.origine = 'B';
+	nouv.destination = 'A';
 	nouv.prec = NULL;
 	nouv.suiv = NULL;
 	nouv.gain = 350;
