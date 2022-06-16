@@ -4,7 +4,7 @@
 #include "structures.h"
 #include "enchere.h"
 
-requete copie_requete(requete r, int prix_propose)
+requete copie_requete(requete r, float prix_propose)
 {
     requete nouv;
     nouv.id_entrepot = r.id_entrepot;
@@ -29,7 +29,7 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
 
         int indice_c_offre_min;
         int indice_e_offre_min;
-        int cout_requete_min = rv[cpt_requete].prix_propose_vente;
+        float cout_requete_min = rv[cpt_requete].prix_propose_vente;
 
         for (int cpt_entrepot = 0; cpt_entrepot < nb_entrepot; cpt_entrepot++)
         {
@@ -38,7 +38,13 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
             {
                 int camion_offre = -1;
                 int indice_e_offre = entrepot_offre - 'A';
-                int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
+                float cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
+                if(camion_offre == -1)
+                {
+                    printf("ERREUR : lors du choix du camion faisant le trajet\n");
+                    return NULL;
+                }
+
                 if (cout_requete && cout_requete < cout_requete_min)
                 {
                     cout_requete_min = cout_requete;
@@ -63,6 +69,12 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
         {
             int camion_demande = -1;
             cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_demande], &camion_demande, graphe);
+            if(camion_demande == -1)
+            {
+                printf("ERREUR : lors du choix du camion faisant le trajet\n");
+                return NULL;
+            }
+            
             int indice_c_demande = camion_demande;
             int taille_trajet = strlen(a[indice_e_demande].liste_camion[indice_c_demande]->trajet);
             char pos_camion = a[indice_e_demande].liste_camion[indice_c_demande]->trajet[taille_trajet - 1];
