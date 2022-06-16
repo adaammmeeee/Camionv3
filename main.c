@@ -70,8 +70,6 @@ int main()
 	scanf("%[^\n]", buffer);
 	fgetc(stdin);
 
-	printf("ICIIIIIIIIIIIIIIIIII");
-	affichage_entrepot(a[0]);
 	if (buffer[0] == 'n')
 	{
 		printf("On procède sans enchères\n");
