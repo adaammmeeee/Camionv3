@@ -23,8 +23,7 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
 
     for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
     {
-        char entrepot_demande = rv[cpt_requete].id_entrepot;
-        int indice_e_demande = entrepot_demande - 'A';
+        int indice_e_demande = rv[cpt_requete].id_entrepot;
         int cpt_offre = 0;
 
         int indice_c_offre_min;
@@ -33,11 +32,10 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
 
         for (int cpt_entrepot = 0; cpt_entrepot < nb_entrepot; cpt_entrepot++)
         {
-            char entrepot_offre = a[cpt_entrepot].id_entrepot;
-            if (entrepot_demande != entrepot_offre)
+            int indice_e_offre = a[cpt_entrepot].id_entrepot;
+            if (indice_e_demande != indice_e_offre)
             {
                 int camion_offre = -1;
-                int indice_e_offre = entrepot_offre - 'A';
                 float cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
                 if(camion_offre == -1)
                 {
