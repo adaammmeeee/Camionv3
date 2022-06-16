@@ -28,7 +28,7 @@ void affichage_entrepot(entrepot a)
 }
 
 // Tous les camions de l'entrepot a retourne à leurs positions initiales (l'id de l'entrepot a)
-entrepot retour_a_la_casa(entrepot a, int **graphe)
+entrepot retour_a_la_casa(entrepot a, float **graphe)
 {
     int taille = 0;
     for (int i = 0; i < a.nb_camion; i++)
@@ -98,7 +98,7 @@ int main()
 		a[i] = retour_a_la_casa(a[i], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
-		printf("rentabilité de l'acteur %c : %d\n", a[i].id_entrepot, a[i].gain_total);
+		printf("rentabilité de l'acteur %c : %f\n", a[i].id_entrepot, a[i].gain_total);
 
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");
 	fflush(stdout);

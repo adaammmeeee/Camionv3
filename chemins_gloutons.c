@@ -27,7 +27,7 @@ float faire_course(camion *c, char origine, char destination, float **graphe, in
 }
 
 // Renvoi la distance entre un camion cam et un sommet du graphe (originie_requete)
-float proximite(int **graphe, camion cam, char origine_requete)
+float proximite(float **graphe, camion cam, char origine_requete)
 {
     int taille_trajet = strlen(cam.trajet);
     char pos_camion = cam.trajet[taille_trajet - 1];
@@ -35,7 +35,7 @@ float proximite(int **graphe, camion cam, char origine_requete)
     return graphe[pos_camion - 'A'][origine_requete - 'A'];
 }
 
-void fusion(int **graphe, char origine_requete, camion **liste_camion, int deb1, int fin1, int fin2)
+void fusion(float **graphe, char origine_requete, camion **liste_camion, int deb1, int fin1, int fin2)
 {
     camion *liste_tmp;
     int deb2 = fin1 + 1;
@@ -73,7 +73,7 @@ void fusion(int **graphe, char origine_requete, camion **liste_camion, int deb1,
     free(liste_tmp);
 }
 
-void tri_fusion_camion_proximite(int **graphe, char origine_requete, camion **liste_camion, int deb, int fin)
+void tri_fusion_camion_proximite(float **graphe, char origine_requete, camion **liste_camion, int deb, int fin)
 {
     if (deb < fin)
     {
@@ -158,7 +158,7 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, float 
 }
 
 // Algo amélioré
-int insertion(int *id_camion, char *new_trajet, entrepot a, requete r, int **graphe)
+float insertion(int *id_camion, char *new_trajet, entrepot a, requete r, float **graphe)
 {
     float meilleur_cout = MAX;
     float actuel_cout = 0;
@@ -228,6 +228,6 @@ int insertion(int *id_camion, char *new_trajet, entrepot a, requete r, int **gra
     free(trajet_a_inserer);
     *id_camion = indice_camion;
     printf("J'ai incrusté sur le sommet %d\n", position_insertion);
-    printf("Cela m'a couté s: %d\n", meilleur_cout);
+    printf("Cela m'a couté s: %f\n", meilleur_cout);
     return meilleur_cout;
 }
