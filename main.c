@@ -141,8 +141,8 @@ int main()
 	int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
 
 	requete nouv;
-	nouv.origine = 2;
-	nouv.destination = 1;
+	nouv.origine = a[0].liste_camion[0]->trajet[a[0].liste_camion[0]->taille_trajet-2];
+	nouv.destination = a[0].id_entrepot;
 	nouv.prec = NULL;
 	nouv.suiv = NULL;
 	nouv.gain = 350;
