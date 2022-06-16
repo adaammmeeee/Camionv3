@@ -157,7 +157,7 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, int **
     return cout;
 }
 
-//Algo amélioré
+// Algo amélioré
 int insertion(int *id_camion, char *new_trajet, entrepot a, requete r, int **graphe)
 {
     int meilleur_cout = MAX;
@@ -188,10 +188,12 @@ int insertion(int *id_camion, char *new_trajet, entrepot a, requete r, int **gra
             */
             if (a.liste_camion[i]->charge[j] == '0') // Sommet initial -> Sommet suivant fait à vide
             {
-    
+
+
                 actuel_cout += cout_distance(graphe[r.destination - 'A'][position_suivante - 'A']);
                 // On soustrait le trajet fait à vide puisqu'on ne le fait plus
                 actuel_cout -= cout_distance(graphe[position_initiale - 'A'][position_suivante - 'A']);
+
                 bool = 1;
             }
             else if (a.liste_camion[i]->charge[j] == '1') // Sommet initial -> Sommet suivant fait à plein
@@ -205,13 +207,13 @@ int insertion(int *id_camion, char *new_trajet, entrepot a, requete r, int **gra
                 memset(new_trajet, 0, TAILLE_MAX_TRAJET);
                 meilleur_cout = actuel_cout;
                 position_insertion = j;
-                strncpy(new_trajet, a.liste_camion[i]->trajet, position_insertion+1);
-                
+                strncpy(new_trajet, a.liste_camion[i]->trajet, position_insertion + 1);
+
                 // Les if permettent d'eviter les lettre en double dans le trajet
-                if (new_trajet[strlen(new_trajet)-1] != trajet_a_inserer[0])
+                if (new_trajet[strlen(new_trajet) - 1] != trajet_a_inserer[0])
                     strcat(new_trajet, trajet_a_inserer);
 
-                if (new_trajet[strlen(new_trajet)-1] != a.liste_camion[i]->trajet[position_insertion+ bool])
+                if (new_trajet[strlen(new_trajet) - 1] != a.liste_camion[i]->trajet[position_insertion + bool])
                     strcat(new_trajet, a.liste_camion[i]->trajet + position_insertion + bool);
                 indice_camion = i;
             }
@@ -226,6 +228,6 @@ int insertion(int *id_camion, char *new_trajet, entrepot a, requete r, int **gra
     free(trajet_a_inserer);
     *id_camion = indice_camion;
     printf("J'ai incrusté sur le sommet %d\n", position_insertion);
-    printf("Cela m'a couté s: %d\n", actuel_cout);
-    return actuel_cout;
+    printf("Cela m'a couté s: %d\n", meilleur_cout);
+    return meilleur_cout;
 }

@@ -2,7 +2,7 @@
 #define MAX 0x7fffffff                  // Valeur maximale pour une variable de type int
 #define NB_MAX_CAMION 64
 #define TAILLE_MAX_TRAJET 64
-#define cout_distance(d) 0.8*d+20
+#define cout_distance(d) d?0.8 * d + 20:0
 
 typedef struct requete
 {
