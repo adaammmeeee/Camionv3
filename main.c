@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "structures.h"
+#include "generateur.h"
 #include "init.h"
 #include "chemins_gloutons.h"
 #include "enchere.h"
@@ -46,14 +47,17 @@ entrepot retour_a_la_casa(entrepot a, float **graphe)
 int main()
 {
 
-	int nb_entrepots = charge_nombre_entrepots("gestionnaire");
-
+	int nb_entrepots = 0;
+	char nomfic[64] = "test";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
-	float **graphe = charge_graphe("matrice_distance.csv");
-
+	float **graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
+	genere_acteur(nomfic,graphe, 96);// tqt le 96 ne restera pas
+	
 	struct entrepot *a = NULL;
-	printf("recuperation des informations sur les entrepots dans le fichier gestionnaire...\n");
-	a = charge_entrepots("gestionnaire", graphe);
+	printf("recuperation des informations sur les entrepots dans le fichier %s...\n",nomfic);
+	a = charge_entrepots(nomfic, graphe);
+	printf("//////////////////////////////////////////////\n");
+	affichage_entrepot(a[1]);
 
 	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
 	requete liste_vente[nb_entrepots];

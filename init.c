@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "structures.h"
 #include "init.h"
 
@@ -8,14 +9,74 @@ int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
 {
     int origine, destination;
     float gain, perte;
-    fscanf(f, "\norigine : %d", &origine);
-    fscanf(f, "\ndestination : %d", &destination);
-    fscanf(f, "\ngains : %f", &gain);
-    fscanf(f, "\nperte : %f", &perte);
+    char c = 0;
+    while (!isdigit(c))
+    {
+        c = fgetc(f);
+    }
+    char buff[64];
+    memset(buff, 0, sizeof(buff));
+    int cpt = 0;
+    while (isdigit(c))
+    {
+        buff[cpt] = c;
+        cpt++;
+        c = fgetc(f);
+    }
+    origine = atoi(buff);
+    // On a recupéré l'origine de la requete
+    memset(buff, 0, 64);
+
+    while (!isdigit(c))
+    {
+        c = fgetc(f);
+    }
+    cpt = 0;
+    while (isdigit(c))
+    {
+        buff[cpt] = c;
+        cpt++;
+        c = fgetc(f);
+    }
+    destination = atoi(buff);
+    // On a recupéré la destination de la requete
+
+    memset(buff, 0, 64);
+
+    while (!isdigit(c))
+    {
+        c = fgetc(f);
+    }
+    cpt = 0;
+    while (isdigit(c) || c == '.')
+    {
+        buff[cpt] = c;
+        cpt++;
+        c = fgetc(f);
+    }
+    gain = atof(buff);
+    // On a recupéré le gain de la requete
+
+    memset(buff, 0, 64);
+
+    while (!isdigit(c))
+    {
+        c = fgetc(f);
+    }
+    cpt = 0;
+    while (isdigit(c) || c == '.')
+    {
+        buff[cpt] = c;
+        cpt++;
+        c = fgetc(f);
+    }
+    perte = atof(buff);
+    // On a recupéré la perte de la requete
+
     return ajout_requete(LR, origine, destination, gain, perte, graphe, id_entrepot);
 }
 
-float **charge_graphe(char *nomfic)
+float **charge_graphe(char *nomfic, int * nb_entrepot)
 {
     FILE *f = fopen(nomfic, "r");
     char c = 0;
@@ -25,8 +86,7 @@ float **charge_graphe(char *nomfic)
         if (c == ',')
             nb_entrepots++;
     }
-
-    printf("Voici le nombre d'entrepot : %d\n", nb_entrepots);
+    *nb_entrepot = nb_entrepots;
     fseek(f, 0, SEEK_SET);
 
     float **graphe = calloc(nb_entrepots, sizeof(int *));
@@ -60,21 +120,12 @@ float **charge_graphe(char *nomfic)
     return graphe;
 }
 
-int charge_nombre_entrepots(char *nomfic)
-{
-    int nb_entrepot_buff = 0;
-    FILE *f = fopen("gestionnaire", "r");
-    fscanf(f, "\nnombre d'entrepot :%d", &nb_entrepot_buff);
-    fclose(f);
-    return nb_entrepot_buff;
-}
-
 entrepot *charge_entrepots(char *nomfic, float **graphe)
 {
     int nb_entrepot_buff = 0;
     entrepot *a = NULL;
-    FILE *f = fopen("gestionnaire", "r");
-    fscanf(f, "\nnombre d'entrepot :%d", &nb_entrepot_buff);
+    FILE *f = fopen(nomfic, "r");
+    fscanf(f, "\nnombre d'entrepot :%d\n\n", &nb_entrepot_buff);
     a = calloc(nb_entrepot_buff, sizeof(struct entrepot));
     if (!a)
     {
@@ -84,12 +135,55 @@ entrepot *charge_entrepots(char *nomfic, float **graphe)
 
     for (int i = 0; i < nb_entrepot_buff; i++)
     {
-        int buf = 0;
-        fscanf(f, "\nentrepot : %d", &buf);
-        fscanf(f, "\nnombre de camion :%d\n", &a[i].nb_camion);
-        a[i].id_entrepot = buf;
-        a[i].gain_total = 0;
+        char c = 0;
+        while (!isdigit(c))
+        {
+            c = fgetc(f);
+        }
+        char buff[64];
+        memset(buff, 0, 64);
+        int cpt = 0;
+        while (isdigit(c))
+        {
+            buff[cpt] = c;
+            cpt++;
+            c = fgetc(f);
+        }
+        a[i].id_entrepot = atoi(buff);
+        // Ici on a recupéré l'id de l'entrepot
+        memset(buff, 0, 64);
 
+        while (!isdigit(c))
+        {
+            c = fgetc(f);
+        }
+        cpt = 0;
+        while (isdigit(c))
+        {
+            buff[cpt] = c;
+            cpt++;
+            c = fgetc(f);
+        }
+        a[i].nb_camion = atoi(buff);
+        // Ici on a recupéré le nombre de camion
+        memset(buff, 0, 64);
+
+        while (!isdigit(c))
+        {
+            c = fgetc(f);
+        }
+        cpt = 0;
+        while (isdigit(c))
+        {
+            buff[cpt] = c;
+            cpt++;
+            c = fgetc(f);
+        }
+        a[i].nb_requete = atoi(buff);
+        // Ici on a recupéré le nombre de requetes
+
+        // On passe à l'initialisation des autres champs de l'entrepots
+        a[i].gain_total = 0;
         a[i].liste_camion = calloc(a[i].nb_camion, sizeof(camion *));
         for (int j = 0; j < a[i].nb_camion; j++)
         {
@@ -98,15 +192,12 @@ entrepot *charge_entrepots(char *nomfic, float **graphe)
 
         for (int j = 0; j < a[i].nb_camion; j++)
         {
-            // a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot; c'était pour debug
             a[i].liste_camion[j]->distance_parcouru = 0;
             a[i].liste_camion[j]->taille_trajet = 1;
             a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
-            a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
+            a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot + '0';
             a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
-            // a[i].liste_camion[j]->id_camion = j + '1'; // pareil c'est pour debug
         }
-        fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
 
         a[i].LR = calloc(1, sizeof(liste_requete));
         init_liste_requete(a[i].LR);
@@ -155,7 +246,7 @@ int ajout_requete(liste_requete *LR, int origine, int destination, float gain, f
     requete *comparateur = LR->dern;
     int test = 0;
     // C'est ici qu'on parcourt notre liste chainée pour insérer notre nouvelle requete conformément au tri
-    while (graphe[nouv->origine - 'A'][nouv->destination - 'A'] > graphe[comparateur->origine - 'A'][comparateur->destination - 'A'])
+    while (graphe[nouv->origine][nouv->destination] > graphe[comparateur->origine][comparateur->destination])
     {
         if (comparateur->prec)
         {

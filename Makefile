@@ -6,9 +6,6 @@ CSRC = *.c
 OBJS = main.o\
     init.o chemins_gloutons.o enchere.o generateur.o
 
-run : main
-	./main
-	
 .PHONY: run
 run: main
 	echo $(CSRC)

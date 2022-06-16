@@ -28,7 +28,7 @@ void liberation(liste_requete *LR);
 void libere_acteur(entrepot a);
 
 // renvoi un graphe (tableau à double entrée) à partir du fichier
-float ** charge_graphe( char *nomfic);
+float **charge_graphe(char *nomfic, int * nb_entrepots);
 
 // Renvoi le nombre d'entrepot total
 int charge_nombre_entrepots(char * nomfic);
