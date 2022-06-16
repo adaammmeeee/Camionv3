@@ -5,9 +5,6 @@ LDFLAGS = -lm
 CSRC = *.c
 OBJS = main.o\
     init.o chemins_gloutons.o enchere.o
-
-run : main
-	./main
 	
 .PHONY: run
 run: main
