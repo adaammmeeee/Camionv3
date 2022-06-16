@@ -11,7 +11,7 @@ void affichage_requete(liste_requete *LR)
     requete *actuelle = LR->prem;
     while (actuelle)
     {
-        printf("origine : %c\ndestination : %c\ngains : %.2f\nperte : %.2f\n\n",
+        printf("origine : %d\ndestination : %d\ngains : %.2f\nperte : %.2f\n\n",
                actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
         actuelle = actuelle->suiv;
     }
@@ -22,7 +22,10 @@ void affichage_entrepot(entrepot a)
     printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
     for (int i = 0; i < a.nb_camion; i++)
     {
-        printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué :%s\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
+        printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué : %ls\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
+		/*for(int j = 0; j < a.liste_camion[i]->taille_trajet; j++)
+			printf("%d", a.liste_camion[i]->trajet[j]);
+		printf("\n");*/
     }
     affichage_requete(a.LR);
 }
@@ -33,8 +36,8 @@ entrepot retour_a_la_casa(entrepot a, float **graphe)
     int taille = 0;
     for (int i = 0; i < a.nb_camion; i++)
     {
-        taille = strlen(a.liste_camion[i]->trajet);
-        char origine = a.liste_camion[i]->trajet[taille - 1];
+        taille = a.liste_camion[i]->taille_trajet;
+        int origine = a.liste_camion[i]->trajet[taille - 1];
         a.gain_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
     }
     return a;
@@ -46,7 +49,7 @@ int main()
 	int nb_entrepots = charge_nombre_entrepots("gestionnaire");
 
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
-	float **graphe = charge_graphe("matrice_distance.csv", nb_entrepots);
+	float **graphe = charge_graphe("matrice_distance.csv");
 
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier gestionnaire...\n");
@@ -63,6 +66,8 @@ int main()
 	scanf("%[^\n]", buffer);
 	fgetc(stdin);
 
+	printf("ICIIIIIIIIIIIIIIIIII");
+	affichage_entrepot(a[0]);
 	if (buffer[0] == 'n')
 	{
 		printf("On procède sans enchères\n");
@@ -111,11 +116,16 @@ int main()
 		fflush(stdout);
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
-		int id = buffer[0] - 'A';
+		int id = buffer[0] - '0';
 		for (int i = 0; i < a[id].nb_camion; i++)
 		{
-			printf("trajet du camion : %s\n", a[id].liste_camion[i]->trajet);
-			printf("charge du camion : %s\n", a[id].liste_camion[i]->charge);
+			printf("trajet du camion : ");
+			for(int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
+				printf("%d", a[id].liste_camion[i]->trajet[j]);
+
+			printf("\ncharge du camion : ");
+			for(int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
+				printf("%d", a[id].liste_camion[i]->charge[j]);
 		}
 		printf("Souhaitez vous voir les trajets d'un autre acteur ? (y/n) \n");
 		fflush(stdout);
@@ -125,11 +135,11 @@ int main()
 	//////////////////////// On test la fonction insertion
 	printf("\n\n\nTest insertion\n");
 	int id_camion = 0;
-	char *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(char));
+	int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
 
 	requete nouv;
-	nouv.origine = 'B';
-	nouv.destination = 'A';
+	nouv.origine = 2;
+	nouv.destination = 1;
 	nouv.prec = NULL;
 	nouv.suiv = NULL;
 	nouv.gain = 350;
@@ -137,8 +147,14 @@ int main()
 	int cout = 0;
 
 	cout = insertion(&id_camion, new_trajet, a[0], nouv, graphe);
-	printf("Si on voulait insérer une requete %c->%c ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait : %s\nCela nous rapportera : %.2f\n",
-		   nouv.origine, nouv.destination, nouv.gain, id_camion, new_trajet, nouv.gain - cout);
+	printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, id_camion);
+	int i=0;
+	while(new_trajet[i])
+	{
+		printf("%d", new_trajet[i]);
+		i++;
+	}
+	printf("\nCela nous rapportera : %.2f\n", nouv.gain - cout);
 
 	free(new_trajet);
 

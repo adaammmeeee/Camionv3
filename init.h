@@ -17,7 +17,7 @@ void init_liste_requete(liste_requete *LR);
 /*
 Ajoute une requete à LR toujours dans l'ordre croissant : gain_requete - cout_trajet_requete
 */
-int ajout_requete(liste_requete *LR, char origine, char destination, float gain, float perte, float **graphe, int id_entrepot);
+int ajout_requete(liste_requete *LR, int origine, int destination, float gain, float perte, float **graphe, int id_entrepot);
 
 /*
 Libère LR
@@ -28,7 +28,7 @@ void liberation(liste_requete *LR);
 void libere_acteur(entrepot a);
 
 // renvoi un graphe (tableau à double entrée) à partir du fichier
-float ** charge_graphe( char *nomfic, int nb_entrepots);
+float ** charge_graphe( char *nomfic);
 
 // Renvoi le nombre d'entrepot total
 int charge_nombre_entrepots(char * nomfic);

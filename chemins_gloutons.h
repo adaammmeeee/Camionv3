@@ -12,4 +12,4 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, float 
 // Si oui, on simule la requete r et on renvoi le cout de la meilleure simulation.
 // Indice trajet indique l'etape à laquelle on à simuler la meilleure insertion
 // id_camion est l'id du camion qui effectuera potentiellement la nouvelle insertion
-float insertion(int *id_camion, char * new_trajet, entrepot a, requete r, float **graphe);
+float insertion(int *id_camion, int * new_trajet, entrepot a, requete r, float **graphe);

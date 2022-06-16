@@ -6,17 +6,29 @@
 
 int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
 {
-    char origine, destination;
+    int origine, destination;
     float gain, perte;
-    fscanf(f, "\norigine : %c", &origine);
-    fscanf(f, "\ndestination : %c", &destination);
+    fscanf(f, "\norigine : %d", &origine);
+    fscanf(f, "\ndestination : %d", &destination);
     fscanf(f, "\ngains : %f", &gain);
     fscanf(f, "\nperte : %f", &perte);
     return ajout_requete(LR, origine, destination, gain, perte, graphe, id_entrepot);
 }
 
-float **charge_graphe(char *nomfic, int nb_entrepots)
+float **charge_graphe(char *nomfic)
 {
+    FILE *f = fopen(nomfic, "r");
+    char c = 0;
+    int nb_entrepots = 1;
+    while ((c = fgetc(f)) != '\n')
+    {
+        if (c == ',')
+            nb_entrepots++;
+    }
+
+    printf("Voici le nombre d'entrepot : %d\n", nb_entrepots);
+    fseek(f, 0, SEEK_SET);
+
     float **graphe = calloc(nb_entrepots, sizeof(int *));
 
     for (int i = 0; i < nb_entrepots; i++)
@@ -24,7 +36,6 @@ float **charge_graphe(char *nomfic, int nb_entrepots)
         graphe[i] = calloc(nb_entrepots, sizeof(int));
     }
 
-    FILE *f = fopen(nomfic, "r");
     char nombre[10];
 
     for (int i = 0; i < nb_entrepots; i++)
@@ -89,10 +100,10 @@ entrepot *charge_entrepots(char *nomfic, float **graphe)
         {
             // a[i].liste_camion[j]->id_entrepot = a[i].id_entrepot; c'était pour debug
             a[i].liste_camion[j]->distance_parcouru = 0;
-            a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(char));
-            a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot + 'A';
-            a[i].liste_camion[j]->trajet[1] = '\0';
-            a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(char));
+            a[i].liste_camion[j]->taille_trajet = 1;
+            a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
+            a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
+            a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
             // a[i].liste_camion[j]->id_camion = j + '1'; // pareil c'est pour debug
         }
         fscanf(f, "\nnombre de requete :%d\n", &a[i].nb_requete);
@@ -115,7 +126,7 @@ void init_liste_requete(liste_requete *LR)
     LR->prem = NULL;
 }
 
-int ajout_requete(liste_requete *LR, char origine, char destination, float gain, float perte, float **graphe, int id_entrepot)
+int ajout_requete(liste_requete *LR, int origine, int destination, float gain, float perte, float **graphe, int id_entrepot)
 {
     requete *nouv = calloc(1, sizeof(requete));
     if (!nouv)
