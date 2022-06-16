@@ -1,10 +1,10 @@
 #Définition des macros
 CC = gcc
 CFLAGS = -Wall -c -g
-LDFLAGS = -lm
+LDFLAGS = -Wall -g
 CSRC = *.c
-OBJS = main.o\
-    init.o chemins_gloutons.o enchere.o generateur.o
+OBJS = main.c\
+	init.o chemins_gloutons.o enchere.o generateur.o
 
 .PHONY: run
 run: main
@@ -15,10 +15,7 @@ debug: main
 	valgrind --leak-check=full --show-leak-kinds=all ./main
 	
 main: $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS)
-	
-main.o: main.c *.h
-	$(CC) $(CFLAGS) $<
+	$(CC) -o $@ $^ $(LDFLAGS) 
 
 %.o: %.c %.h structure.h
 	$(CC) $(CFLAGS) $<
@@ -27,4 +24,5 @@ main.o: main.c *.h
 clean:
 	rm -f *.o
 	rm -f main
-	ls -l
+	rm -f gestionnaire
+	ls

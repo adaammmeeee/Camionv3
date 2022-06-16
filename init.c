@@ -14,7 +14,7 @@ int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
     {
         c = fgetc(f);
     }
-    char buff[64];
+    char buff[256];
     memset(buff, 0, sizeof(buff));
     int cpt = 0;
     while (isdigit(c))
@@ -25,7 +25,7 @@ int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
     }
     origine = atoi(buff);
     // On a recupéré l'origine de la requete
-    memset(buff, 0, 64);
+    memset(buff, 0, 256);
 
     while (!isdigit(c))
     {
@@ -41,7 +41,7 @@ int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
     destination = atoi(buff);
     // On a recupéré la destination de la requete
 
-    memset(buff, 0, 64);
+    memset(buff, 0, 256);
 
     while (!isdigit(c))
     {
@@ -57,7 +57,7 @@ int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
     gain = atof(buff);
     // On a recupéré le gain de la requete
 
-    memset(buff, 0, 64);
+    memset(buff, 0, 256);
 
     while (!isdigit(c))
     {
@@ -140,8 +140,8 @@ entrepot *charge_entrepots(char *nomfic, float **graphe)
         {
             c = fgetc(f);
         }
-        char buff[64];
-        memset(buff, 0, 64);
+        char buff[256];
+        memset(buff, 0, 256);
         int cpt = 0;
         while (isdigit(c))
         {
@@ -151,7 +151,7 @@ entrepot *charge_entrepots(char *nomfic, float **graphe)
         }
         a[i].id_entrepot = atoi(buff);
         // Ici on a recupéré l'id de l'entrepot
-        memset(buff, 0, 64);
+        memset(buff, 0, 256);
 
         while (!isdigit(c))
         {
@@ -166,7 +166,7 @@ entrepot *charge_entrepots(char *nomfic, float **graphe)
         }
         a[i].nb_camion = atoi(buff);
         // Ici on a recupéré le nombre de camion
-        memset(buff, 0, 64);
+        memset(buff, 0, 256);
 
         while (!isdigit(c))
         {
@@ -195,7 +195,7 @@ entrepot *charge_entrepots(char *nomfic, float **graphe)
             a[i].liste_camion[j]->distance_parcouru = 0;
             a[i].liste_camion[j]->taille_trajet = 1;
             a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
-            a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot + '0';
+            a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
             a[i].liste_camion[j]->charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
         }
 

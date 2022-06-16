@@ -23,10 +23,10 @@ void affichage_entrepot(entrepot a)
     printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
     for (int i = 0; i < a.nb_camion; i++)
     {
-        printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué : %ls\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
-		/*for(int j = 0; j < a.liste_camion[i]->taille_trajet; j++)
+        printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué :", i, a.liste_camion[i]->distance_parcouru);
+		for(int j = 0; j < a.liste_camion[i]->taille_trajet; j++)
 			printf("%d", a.liste_camion[i]->trajet[j]);
-		printf("\n");*/
+		printf("\n");
     }
     affichage_requete(a.LR);
 }
@@ -48,7 +48,7 @@ int main()
 {
 
 	int nb_entrepots = 0;
-	char nomfic[64] = "test";
+	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	float **graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
 	genere_acteur(nomfic,graphe, 96);// tqt le 96 ne restera pas
@@ -87,7 +87,7 @@ int main()
 		int nb_requete_vente = 0;
 		for (int i = 0; i < nb_entrepots; i++)
 		{
-			if (a[i].nb_requete)
+			if (a[i].nb_requete > 1)
 			{
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
 				int camion = -1;
@@ -130,6 +130,7 @@ int main()
 			printf("\ncharge du camion : ");
 			for(int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
 				printf("%d", a[id].liste_camion[i]->charge[j]);
+			printf("\n");
 		}
 		printf("Souhaitez vous voir les trajets d'un autre acteur ? (y/n) \n");
 		fflush(stdout);

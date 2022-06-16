@@ -90,7 +90,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
 
     if (!LR || nb_requete == 0)
     {
-        printf("Aucune requête a evalué, error in %s\n", __FUNCTION__);
+        printf("Aucune requête à evaluer, error in %s\n", __FUNCTION__);
         return err;
     }
 
