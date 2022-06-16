@@ -228,6 +228,6 @@ float insertion(int *id_camion, char *new_trajet, entrepot a, requete r, float *
     free(trajet_a_inserer);
     *id_camion = indice_camion;
     printf("J'ai incrusté sur le sommet %d\n", position_insertion);
-    printf("Cela m'a couté s: %f\n", meilleur_cout);
+    printf("Cela m'a couté s: %.2f\n", meilleur_cout);
     return meilleur_cout;
 }

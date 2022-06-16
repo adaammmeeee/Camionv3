@@ -11,7 +11,7 @@ void affichage_requete(liste_requete *LR)
     requete *actuelle = LR->prem;
     while (actuelle)
     {
-        printf("origine : %c\ndestination : %c\ngains : %f\nperte : %f\n\n",
+        printf("origine : %c\ndestination : %c\ngains : %.2f\nperte : %.2f\n\n",
                actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
         actuelle = actuelle->suiv;
     }
@@ -22,7 +22,7 @@ void affichage_entrepot(entrepot a)
     printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
     for (int i = 0; i < a.nb_camion; i++)
     {
-        printf("\nid_camion : %d\ndistance_parcouru : %f\nTrajet effectué :%s\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
+        printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué :%s\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
     }
     affichage_requete(a.LR);
 }
@@ -98,7 +98,7 @@ int main()
 		a[i] = retour_a_la_casa(a[i], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
-		printf("rentabilité de l'acteur %c : %f\n", a[i].id_entrepot, a[i].gain_total);
+		printf("rentabilité de l'acteur %c : %.2f\n", a[i].id_entrepot, a[i].gain_total);
 
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");
 	fflush(stdout);
@@ -137,7 +137,7 @@ int main()
 	int cout = 0;
 
 	cout = insertion(&id_camion, new_trajet, a[0], nouv, graphe);
-	printf("Si on voulait insérer une requete %c->%c ayant pour gain %f\nAlors on la confierai au camion %d et son nouveau trajet serait : %s\nCela nous rapportera : %f\n",
+	printf("Si on voulait insérer une requete %c->%c ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait : %s\nCela nous rapportera : %.2f\n",
 		   nouv.origine, nouv.destination, nouv.gain, id_camion, new_trajet, nouv.gain - cout);
 
 	free(new_trajet);
