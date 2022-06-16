@@ -1,7 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lib.h"
-#include "string.h"
+#include <string.h>
+#include "structures.h"
+#include "init.h"
+#include "chemins_gloutons.h"
+#include "enchere.h"
+
+void affichage_requete(liste_requete *LR)
+{
+    requete *actuelle = LR->prem;
+    while (actuelle)
+    {
+        printf("origine : %c\ndestination : %c\ngains : %d\nperte : %d\n\n",
+               actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
+        actuelle = actuelle->suiv;
+    }
+}
+
+void affichage_entrepot(entrepot a)
+{
+    printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
+    for (int i = 0; i < a.nb_camion; i++)
+    {
+        printf("\nid_camion : %d\ndistance_parcouru : %d\nTrajet effectué :%s\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
+    }
+    affichage_requete(a.LR);
+}
+
+// Tous les camions de l'entrepot a retourne à leurs positions initiales (l'id de l'entrepot a)
+entrepot retour_a_la_casa(entrepot a, int **graphe)
+{
+    int taille = 0;
+    for (int i = 0; i < a.nb_camion; i++)
+    {
+        taille = strlen(a.liste_camion[i]->trajet);
+        char origine = a.liste_camion[i]->trajet[taille - 1];
+        a.gain_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
+    }
+    return a;
+}
 
 int main()
 {
