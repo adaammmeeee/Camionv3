@@ -29,7 +29,6 @@ float faire_course(camion *c, int origine, int destination, float **graphe, int 
 float proximite(float **graphe, camion cam, int origine_requete)
 {
     int pos_camion = cam.trajet[cam.taille_trajet - 1];
-
     return graphe[pos_camion][origine_requete];
 }
 

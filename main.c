@@ -51,7 +51,7 @@ int main()
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	float **graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
-	genere_acteur(nomfic,graphe, 96);// tqt le 96 ne restera pas
+	genere_acteur(nomfic,graphe, nb_entrepots);// tqt le 96 ne restera pas
 	
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n",nomfic);
@@ -90,11 +90,15 @@ int main()
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
 				int camion = -1;
 				int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
-				liste_vente[i] = copie_requete(*(a[i].LR->dern), cout_requete);
+				if(camion == -1)
+					return 1;
+
+				liste_vente[nb_requete_vente] = copie_requete(*(a[i].LR->dern), cout_requete);
 				nb_requete_vente++;
 			}
 		}
-		a = enchere_echange(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+		if(nb_requete_vente)
+			a = enchere_echange(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 	}
 	else
 	{
@@ -138,28 +142,32 @@ int main()
 	//////////////////////// On test la fonction insertion
 	printf("\n\n\nTest insertion\n");
 	int id_camion = 0;
-	int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
 
-	requete nouv;
-	nouv.origine = a[0].liste_camion[0]->trajet[a[0].liste_camion[0]->taille_trajet-2];
-	nouv.destination = a[0].id_entrepot;
-	nouv.prec = NULL;
-	nouv.suiv = NULL;
-	nouv.gain = 350;
-	nouv.perte = 600;
-	int cout = 0;
-
-	cout = insertion(&id_camion, new_trajet, a[0], nouv, graphe);
-	printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, id_camion);
-	int i=0;
-	while(new_trajet[i])
+	if(a[0].liste_camion[0]->taille_trajet > 2)
 	{
-		printf("%d", new_trajet[i]);
-		i++;
-	}
-	printf("\nCela nous rapportera : %.2f\n", nouv.gain - cout);
+		int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
 
-	free(new_trajet);
+		requete nouv;
+		nouv.origine = a[0].liste_camion[0]->trajet[a[0].liste_camion[0]->taille_trajet-2];
+		nouv.destination = a[0].id_entrepot;
+		nouv.prec = NULL;
+		nouv.suiv = NULL;
+		nouv.gain = 350;
+		nouv.perte = 600;
+		int cout = 0;
+
+		cout = insertion(&id_camion, new_trajet, a[0], nouv, graphe);
+		printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, id_camion);
+		int i=0;
+		while(new_trajet[i])
+		{
+			printf("%d", new_trajet[i]);
+			i++;
+		}
+		printf("\nCela nous rapportera : %.2f\n", nouv.gain - cout);
+
+		free(new_trajet);
+	}
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
