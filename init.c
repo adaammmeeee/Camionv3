@@ -4,20 +4,20 @@
 #include "structures.h"
 #include "init.h"
 
-int charge_requete(FILE *f, liste_requete *LR, int **graphe, char id_entrepot)
+int charge_requete(FILE *f, liste_requete *LR, float **graphe, char id_entrepot)
 {
     char origine, destination;
-    int gain, perte;
+    float gain, perte;
     fscanf(f, "\norigine : %c", &origine);
     fscanf(f, "\ndestination : %c", &destination);
-    fscanf(f, "\ngains : %d", &gain);
-    fscanf(f, "\nperte : %d", &perte);
+    fscanf(f, "\ngains : %f", &gain);
+    fscanf(f, "\nperte : %f", &perte);
     return ajout_requete(LR, origine, destination, gain, perte, graphe, id_entrepot);
 }
 
-int **charge_graphe(char *nomfic, int nb_entrepots)
+float **charge_graphe(char *nomfic, int nb_entrepots)
 {
-    int **graphe = calloc(nb_entrepots, sizeof(int *));
+    float **graphe = calloc(nb_entrepots, sizeof(int *));
 
     for (int i = 0; i < nb_entrepots; i++)
     {
@@ -41,7 +41,7 @@ int **charge_graphe(char *nomfic, int nb_entrepots)
             }
             nombre[cpt] = '\0';
 
-            graphe[i][j] = atoi(nombre);
+            graphe[i][j] = atof(nombre);
         }
     }
 
@@ -58,7 +58,7 @@ int charge_nombre_entrepots(char *nomfic)
     return nb_entrepot_buff;
 }
 
-entrepot *charge_entrepots(char *nomfic, int **graphe)
+entrepot *charge_entrepots(char *nomfic, float **graphe)
 {
     int nb_entrepot_buff = 0;
     entrepot *a = NULL;
@@ -115,7 +115,7 @@ void init_liste_requete(liste_requete *LR)
     LR->prem = NULL;
 }
 
-int ajout_requete(liste_requete *LR, char origine, char destination, int gain, int perte, int **graphe, char id_entrepot)
+int ajout_requete(liste_requete *LR, char origine, char destination, float gain, float perte, float **graphe, char id_entrepot)
 {
     requete *nouv = calloc(1, sizeof(requete));
     if (!nouv)

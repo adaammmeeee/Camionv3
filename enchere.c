@@ -4,7 +4,7 @@
 #include "structures.h"
 #include "enchere.h"
 
-requete copie_requete(requete r, int prix_propose)
+requete copie_requete(requete r, float prix_propose)
 {
     requete nouv;
     nouv.id_entrepot = r.id_entrepot;
@@ -18,7 +18,7 @@ requete copie_requete(requete r, int prix_propose)
     return nouv;
 }
 
-entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, float **graphe)
 {
 
     for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)

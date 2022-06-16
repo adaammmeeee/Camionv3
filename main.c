@@ -11,7 +11,7 @@ void affichage_requete(liste_requete *LR)
     requete *actuelle = LR->prem;
     while (actuelle)
     {
-        printf("origine : %c\ndestination : %c\ngains : %d\nperte : %d\n\n",
+        printf("origine : %c\ndestination : %c\ngains : %f\nperte : %f\n\n",
                actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
         actuelle = actuelle->suiv;
     }
@@ -22,7 +22,7 @@ void affichage_entrepot(entrepot a)
     printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
     for (int i = 0; i < a.nb_camion; i++)
     {
-        printf("\nid_camion : %d\ndistance_parcouru : %d\nTrajet effectué :%s\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
+        printf("\nid_camion : %d\ndistance_parcouru : %f\nTrajet effectué :%s\n", i, a.liste_camion[i]->distance_parcouru, a.liste_camion[i]->trajet);
     }
     affichage_requete(a.LR);
 }
@@ -46,7 +46,7 @@ int main()
 	int nb_entrepots = charge_nombre_entrepots("gestionnaire");
 
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
-	int **graphe = charge_graphe("matrice_distance.csv", nb_entrepots);
+	float **graphe = charge_graphe("matrice_distance.csv", nb_entrepots);
 
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier gestionnaire...\n");
@@ -137,7 +137,7 @@ int main()
 	int cout = 0;
 
 	cout = insertion(&id_camion, new_trajet, a[0], nouv, graphe);
-	printf("Si on voulait insérer une requete %c->%c ayant pour gain %d\nAlors on la confierai au camion %d et son nouveau trajet serait : %s\nCela nous rapportera : %d\n",
+	printf("Si on voulait insérer une requete %c->%c ayant pour gain %f\nAlors on la confierai au camion %d et son nouveau trajet serait : %s\nCela nous rapportera : %f\n",
 		   nouv.origine, nouv.destination, nouv.gain, id_camion, new_trajet, nouv.gain - cout);
 
 	free(new_trajet);

@@ -2,16 +2,16 @@
 #define MAX 0x7fffffff                  // Valeur maximale pour une variable de type int
 #define NB_MAX_CAMION 64
 #define TAILLE_MAX_TRAJET 64
-#define cout_distance(d) d?0.8 * d + 20:0
+#define cout_distance(d) d?1.1 * d + 50:0
 
 typedef struct requete
 {
     char id_entrepot;
     char origine;
     char destination;
-    int gain;
-    int perte;
-    int prix_propose_vente;
+    float gain;
+    float perte;
+    float prix_propose_vente;
     struct requete *suiv;
     struct requete *prec;
 } requete;
@@ -24,7 +24,7 @@ typedef struct liste_requete
 
 typedef struct camion
 {
-    int distance_parcouru;
+    float distance_parcouru;
     char *trajet;
     char *charge;
 
@@ -33,7 +33,7 @@ typedef struct camion
 typedef struct entrepot
 {
     char id_entrepot;
-    int gain_total;
+    float gain_total;
     int nb_requete;
     int nb_camion;
     liste_requete *LR;
@@ -42,7 +42,7 @@ typedef struct entrepot
 
 typedef struct enchere
 {
-    int indice_e_offre;
-    int indice_c_offre;
-    int prix;
+    float indice_e_offre;
+    float indice_c_offre;
+    float prix;
 } enchere;
