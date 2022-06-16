@@ -98,7 +98,7 @@ int main()
 		a[i] = retour_a_la_casa(a[i], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
-		printf("rentabilité de l'acteur %c : %.2f\n", a[i].id_entrepot, a[i].gain_total);
+		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, a[i].gain_total);
 
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");
 	fflush(stdout);

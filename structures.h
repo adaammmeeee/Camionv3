@@ -6,7 +6,7 @@
 
 typedef struct requete
 {
-    char id_entrepot;
+    int id_entrepot;
     char origine;
     char destination;
     float gain;
@@ -32,7 +32,7 @@ typedef struct camion
 
 typedef struct entrepot
 {
-    char id_entrepot;
+    int id_entrepot;
     float gain_total;
     int nb_requete;
     int nb_camion;

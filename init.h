@@ -2,7 +2,7 @@
 Initialise à partir du fichier f une requete qui est ajoutée dans la liste chainée LR 
 La requête n'est pas ajouté à la fin mais dans l'ordre croissant : gain_requete  - cout_trajet_requete
 */
-int charge_requete(FILE *f, liste_requete *LR, float **graphe, char id_entrepot);
+int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot);
 
 /*
 Renvoi un tableau d'entrepot à partir du fichier nomfic
@@ -17,7 +17,7 @@ void init_liste_requete(liste_requete *LR);
 /*
 Ajoute une requete à LR toujours dans l'ordre croissant : gain_requete - cout_trajet_requete
 */
-int ajout_requete(liste_requete *LR, char origine, char destination, float gain, float perte, float **graphe, char id_entrepot);
+int ajout_requete(liste_requete *LR, char origine, char destination, float gain, float perte, float **graphe, int id_entrepot);
 
 /*
 Libère LR

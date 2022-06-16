@@ -4,7 +4,7 @@ CFLAGS = -Wall -c -g
 LDFLAGS = -lm
 CSRC = *.c
 OBJS = main.o\
-    init.o chemins_gloutons.o enchere.o
+    init.o chemins_gloutons.o enchere.o generateur.o
 
 run : main
 	./main

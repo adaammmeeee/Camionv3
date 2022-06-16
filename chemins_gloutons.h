@@ -1,6 +1,6 @@
 // Ajoute à la fin du trajet de c une course chargée (ou pas) d'origine jusqu'à destination
 // Renvoi le cout de cette course
-float faire_course(camion *c, char origine, char destination, float **graphe, int plein);
+float faire_course(camion *c, int origine, int destination, float **graphe, int plein);
 
 // Basé sur un algo glouton : voir rapport
 entrepot evaluation_meilleure_solution(liste_requete * LR, entrepot a, int nb_requete, float **graphe);
