@@ -16,14 +16,14 @@ int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
     }
     fprintf(f, "nombre d'entrepot : %d\n\n", nb_entrepots);
 
-    srand(getpid());
+    //srand(getpid());
 
     for (int i = 0; i < nb_entrepots; i++)
     {
         int nombre_requetes = rand() % 20 + 1; // entre 300 et 2000 requetes
         int nombre_camions =  8; // 10 requetes par camion
         fprintf(f, "entrepot : %d\nnombre de camion : %d\nnombre de requete : %d\n\n", i, nombre_camions, nombre_requetes);
-
+        float gain = 0;
         for (int j = 0; j < nombre_requetes; j++)
         {
             int origine = i;
@@ -32,7 +32,8 @@ int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
             {
                 destination = rand() % nb_entrepots;
             }
-            float gain = cout_distance(graphe[origine][destination])*10;
+            gain = cout_distance(graphe[origine][destination])*10.0;
+            printf("cout distance: %f , gain : %f\n", graphe[origine][destination], gain);
             float perte = 100;
 
             fprintf(f, "origine : %d\ndestination : %d\ngains : %f\nperte : %f\n\n", origine, destination, gain, perte);
