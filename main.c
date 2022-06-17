@@ -51,7 +51,6 @@ int main()
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	float **graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
 	genere_acteur(nomfic,graphe, nb_entrepots);// tqt le 96 ne restera pas
-	return 0;
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n",nomfic);
 	a = charge_entrepots(nomfic, graphe);
