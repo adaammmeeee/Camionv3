@@ -62,7 +62,7 @@ int main()
 
 	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
 
-	char buffer[2];
+	char buffer[64];
 	printf("Souhaitez vous utilisé l'enchère ? (y/n)\n");
 	fflush(stdout);
 	scanf("%[^\n]", buffer);
@@ -100,7 +100,7 @@ int main()
 	}
 	else
 	{
-		printf("Je ne comprend pas ce que tu me demandes, j'arrête\n");
+		printf("Je ne comprend pas ce que tu me demandes, arrête\n");
 	}
 
 	for (int i = 0; i < nb_entrepots; i++)
@@ -115,12 +115,12 @@ int main()
 	fgetc(stdin);
 	while (buffer[0] == 'y')
 	{
-		memset(buffer, 0, 2);
+		memset(buffer, 0, 64);
 		printf("Quel acteur souhaitez vous observer ? Entrez son id :\n");
 		fflush(stdout);
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
-		int id = buffer[0] - '0';
+		int id = atoi(buffer);
 		for (int i = 0; i < a[id].nb_camion; i++)
 		{
 			printf("trajet du camion : ");
