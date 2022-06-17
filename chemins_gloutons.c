@@ -94,6 +94,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     }
 
     // Debut du glouton 
+    int camion_non_utilise = 0;
     float gain_total = 0;
     requete *actuelle = LR->prem;
     while (actuelle && nb_requete)
@@ -108,13 +109,18 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
             if (distance_parcouru + graphe[pos_camion][actuelle->origine] + graphe[actuelle->origine][actuelle->destination] + graphe[actuelle->destination][a.id_entrepot] <= DISTANCE_MAX)
             {
                 // Trajet à vide, le camion quitte sa position pour aller vers l'origine de la requete
-                gain_total -= faire_course(a.liste_camion[i], a.liste_camion[i]->trajet[taille_trajet - 1], actuelle->origine, graphe, 0);
+                gain_total -= faire_course(a.liste_camion[i], pos_camion, actuelle->origine, graphe, 0);
                 // Trajet plein le camion part de l'origine vers la destination de la requête
                 gain_total -= faire_course(a.liste_camion[i], actuelle->origine, actuelle->destination, graphe, 1);
                 gain_total += actuelle->gain;
                 break;
             }
+            else
+                camion_non_utilise++;
         }
+        if (camion_non_utilise == a.nb_camion) 
+            gain_total -= actuelle->perte;
+        
         actuelle = actuelle->suiv;
         nb_requete--;
     }
@@ -211,7 +217,6 @@ float insertion(int *id_camion, int *new_trajet, entrepot a, requete r, float **
                     taille_new_trajet += 2;
                 }
 
-//A changer a partir d'ici
                 if (new_trajet[taille_new_trajet - 1] != a.liste_camion[i]->trajet[position_insertion + bool])
                     memcpy(new_trajet + taille_new_trajet, a.liste_camion[i]->trajet + position_insertion + bool, (a.liste_camion[i]->taille_trajet - position_insertion)*sizeof(int));
                 

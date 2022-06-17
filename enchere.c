@@ -37,7 +37,7 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
             {
                 int camion_offre = -1;
                 float cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
-                if(camion_offre == -1)
+                if(camion_offre == -1 && cout_requete)
                 {
                     printf("ERREUR : lors du choix du camion faisant le trajet\n");
                     return NULL;
@@ -66,19 +66,26 @@ entrepot *enchere_echange(requete *rv, int nb_requete_vendre, int nb_entrepot, e
         else
         {
             int camion_demande = -1;
-            cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_demande], &camion_demande, graphe);
-            if(camion_demande == -1)
+            int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_demande], &camion_demande, graphe);
+            if(camion_demande == -1 && cout_requete)
             {
                 printf("ERREUR : lors du choix du camion faisant le trajet\n");
                 return NULL;
             }
-            
-            int indice_c_demande = camion_demande;
-            int taille_trajet = a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet;
-            int pos_camion = a[indice_e_demande].liste_camion[indice_c_demande]->trajet[taille_trajet - 1];
+            else if(camion_demande != -1 && cout_requete)
+            {
+                int indice_c_demande = camion_demande;
+                int taille_trajet = a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet;
+                int pos_camion = a[indice_e_demande].liste_camion[indice_c_demande]->trajet[taille_trajet - 1];
 
-            a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], pos_camion, rv[cpt_requete].origine, graphe, 0);
-            a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], rv[cpt_requete].origine, rv[cpt_requete].destination, graphe, 1);
+                a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], pos_camion, rv[cpt_requete].origine, graphe, 0);
+                a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], rv[cpt_requete].origine, rv[cpt_requete].destination, graphe, 1);
+            }
+            else if(!cout_requete)
+            {
+                a[indice_e_demande].gain_total -= rv[cpt_requete].gain;
+                a[indice_e_demande].gain_total -= rv[cpt_requete].perte;
+            }
         }
         a[indice_e_demande].gain_total += rv[cpt_requete].gain;
     }
