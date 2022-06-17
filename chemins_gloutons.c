@@ -157,9 +157,9 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, float 
 }
 
 // Algo amélioré
-float insertion(int *id_camion, int *new_trajet, entrepot a, requete r, float **graphe)
+float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int* taille_new_trajet, float **graphe)
 {
-    int taille_new_trajet = 0;
+    *taille_new_trajet = 0;
     float meilleur_cout = MAX;
     float actuel_cout = 0;
     int position_insertion = 0;
@@ -206,19 +206,19 @@ float insertion(int *id_camion, int *new_trajet, entrepot a, requete r, float **
                 memset(new_trajet, 0, TAILLE_MAX_TRAJET);
                 meilleur_cout = actuel_cout;
                 position_insertion = j;
-                taille_new_trajet = position_insertion + 1;
-                memcpy(new_trajet, a.liste_camion[i]->trajet, (taille_new_trajet)*sizeof(int));
+                *taille_new_trajet = position_insertion + 1;
+                memcpy(new_trajet, a.liste_camion[i]->trajet, (*taille_new_trajet)*sizeof(int));
 
                 // Les if permettent d'eviter les lettre en double dans le trajet
-                if (new_trajet[taille_new_trajet - 1] != trajet_a_inserer[0])
+                if (new_trajet[*taille_new_trajet - 1] != trajet_a_inserer[0])
                 {
-                    new_trajet[taille_new_trajet] = trajet_a_inserer[0];
+                    new_trajet[*taille_new_trajet] = trajet_a_inserer[0];
                     new_trajet[position_insertion + 1] = trajet_a_inserer[1];
                     taille_new_trajet += 2;
                 }
 
-                if (new_trajet[taille_new_trajet - 1] != a.liste_camion[i]->trajet[position_insertion + bool])
-                    memcpy(new_trajet + taille_new_trajet, a.liste_camion[i]->trajet + position_insertion + bool, (a.liste_camion[i]->taille_trajet - position_insertion)*sizeof(int));
+                if (new_trajet[*taille_new_trajet - 1] != a.liste_camion[i]->trajet[position_insertion + bool])
+                    memcpy(new_trajet + *taille_new_trajet, a.liste_camion[i]->trajet + position_insertion + bool, (a.liste_camion[i]->taille_trajet - position_insertion)*sizeof(int));
                 
                 indice_camion = i;
             }
@@ -234,5 +234,8 @@ float insertion(int *id_camion, int *new_trajet, entrepot a, requete r, float **
     *id_camion = indice_camion;
     printf("J'ai incrusté sur le sommet %d\n", position_insertion);
     printf("Cela m'a couté s: %.2f\n", meilleur_cout);
+
     return meilleur_cout;
 }
+
+

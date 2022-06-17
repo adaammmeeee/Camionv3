@@ -39,10 +39,3 @@ typedef struct entrepot
     liste_requete *LR;
     camion **liste_camion;
 } entrepot;
-
-typedef struct enchere
-{
-    int indice_e_offre;
-    int indice_c_offre;
-    float prix;
-} enchere;
