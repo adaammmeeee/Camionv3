@@ -25,8 +25,8 @@ void affichage_entrepot(entrepot a)
     {
         printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué :", i, a.liste_camion[i]->distance_parcouru);
 		for(int j = 0; j < a.liste_camion[i]->taille_trajet; j++)
-			printf("%d", a.liste_camion[i]->trajet[j]);
-		printf("\n");
+			printf("-%d-", a.liste_camion[i]->trajet[j]);
+		printf("-\n");
     }
     affichage_requete(a.LR);
 }
@@ -34,10 +34,9 @@ void affichage_entrepot(entrepot a)
 // Tous les camions de l'entrepot a retourne à leurs positions initiales (l'id de l'entrepot a)
 entrepot retour_a_la_casa(entrepot a, float **graphe)
 {
-    int taille = 0;
     for (int i = 0; i < a.nb_camion; i++)
     {
-        taille = a.liste_camion[i]->taille_trajet;
+        int taille = a.liste_camion[i]->taille_trajet;
         int origine = a.liste_camion[i]->trajet[taille - 1];
         a.gain_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
     }
@@ -127,12 +126,12 @@ int main()
 		{
 			printf("trajet du camion : ");
 			for(int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
-				printf("%d", a[id].liste_camion[i]->trajet[j]);
+				printf("-%d", a[id].liste_camion[i]->trajet[j]);
 
-			printf("\ncharge du camion : ");
+			printf("-\ncharge du camion : ");
 			for(int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
-				printf("%d", a[id].liste_camion[i]->charge[j]);
-			printf("\n");
+				printf("-%d", a[id].liste_camion[i]->charge[j]);
+			printf("-\n");
 		}
 		printf("Souhaitez vous voir les trajets d'un autre acteur ? (y/n) \n");
 		fflush(stdout);
@@ -159,12 +158,12 @@ int main()
 		cout = insertion(&id_camion, new_trajet, a[0], nouv, graphe);
 		printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, id_camion);
 		int i=0;
-		while(new_trajet[i])
+		while(i<a[0].liste_camion[0]->taille_trajet)
 		{
-			printf("%d", new_trajet[i]);
+			printf("-%d", new_trajet[i]);
 			i++;
 		}
-		printf("\nCela nous rapportera : %.2f\n", nouv.gain - cout);
+		printf("-\nCela nous rapportera : %.2f\n", nouv.gain - cout);
 
 		free(new_trajet);
 	}

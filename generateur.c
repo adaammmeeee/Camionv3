@@ -32,7 +32,7 @@ int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
             {
                 destination = rand() % nb_entrepots;
             }
-            float gain = cout_distance(graphe[origine][destination])*10 + rand() % 1000;
+            float gain = cout_distance(graphe[origine][destination])*10;
             float perte = 100;
 
             fprintf(f, "origine : %d\ndestination : %d\ngains : %f\nperte : %f\n\n", origine, destination, gain, perte);
