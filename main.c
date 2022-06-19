@@ -45,15 +45,18 @@ entrepot retour_a_la_casa(entrepot a, float **graphe)
 
 int main()
 {
-
+	
 	int nb_entrepots = 0;
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	float **graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
-	genere_acteur(nomfic,graphe, nb_entrepots);// tqt le 96 ne restera pas
+	genere_acteur(nomfic,graphe, nb_entrepots);
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n",nomfic);
 	a = charge_entrepots(nomfic, graphe);
+
+	assignation_requete(a[0]);
+	return 0;
 	printf("//////////////////////////////////////////////\n");
 	affichage_entrepot(a[1]);
 

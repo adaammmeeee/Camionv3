@@ -93,7 +93,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
         return err;
     }
 
-    // Debut du glouton 
+    // Debut du glouton
     int camion_non_utilise = 0;
     float gain_total = 0;
     requete *actuelle = LR->prem;
@@ -118,9 +118,9 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
             else
                 camion_non_utilise++;
         }
-        if (camion_non_utilise == a.nb_camion) 
+        if (camion_non_utilise == a.nb_camion)
             gain_total -= actuelle->perte;
-        
+
         actuelle = actuelle->suiv;
         nb_requete--;
     }
@@ -157,7 +157,7 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, float 
 }
 
 // Algo amélioré
-float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int* taille_new_trajet, float **graphe)
+float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *taille_new_trajet, float **graphe)
 {
     *taille_new_trajet = 0;
     float meilleur_cout = MAX;
@@ -188,7 +188,6 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int* tai
             if (!a.liste_camion[i]->charge[j]) // Sommet initial -> Sommet suivant fait à vide
             {
 
-
                 actuel_cout += cout_distance(graphe[r.destination][position_suivante]);
                 // On soustrait le trajet fait à vide puisqu'on ne le fait plus
                 actuel_cout -= cout_distance(graphe[position_initiale][position_suivante]);
@@ -207,7 +206,7 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int* tai
                 meilleur_cout = actuel_cout;
                 position_insertion = j;
                 *taille_new_trajet = position_insertion + 1;
-                memcpy(new_trajet, a.liste_camion[i]->trajet, (*taille_new_trajet)*sizeof(int));
+                memcpy(new_trajet, a.liste_camion[i]->trajet, (*taille_new_trajet) * sizeof(int));
 
                 // Les if permettent d'eviter les lettre en double dans le trajet
                 if (new_trajet[*taille_new_trajet - 1] != trajet_a_inserer[0])
@@ -218,8 +217,8 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int* tai
                 }
 
                 if (new_trajet[*taille_new_trajet - 1] != a.liste_camion[i]->trajet[position_insertion + bool])
-                    memcpy(new_trajet + *taille_new_trajet, a.liste_camion[i]->trajet + position_insertion + bool, (a.liste_camion[i]->taille_trajet - position_insertion)*sizeof(int));
-                
+                    memcpy(new_trajet + *taille_new_trajet, a.liste_camion[i]->trajet + position_insertion + bool, (a.liste_camion[i]->taille_trajet - position_insertion) * sizeof(int));
+
                 indice_camion = i;
             }
         }
@@ -238,4 +237,67 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int* tai
     return meilleur_cout;
 }
 
+void affiche_tableau(int *tableau, int taille)
+{
+    for (int i = 0; i < taille; i++)
+    {
+        printf("%d ", tableau[i]);
+    }
+    printf("\n");
+}
 
+void incremente_tableau(int *tableau, int taille, int limite)
+{
+    if (tableau[taille - 1] == limite)
+    {
+        int cpt = 1;
+        while (tableau[taille - cpt] == limite)
+        {
+            tableau[taille - cpt] = 0;
+            cpt++;
+        }
+        if (taille - cpt >= 0)
+            tableau[taille - cpt]++;
+    }
+    else
+    {
+        tableau[taille - 1]++;
+    }
+}
+
+// brut force
+int assignation_requete(entrepot a)
+{
+    int tab_requete[a.nb_requete];
+    for (int i = 0; i < a.nb_requete; i++)
+        tab_requete[i] = 1;
+
+    // chaque indice du tab_requete représente le numéro de requête, le nombre dans cette case représente le numéro de camion qui traite la demande
+
+    requete r[a.nb_requete];
+    requete * copy = a.LR->prem;
+    for (int i = 0; i < a.nb_requete; i++)
+    {
+        r[i].origine = copy->origine;
+        r[i].destination = copy->destination;
+        r[i].gain = copy->gain;
+        copy = copy->suiv;
+    }
+    // On a chargé notre tableau de requete pour éviter de parcourir la liste chaînée en boucle
+
+
+    int temp;
+    for (int j = 1; j <= a.nb_requete; j++)
+    {
+        for (int i = 0; i < a.nb_requete - 1; i++)
+        {
+            temp = tab_requete[i];
+            tab_requete[i] = tab_requete[i + 1];
+            tab_requete[i + 1] = temp;
+            affiche_tableau(tab_requete, a.nb_requete);
+        }
+    }
+    // On incrémente le tableau à chaque fois pour obtenir toutes les combinaisons possibles
+    incremente_tableau(tab_requete, a.nb_requete, a.nb_camion);
+    return 0;
+}
