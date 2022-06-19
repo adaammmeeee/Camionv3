@@ -16,7 +16,8 @@ int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
     }
     fprintf(f, "nombre d'entrepot : %d\n\n", nb_entrepots);
 
-    // srand(getpid());
+    //srand(getpid());
+    srand(3);
 
     for (int i = 0; i < nb_entrepots; i++)
     {
