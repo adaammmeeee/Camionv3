@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "structures.h"
 #include "chemins_gloutons.h"
+#include "affichage.h"
 
 float faire_course(camion *c, int origine, int destination, float **graphe, int plein)
 {
@@ -265,6 +266,14 @@ void incremente_tableau(int *tableau, int taille, int limite)
     }
 }
 
+int calcul_cout(int *tab_requete, requete *liste_requete, int taille_requete, int taille_tab, float **graphe, entrepot a)
+{
+    int gain = 0;
+    for (int i = 0; i < taille_requete; i++)
+    {
+    }
+}
+
 // brut force
 int assignation_requete(entrepot a)
 {
@@ -272,10 +281,10 @@ int assignation_requete(entrepot a)
     for (int i = 0; i < a.nb_requete; i++)
         tab_requete[i] = 1;
 
-    // chaque indice du tab_requete représente le numéro de requête, le nombre dans cette case représente le numéro de camion qui traite la demande
+    // chaque indice du tab_requete représente le numéro de requête, la valeur dans cette case représente le numéro de camion qui traite la demande
 
     requete r[a.nb_requete];
-    requete * copy = a.LR->prem;
+    requete *copy = a.LR->prem;
     for (int i = 0; i < a.nb_requete; i++)
     {
         r[i].origine = copy->origine;
@@ -283,21 +292,50 @@ int assignation_requete(entrepot a)
         r[i].gain = copy->gain;
         copy = copy->suiv;
     }
-    // On a chargé notre tableau de requete pour éviter de parcourir la liste chaînée en boucle
+    affiche_tableau(tab_requete, a.nb_requete);
 
+    for (int i = 0; i < 10000; i++)
+        incremente_tableau(tab_requete, a.nb_requete, a.nb_camion);
+
+    affiche_tableau(tab_requete, a.nb_requete);
+
+    // On a chargé notre tableau de requete pour éviter de parcourir la liste chaînée en boucle
+    // Maintenant pour chaque camion, on va assigner les requêtes à traiter
+    int camion_requete[a.nb_camion][a.nb_requete];
+
+    // On passe par un tableau de position de curseur, pour pouvoir concaténer à chaque fois la requête à assigner bien à la fin sans parcourir en boucle le tableau
+    int pos_curseur[a.nb_camion];
+    for (int i = 0; i < a.nb_camion; i++)
+        pos_curseur[i] = 0;
+
+    for (int i = 0; i < a.nb_requete; i++)
+    {
+        camion_requete[tab_requete[i]][pos_curseur[tab_requete[i]]] = i;
+        pos_curseur[tab_requete[i]]++;
+    }
 
     int temp;
-    for (int j = 1; j <= a.nb_requete; j++)
+    for (int i = 0; i < a.nb_camion; i++)
+        affiche_tableau(camion_requete[i], pos_curseur[i]);
+
+    for (int i = 0; i < a.nb_camion; i++)
     {
-        for (int i = 0; i < a.nb_requete - 1; i++)
+        printf("/////////////////////////////////////\n");
+
+        for (int j = 1; j <= pos_curseur[i]; j++)
         {
-            temp = tab_requete[i];
-            tab_requete[i] = tab_requete[i + 1];
-            tab_requete[i + 1] = temp;
-            affiche_tableau(tab_requete, a.nb_requete);
+            for (int k = 0; k < pos_curseur[i] - 1; k++)
+            {
+                temp = camion_requete[i][k];
+                camion_requete[i][k] = camion_requete[i][k + 1];
+                camion_requete[i][k + i] = temp;
+                // à ce moment là on calcule le coùt de la liste de requête pour le camion i
+
+                affiche_tableau(camion_requete[i], pos_curseur[i]);
+            }
         }
     }
+
     // On incrémente le tableau à chaque fois pour obtenir toutes les combinaisons possibles
-    incremente_tableau(tab_requete, a.nb_requete, a.nb_camion);
     return 0;
 }

@@ -9,53 +9,64 @@
 
 void affichage_requete(liste_requete *LR)
 {
-    requete *actuelle = LR->prem;
-    while (actuelle)
-    {
-        printf("origine : %d\ndestination : %d\ngains : %.2f\nperte : %.2f\n\n",
-               actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
-        actuelle = actuelle->suiv;
-    }
+	requete *actuelle = LR->prem;
+	while (actuelle)
+	{
+		printf("origine : %d\ndestination : %d\ngains : %.2f\nperte : %.2f\n\n",
+			   actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
+		actuelle = actuelle->suiv;
+	}
 }
 
 void affichage_entrepot(entrepot a)
 {
-    printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
-    for (int i = 0; i < a.nb_camion; i++)
-    {
-        printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué :", i, a.liste_camion[i]->distance_parcouru);
-		for(int j = 0; j < a.liste_camion[i]->taille_trajet; j++)
+	printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
+	for (int i = 0; i < a.nb_camion; i++)
+	{
+		printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué :", i, a.liste_camion[i]->distance_parcouru);
+		for (int j = 0; j < a.liste_camion[i]->taille_trajet; j++)
 			printf("-%d-", a.liste_camion[i]->trajet[j]);
 		printf("-\n");
-    }
-    affichage_requete(a.LR);
+	}
+	affichage_requete(a.LR);
 }
 
 // Tous les camions de l'entrepot a retourne à leurs positions initiales (l'id de l'entrepot a)
 entrepot retour_a_la_casa(entrepot a, float **graphe)
 {
-    for (int i = 0; i < a.nb_camion; i++)
-    {
-        int taille = a.liste_camion[i]->taille_trajet;
-        int origine = a.liste_camion[i]->trajet[taille - 1];
-        a.gain_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
-    }
-    return a;
+	for (int i = 0; i < a.nb_camion; i++)
+	{
+		int taille = a.liste_camion[i]->taille_trajet;
+		int origine = a.liste_camion[i]->trajet[taille - 1];
+		a.gain_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
+	}
+	return a;
 }
 
 int main()
 {
-	
+
 	int nb_entrepots = 0;
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	float **graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
-	genere_acteur(nomfic,graphe, nb_entrepots);
+	genere_acteur(nomfic, graphe, nb_entrepots);
 	struct entrepot *a = NULL;
-	printf("recuperation des informations sur les entrepots dans le fichier %s...\n",nomfic);
+	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
 
 	assignation_requete(a[0]);
+
+	for (int i = 0; i < nb_entrepots; i++)
+		libere_acteur(a[i]);
+	free(a);
+
+	for (int i = 0; i < nb_entrepots; i++)
+	{
+		free(graphe[i]);
+	}
+	free(graphe);
+
 	return 0;
 	printf("//////////////////////////////////////////////\n");
 	affichage_entrepot(a[1]);
@@ -96,14 +107,14 @@ int main()
 					a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
 					int camion = -1;
 					int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
-					if(camion == -1)
+					if (camion == -1)
 						return 1;
 
 					liste_vente[nb_requete_vente] = copie_requete(*(a[i].LR->dern), cout_requete);
 					nb_requete_vente++;
 				}
 			}
-			if(nb_requete_vente)
+			if (nb_requete_vente)
 				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
 		else if (buffer[0] == '1')
@@ -117,14 +128,14 @@ int main()
 					a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
 					int camion = -1;
 					int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
-					if(camion == -1)
+					if (camion == -1)
 						return 1;
 
 					liste_vente[nb_requete_vente] = copie_requete(*(a[i].LR->dern), cout_requete);
 					nb_requete_vente++;
 				}
 			}
-			if(nb_requete_vente)
+			if (nb_requete_vente)
 				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
 		else
@@ -154,11 +165,11 @@ int main()
 		for (int i = 0; i < a[id].nb_camion; i++)
 		{
 			printf("trajet du camion : ");
-			for(int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
+			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
 				printf("-%d", a[id].liste_camion[i]->trajet[j]);
 
 			printf("-\ncharge du camion : ");
-			for(int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
+			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
 				printf("-%d", a[id].liste_camion[i]->charge[j]);
 			printf("-\n");
 		}
@@ -168,6 +179,7 @@ int main()
 		fgetc(stdin);
 	}
 	//////////////////////// On test la fonction insertion
+	/*
 	printf("\n\n\nTest insertion\n");
 	int id_camion = 0;
 
@@ -195,7 +207,7 @@ int main()
 
 		free(new_trajet);
 	}
-
+	*/
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
 	free(a);

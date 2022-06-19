@@ -1,6 +1,8 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
-        "chemins_gloutons.h": "c"
+        "chemins_gloutons.h": "c",
+        "structures.h": "c",
+        "affichage.h": "c"
     }
 }

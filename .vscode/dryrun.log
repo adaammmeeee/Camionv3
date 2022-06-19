@@ -1,11 +1,4 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/adame/Camionv3'
-gcc -Wall -c -g   -c -o init.o init.c
-gcc -Wall -c -g   -c -o chemins_gloutons.o chemins_gloutons.c
-gcc -Wall -c -g   -c -o enchere.o enchere.c
-gcc -Wall -c -g   -c -o generateur.o generateur.c
-gcc -o main main.c init.o chemins_gloutons.o enchere.o generateur.o -Wall -g 
-echo *.c
-./main
-make: Leaving directory '/home/adame/Camionv3'
- 
+make.exe --dry-run --keep-going --print-directory
+'make.exe' n'est pas reconnu en tant que commande interne
+ou externe, un programme ex�cutable ou un fichier de commandes.
+
