@@ -55,8 +55,8 @@ int main()
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n",nomfic);
 	a = charge_entrepots(nomfic, graphe);
 
-	assignation_requete(a[0]);
-	return 0;
+	//assignation_requete(a[0]);
+	//return 0;
 	printf("//////////////////////////////////////////////\n");
 	affichage_entrepot(a[1]);
 
@@ -79,9 +79,13 @@ int main()
 			if (a[i].nb_requete)
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
 		}
+		
+		for (int i = 0; i < nb_entrepots; i++)
+			a[i] = retour_a_la_casa(a[i], graphe);
 	}
 	else if (buffer[0] == 'y')
 	{
+		printf("On va maintenant faire l'ajout de requête à la fin d'un trajet existant\n");
 		printf("Quel type de glouton voulez-vous utiliser, ajout à la fin ou par insertion ? (0/1) \n");
 		fflush(stdout);
 		scanf("%[^\n]", buffer);
@@ -96,8 +100,10 @@ int main()
 					a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
 					int camion = -1;
 					int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
-					if(camion == -1)
+					if(camion == -1 && cout_requete)
 						return 1;
+					else if(!cout_requete)
+						cout_requete = a[i].LR->dern->perte - 1;
 
 					liste_vente[nb_requete_vente] = copie_requete(*(a[i].LR->dern), cout_requete);
 					nb_requete_vente++;
@@ -105,36 +111,42 @@ int main()
 			}
 			if(nb_requete_vente)
 				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+
+			for (int i = 0; i < nb_entrepots; i++)
+				a[i] = retour_a_la_casa(a[i], graphe);
 		}
 		else if (buffer[0] == '1')
 		{
 			printf("On va maintenant faire l'ajout de requête par insertion\n");
 			int nb_requete_vente = 0;
+			int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
 			for (int i = 0; i < nb_entrepots; i++)
 			{
+				memset(new_trajet, 0, TAILLE_MAX_TRAJET);
 				if (a[i].nb_requete > 1)
 				{
-					a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
-					int camion = -1;
-					int cout_requete = cout_requete_fin_trajet(*(a[i].LR->dern), a[i], &camion, graphe);
-					if(camion == -1)
+					a[i] = init_insertion(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
+					int camion = -1; int taille_new_trajet = 0;
+					int cout_requete = insertion(*(a[i].LR->dern), a[i], &camion, new_trajet, &taille_new_trajet, graphe);
+					if((camion == -1 || !taille_new_trajet)&& cout_requete)
 						return 1;
+					else if(!cout_requete)
+						cout_requete = a[i].LR->dern->perte - 1;
 
 					liste_vente[nb_requete_vente] = copie_requete(*(a[i].LR->dern), cout_requete);
 					nb_requete_vente++;
 				}
 			}
+			free(new_trajet);
+
 			if(nb_requete_vente)
-				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
 		else
 			printf("Je ne comprend pas ce que tu me demandes, arrête\n");
 	}
 	else
 		printf("Je ne comprend pas ce que tu me demandes, arrête\n");
-
-	for (int i = 0; i < nb_entrepots; i++)
-		a[i] = retour_a_la_casa(a[i], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
 		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, a[i].gain_total);
@@ -187,7 +199,7 @@ int main()
 
 		cout = insertion(nouv, a[0], &id_camion, new_trajet, &taille_new_trajet, graphe);
 		printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, id_camion);
-		int i=0;
+
 		for(int i = 0; i < taille_new_trajet; i++)
 			printf("-%d", new_trajet[i]);
 
