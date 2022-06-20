@@ -4,7 +4,8 @@ gcc -Wall -c -g   -c -o init.o init.c
 gcc -Wall -c -g   -c -o chemins_gloutons.o chemins_gloutons.c
 gcc -Wall -c -g   -c -o enchere.o enchere.c
 gcc -Wall -c -g   -c -o generateur.o generateur.c
-gcc -o main main.c init.o chemins_gloutons.o enchere.o generateur.o -Wall -g 
+gcc -Wall -c -g   -c -o affichage.o affichage.c
+gcc -o main main.c init.o chemins_gloutons.o enchere.o generateur.o affichage.o -Wall -g 
 echo *.c
 ./main
 make: Leaving directory '/home/adame/Camionv3'

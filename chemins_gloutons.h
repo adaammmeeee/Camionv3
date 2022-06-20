@@ -16,4 +16,4 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int* tai
 
 entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, float **graphe);
 
-int assignation_requete(entrepot a);
+int assignation_requete(entrepot a, float ** graphe);
