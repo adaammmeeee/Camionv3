@@ -55,7 +55,7 @@ int main()
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
 
-	assignation_requete(a[0]);
+	/*assignation_requete(a[0]);
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
@@ -67,7 +67,7 @@ int main()
 	}
 	free(graphe);
 
-	return 0;
+	return 0;*/
 	printf("//////////////////////////////////////////////\n");
 	affichage_entrepot(a[1]);
 
@@ -190,8 +190,7 @@ int main()
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
 	}
-	//////////////////////// On test la fonction insertion
-	/*
+	/*//////////////////////// On test la fonction insertion
 	printf("\n\n\nTest insertion\n");
 	int id_camion = 0;
 
@@ -218,8 +217,7 @@ int main()
 		printf("-\nCela nous rapportera : %.2f\n", nouv.gain - cout);
 
 		free(new_trajet);
-	}
-	*/
+	}*/
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
 	free(a);
