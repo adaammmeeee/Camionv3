@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jun 19 13:32:16 2022
+# Make data base, printed on Sun Jun 19 21:53:40 2022
 
 # Variables
 
@@ -49,7 +51,7 @@ VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"fr","availableLanguages":{"*":"fr"},"_languagePackId":"575d78304484aa5fa0cbb32d34fd883d.fr","_translationsConfigFile":"/home/adame/.config/Code/clp/575d78304484aa5fa0cbb32d34fd883d.fr/tcf.json","_cacheRoot":"/home/adame/.config/Code/clp/575d78304484aa5fa0cbb32d34fd883d.fr","_resolvedLanguagePackCoreLocation":"/home/adame/.config/Code/clp/575d78304484aa5fa0cbb32d34fd883d.fr/30d9c6cd9483b2cc586687151bcbcd635f373630","_corruptedFile":"/home/adame/.config/Code/clp/575d78304484aa5fa0cbb32d34fd883d.fr/corrupted.info","_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:42380
+JOURNAL_STREAM = 8:36740
 # makefile (from 'Makefile', line 3)
 CFLAGS = -Wall -c -g
 # environment
@@ -71,13 +73,13 @@ MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=47ed0d381cc1fe372c91b37962af089b
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=69bed0e1cdb3b3cc9078660262af7e7e
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'Makefile', line 6)
 OBJS = main.c init.o chemins_gloutons.o enchere.o generateur.o
 # environment
-MANAGERPID = 985
+MANAGERPID = 958
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -91,7 +93,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/adame:@/tmp/.ICE-unix/1279,unix/adame:/tmp/.ICE-unix/1279
+SESSION_MANAGER = local/adame:@/tmp/.ICE-unix/1256,unix/adame:/tmp/.ICE-unix/1256
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -109,7 +111,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = d99e8317d1924e5db0f92d3e9ca4fac7
+INVOCATION_ID = 165dbcf228694704ad1e7c91012c5ff6
 # makefile (from 'Makefile', line 4)
 LDFLAGS = -Wall -g
 # environment
@@ -135,7 +137,7 @@ PWD = /home/adame/Camionv3
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1240
+SSH_AGENT_PID = 1217
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -191,7 +193,7 @@ CC = gcc
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-3c3a29c7-b540-4495-840d-380a77305a5f.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-dc50fce8-ebed-4d8e-a4ce-21daf9a29dbc.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -241,11 +243,11 @@ LC_ALL = C
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/b0994046_3434_4883_a430_3b1d10183f36
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/8c7d693b_6aed_48a1_bde2_9484641eba6a
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.106
+GNOME_TERMINAL_SERVICE = :1.88
 # default
 SUFFIXES := 
 # environment
@@ -263,9 +265,9 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 4489
+VSCODE_PID = 2550
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=47ed0d381cc1fe372c91b37962af089b
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=69bed0e1cdb3b3cc9078660262af7e7e
 # variable set hash-table stats:
 # Load=128/1024=12%, Rehash=0, Collisions=17/154=11%
 
@@ -275,9 +277,9 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=47ed0d381cc1fe372c91b37
 
 # Directories
 
-# . (device 66309, inode 925697): 23 files, no impossibilities.
+# . (device 66309, inode 925697): 24 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -289,11 +291,9 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=47ed0d381cc1fe372c91b37
 
 # Files
 
+ 
 # Not a target:
 all:
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
@@ -391,12 +391,12 @@ enchere.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 36 / storage = 347 B / avg = 9 B
-# current buf: size = 8162 B / used = 347 B / count = 36 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 360 B / avg = 9 B
+# current buf: size = 8162 B / used = 360 B / count = 37 / avg = 9 B
 
-# strcache performance: lookups = 57 / hit rate = 36%
+# strcache performance: lookups = 58 / hit rate = 36%
 # hash-table stats:
-# Load=36/8192=0%, Rehash=0, Collisions=1/57=2%
-# Finished Make data base on Sun Jun 19 13:32:16 2022
+# Load=37/8192=0%, Rehash=0, Collisions=1/58=2%
+# Finished Make data base on Sun Jun 19 21:53:40 2022
 
  
