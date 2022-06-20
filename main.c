@@ -69,7 +69,7 @@ int main()
 
 	return 0;*/
 	printf("//////////////////////////////////////////////\n");
-	affichage_entrepot(a[1]);
+	//affichage_entrepot(a[1]);
 
 	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
 	requete liste_vente[nb_entrepots];
@@ -133,10 +133,10 @@ int main()
 			int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
 			for (int i = 0; i < nb_entrepots; i++)
 			{
-				memset(new_trajet, 0, TAILLE_MAX_TRAJET);
 				if (a[i].nb_requete > 1)
 				{
 					a[i] = init_insertion(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
+					memset(new_trajet, 0, TAILLE_MAX_TRAJET);
 					int camion = -1; int taille_new_trajet = 0;
 					int cout_requete = insertion(*(a[i].LR->dern), a[i], &camion, new_trajet, &taille_new_trajet, graphe);
 					if((camion == -1 || !taille_new_trajet)&& cout_requete)
@@ -176,11 +176,11 @@ int main()
 		int id = atoi(buffer);
 		for (int i = 0; i < a[id].nb_camion; i++)
 		{
-			printf("trajet du camion : ");
+			printf("trajet du camion %d : ", a[id].liste_camion[i]->id_camion);
 			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
 				printf("-%d", a[id].liste_camion[i]->trajet[j]);
 
-			printf("-\ncharge du camion : ");
+			printf("-\ncharge du camion %d : ", a[id].liste_camion[i]->id_camion);
 			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
 				printf("-%d", a[id].liste_camion[i]->charge[j]);
 			printf("-\n");
@@ -190,7 +190,7 @@ int main()
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
 	}
-	/*//////////////////////// On test la fonction insertion
+	//////////////////////// On test la fonction insertion
 	printf("\n\n\nTest insertion\n");
 	int id_camion = 0;
 
@@ -217,7 +217,7 @@ int main()
 		printf("-\nCela nous rapportera : %.2f\n", nouv.gain - cout);
 
 		free(new_trajet);
-	}*/
+	}
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
 	free(a);

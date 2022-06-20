@@ -91,10 +91,10 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, float 
         int taille_trajet = a.liste_camion[i]->taille_trajet;
         int pos_camion = a.liste_camion[i]->trajet[taille_trajet - 1];
         float distance_parcouru = a.liste_camion[i]->distance_parcouru;
-        *indice_camion = i;
 
         if (distance_parcouru + graphe[pos_camion][nouv.origine] + graphe[nouv.origine][nouv.destination] + graphe[nouv.destination][a.id_entrepot] <= DISTANCE_MAX)
         {
+            *indice_camion = i;
             cout += cout_distance(graphe[pos_camion][nouv.origine]);
             cout += cout_distance(graphe[nouv.origine][nouv.destination]);
             cout += cout_distance(graphe[nouv.destination][a.id_entrepot]);
@@ -165,6 +165,8 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *tai
     trajet_a_inserer[0] = r.origine;
     trajet_a_inserer[1] = r.destination;
     int bool = 0;
+
+    //printf("%d : %d\n",a.id_entrepot, a.liste_camion[0]->trajet[a.liste_camion[0]->taille_trajet - 2]);
     for (int i = 0; i < a.nb_camion; i++)
     {
         //PROBLEME SI ON EST A j = taille_trajet - 1 pour destination
@@ -175,61 +177,68 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *tai
             bool = 0;
             int position_initiale = a.liste_camion[i]->trajet[j];
             int position_suivante = a.liste_camion[i]->trajet[j + 1];
-            // On part de notre sommet initial (j), et on va effectuer la requête que l'on souhaite intégrer
-            actuel_cout += cout_distance(graphe[position_initiale][r.origine]);
-            actuel_cout += cout_distance(graphe[r.origine][r.destination]);
-            /* Maintenant on souhaite faire revenir notre camion dans le trajet normal
-             Soit on le fait revenir sur le sommet initial d'où il est parti
-             Soit on le fait revenir sur le sommet suivant lequel il est parti,
-             dans ce cas la le trajet entre j et le suivant doit être fait à vide
-             Pour ne pas rater de requête.
-            */
-            if (!a.liste_camion[i]->charge[j]) // Sommet initial -> Sommet suivant fait à vide
-            {
 
-                actuel_cout += cout_distance(graphe[r.destination][position_suivante]);
-                // On soustrait le trajet fait à vide puisqu'on ne le fait plus
-                actuel_cout -= cout_distance(graphe[position_initiale][position_suivante]);
-
-                bool = 1;
-            }
-            else if (a.liste_camion[i]->charge[j] == 1) // Sommet initial -> Sommet suivant fait à plein
+            if(a.liste_camion[i]->distance_parcouru + graphe[position_initiale][r.origine] + graphe[r.origine][r.destination] <= DISTANCE_MAX)
             {
-                // On revient simplement sur le sommet initial
-                actuel_cout += cout_distance(graphe[r.destination][position_initiale]);
-            }
-            // Actuel cout = cout de la deviation, c'est la valeur qu'on cherche à minimiser
-            if (actuel_cout < meilleur_cout)
-            {
-                memset(new_trajet, 0, TAILLE_MAX_TRAJET);
-                meilleur_cout = actuel_cout;
-                position_insertion = j + 1;
-                memcpy(new_trajet, a.liste_camion[i]->trajet, position_insertion * sizeof(int));
-
-                // Les if permettent d'eviter les lettre en double dans le trajet
-                if (new_trajet[position_insertion - 1] != trajet_a_inserer[0])
+                // On part de notre sommet initial (j), et on va effectuer la requête que l'on souhaite intégrer
+                actuel_cout += cout_distance(graphe[position_initiale][r.origine]);
+                actuel_cout += cout_distance(graphe[r.origine][r.destination]);
+                /* Maintenant on souhaite faire revenir notre camion dans le trajet normal
+                 Soit on le fait revenir sur le sommet initial d'où il est parti
+                 Soit on le fait revenir sur le sommet suivant lequel il est parti,
+                 dans ce cas la le trajet entre j et le suivant doit être fait à vide
+                 Pour ne pas rater de requête.
+                */
+                if (!a.liste_camion[i]->charge[j]) // Sommet initial -> Sommet suivant fait à vide
                 {
-                    new_trajet[position_insertion] = trajet_a_inserer[0];
-                    new_trajet[position_insertion + 1] = trajet_a_inserer[1];
-                    position_insertion += 2;
-                    taille_ajout++;
-                }
 
-                if (new_trajet[position_insertion - 1] != a.liste_camion[i]->trajet[j + bool])
+                    actuel_cout += cout_distance(graphe[r.destination][position_suivante]);
+                    // On soustrait le trajet fait à vide puisqu'on ne le fait plus
+                    actuel_cout -= cout_distance(graphe[position_initiale][position_suivante]);
+
+                    bool = 1;
+                }
+                else if (a.liste_camion[i]->charge[j] == 1) // Sommet initial -> Sommet suivant fait à plein
                 {
-                    memcpy(new_trajet + position_insertion, a.liste_camion[i]->trajet + j + bool, (a.liste_camion[i]->taille_trajet - j) * sizeof(int));
-                    taille_ajout++;
+                    // On revient simplement sur le sommet initial
+                    actuel_cout += cout_distance(graphe[r.destination][position_initiale]);
                 }
+                // Actuel cout = cout de la deviation, c'est la valeur qu'on cherche à minimiser
+                if (actuel_cout < meilleur_cout)
+                {
+                    memset(new_trajet, 0, TAILLE_MAX_TRAJET);
+                    meilleur_cout = actuel_cout;
+                    position_insertion = j + 1;
+                    new_trajet = memcpy(new_trajet, a.liste_camion[i]->trajet, position_insertion * sizeof(int));
+                    
+                    for(int k = 0; k < position_insertion; k++)
+                        printf("-%d", a.liste_camion[i]->trajet[k]);
+                    printf("-\n");
 
-                indice_camion = i;
+                    // Les if permettent d'eviter les lettre en double dans le trajet
+                    if (new_trajet[position_insertion - 1] != trajet_a_inserer[0])
+                    {
+                        new_trajet[position_insertion] = trajet_a_inserer[0];
+                        new_trajet[position_insertion + 1] = trajet_a_inserer[1];
+                        position_insertion += 2;
+                        taille_ajout++;
+                    }
+
+                    if (new_trajet[position_insertion - 1] != a.liste_camion[i]->trajet[j + bool])
+                    {
+                        new_trajet = memcpy(new_trajet + position_insertion, a.liste_camion[i]->trajet + j + bool, (a.liste_camion[i]->taille_trajet - j) * sizeof(int));
+                        taille_ajout++;
+                    }
+
+                    indice_camion = i;
+                }
             }
         }
     }
     if (meilleur_cout == MAX)
     {
         free(trajet_a_inserer);
-        printf("Erreur, aucun cout pertinent n'a été trouvé\n");
-        return -1;
+        return 0;
     }
     free(trajet_a_inserer);
     *id_camion = indice_camion;
@@ -259,11 +268,13 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, float **g
 
     for(int i = 0; i < a.nb_camion; i++)
     {
+        a.liste_camion[i]->trajet[0] = a.id_entrepot;
         a.liste_camion[i]->trajet[1] = a.id_entrepot;
-        a.liste_camion[i]->taille_trajet++;
+        a.liste_camion[i]->taille_trajet = 2;
     }
     while (actuelle && nb_requete)
     {
+        printf("%d : debut %d\n", a.id_entrepot, a.liste_camion[0]->trajet[0]);
         int camion = -1;
         int taille_new_trajet = 0;
         memset(new_trajet, 0, TAILLE_MAX_TRAJET);
@@ -326,7 +337,7 @@ void incremente_tableau(int *tableau, int taille, int limite)
         tableau[taille - 1]++;
     }
 }
-
+/*
 int calcul_cout(int *tab_requete, requete *liste_requete, int taille_requete, int taille_tab, float **graphe, entrepot a)
 {
     int gain = 0;
@@ -399,4 +410,4 @@ int assignation_requete(entrepot a)
 
     // On incrémente le tableau à chaque fois pour obtenir toutes les combinaisons possibles
     return 0;
-}
+}*/

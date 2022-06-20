@@ -24,6 +24,7 @@ typedef struct liste_requete
 
 typedef struct camion
 {
+    int id_camion; //pour l'affichage
     float distance_parcouru;
     int taille_trajet;
     int *trajet;

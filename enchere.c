@@ -63,7 +63,7 @@ entrepot *enchere_echange_fin(requete *rv, int nb_requete_vendre, int nb_entrepo
             a[indice_e_demande].gain_total -= cout_requete_min + 1;
 
             printf("ENCHERES : La requete %d->%d de l'acteur %d a été vendue à l'acteur %d au prix de %.2f, il la fera avec le camion %d\n", 
-                rv[cpt_requete].origine, rv[cpt_requete].destination, indice_e_demande, indice_e_offre_min, cout_requete_min + 1, indice_c_offre_min);
+                rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, a[indice_e_offre_min].id_entrepot, cout_requete_min + 1, a[indice_e_offre_min].liste_camion[indice_c_offre_min]->id_camion);
         }
         else
         {
@@ -83,10 +83,13 @@ entrepot *enchere_echange_fin(requete *rv, int nb_requete_vendre, int nb_entrepo
                 a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], pos_camion, rv[cpt_requete].origine, graphe, 0);
                 a[indice_e_demande].gain_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], rv[cpt_requete].origine, rv[cpt_requete].destination, graphe, 1);
                 printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il la fera avec le camion %d\n", 
-                rv[cpt_requete].origine, rv[cpt_requete].destination, indice_e_demande, indice_c_demande);
+                rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, a[indice_e_demande].liste_camion[indice_c_demande]->id_camion);
             }
             else if(!cout_requete)
             {
+                printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il ne peut pas la faire, il perdra %.2f\n", 
+                rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, rv[cpt_requete].perte);
+                
                 a[indice_e_demande].gain_total -= rv[cpt_requete].gain;
                 a[indice_e_demande].gain_total -= rv[cpt_requete].perte;
             }
