@@ -165,7 +165,7 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *tai
     trajet_a_inserer[1] = r.destination;
     int bool = 0;
 
-    //printf("%d : %d\n",a.id_entrepot, a.liste_camion[0]->trajet[a.liste_camion[0]->taille_trajet - 2]);
+    // printf("%d : %d\n",a.id_entrepot, a.liste_camion[0]->trajet[a.liste_camion[0]->taille_trajet - 2]);
     for (int i = 0; i < a.nb_camion; i++)
     {
         // PROBLEME SI ON EST A j = taille_trajet - 1 pour destination
@@ -177,7 +177,7 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *tai
             int position_initiale = a.liste_camion[i]->trajet[j];
             int position_suivante = a.liste_camion[i]->trajet[j + 1];
 
-            if(a.liste_camion[i]->distance_parcouru + graphe[position_initiale][r.origine] + graphe[r.origine][r.destination] <= DISTANCE_MAX)
+            if (a.liste_camion[i]->distance_parcouru + graphe[position_initiale][r.origine] + graphe[r.origine][r.destination] <= DISTANCE_MAX)
             {
                 // On part de notre sommet initial (j), et on va effectuer la requête que l'on souhaite intégrer
                 actuel_cout += cout_distance(graphe[position_initiale][r.origine]);
@@ -209,8 +209,8 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *tai
                     meilleur_cout = actuel_cout;
                     position_insertion = j + 1;
                     new_trajet = memcpy(new_trajet, a.liste_camion[i]->trajet, position_insertion * sizeof(int));
-                    
-                    for(int k = 0; k < position_insertion; k++)
+
+                    for (int k = 0; k < position_insertion; k++)
                         printf("-%d", a.liste_camion[i]->trajet[k]);
                     printf("-\n");
 
@@ -326,7 +326,8 @@ void incremente_tableau(int *tableau, int taille, int limite)
         while (tableau[taille - cpt] == limite)
         {
             tableau[taille - cpt] = 0;
-            cpt++;
+            if (taille - cpt > 0)
+                cpt++;
         }
         if (taille - cpt >= 0)
             tableau[taille - cpt]++;
@@ -354,12 +355,12 @@ float calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, en
     return gain_total;
 }
 
-int calcul_combinaison(int *tab, int taille_tab, int *new_tab, int *case_noir, int cpt, requete *r, entrepot a, float **graphe)
+int different_ordre(int *tab, int taille_tab, int *new_tab, int *case_noir, int cpt, requete *r, entrepot a, float **graphe)
 {
     if (cpt == taille_tab)
     {
-        //affiche_tableau(new_tab, taille_tab);
-        //printf("cout : %.2f\n",calcul_cout_tab_requete(new_tab, taille_tab, r, a, graphe));
+        affiche_tableau(new_tab, taille_tab);
+        // printf("cout : %.2f\n",calcul_cout_tab_requete(new_tab, taille_tab, r, a, graphe));
         return 0;
     }
 
@@ -369,20 +370,105 @@ int calcul_combinaison(int *tab, int taille_tab, int *new_tab, int *case_noir, i
         {
             new_tab[cpt] = tab[i];
             case_noir[i] = 1;
-            calcul_combinaison(tab, taille_tab, new_tab, case_noir, cpt + 1, r, a, graphe);
+            different_ordre(tab, taille_tab, new_tab, case_noir, cpt + 1, r, a, graphe);
             case_noir[i] = 0;
         }
     }
     return -1;
 }
 
+int rempli_difference(int *tab_a_remplir, int *cmp1, int taille_cmp1, int *cmp2, int taille_cmp2)
+{
+    int cpt = 0;
+    for (int i = 0; i < taille_cmp1; i++)
+    {
+        int trouve = 0;
+        for (int j = 0; j < taille_cmp2; j++)
+        {
+            if (cmp1[i] == cmp2[j])
+            {
+                trouve = 1;
+                break;
+            }
+        }
+        if (!trouve)
+        {
+            tab_a_remplir[cpt] = cmp1[i];
+            cpt++;
+        }
+    }
+    return cpt;
+}
+
+int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **camion_requete, requete *r, entrepot a, float **graphe)
+{
+    // On a trouvé une combinaison !
+    
+    if (index == k)
+    {
+        sleep(1);
+        printf("Nouvelle combinaison : \n");
+        // Pour cette combinaison on test tous les ordres
+        for (int i = 0; i < k; i++)
+            camion_requete[i][0] = tab[i];
+
+        // Maintenant que la première requete de chaque camion à été initialisé on rempli le reste du tableau avec les requete restante
+        int requete_restante[n];
+        int nb_requete_restante = 0;
+        nb_requete_restante = rempli_difference(requete_restante, tab_ref, n, tab, k);
+        // les indices d'insignation représente le numéro de la requete
+        // La valeur des cases représente le camion qui prend la requête
+        int *assignation = calloc(sizeof(int), nb_requete_restante);
+        int nb_incrementation = k;
+        for (int i = 0; i < nb_requete_restante-1; i++)
+            nb_incrementation *= nb_incrementation;
+
+        for (int z = 0; z < nb_incrementation; z++) 
+        {
+            // On passe par un tableau de position de curseur, pour pouvoir concaténer à chaque fois la requête à assigner bien à la fin sans parcourir en boucle le tableau
+            int pos_curseur[k];
+            for (int i = 0; i < k; i++)
+                pos_curseur[i] = 1;
+
+            for (int j = 0; j < nb_requete_restante; j++)
+            {
+                int indice_camion = assignation[j];
+                camion_requete[indice_camion][pos_curseur[indice_camion]] = requete_restante[j];
+                pos_curseur[indice_camion]++;
+            }
+            for (int i = 0; i < k; i++)
+            {
+                int new_tab[pos_curseur[i]];
+                int case_noir[pos_curseur[i]];
+                for (int j = 0; j < pos_curseur[i]; j++)
+                {
+                    case_noir[j] = 0;
+                }
+                printf("camion %d : ",i);
+                affiche_tableau(camion_requete[i], pos_curseur[i]);
+                different_ordre(camion_requete[i]+1, pos_curseur[i]-1, new_tab, case_noir, 0, r, a, graphe);
+                printf("\n");
+                memset(camion_requete[i] + 1, 0, sizeof(int) * (n - 1));
+            }
+            printf("\n\n");
+            incremente_tableau(assignation, nb_requete_restante, k - 1);
+        }
+        free(assignation);
+
+        return 0;
+    }
+
+    for (int i = cpt; i < n && index < k; i++)
+    {
+        tab[index] = tab_ref[i];
+        combinaison(tab, tab_ref, n, k, index + 1, i + 1, camion_requete, r, a, graphe);
+    }
+    return 0;
+}
 
 // brut force
 int assignation_requete(entrepot a, float **graphe)
 {
-    int tab_requete[a.nb_requete];
-    for (int i = 0; i < a.nb_requete; i++)
-        tab_requete[i] = 1;
 
     // chaque indice du tab_requete représente le numéro de requête, la valeur dans cette case représente le numéro de camion qui traite la demande
 
@@ -395,40 +481,43 @@ int assignation_requete(entrepot a, float **graphe)
         r[i].gain = copy->gain;
         copy = copy->suiv;
     }
-    affiche_tableau(tab_requete, a.nb_requete);
-
     // On a chargé notre tableau de requete pour éviter de parcourir la liste chaînée en boucle
+
     // Maintenant pour chaque camion, on va assigner les requêtes à traiter
-    int camion_requete[a.nb_camion][a.nb_requete];
-
-    // On passe par un tableau de position de curseur, pour pouvoir concaténer à chaque fois la requête à assigner bien à la fin sans parcourir en boucle le tableau
-    int pos_curseur[a.nb_camion];
+    int **camion_requete;
+    camion_requete = calloc(a.nb_camion, sizeof(int *));
     for (int i = 0; i < a.nb_camion; i++)
-        pos_curseur[i] = 0;
-
-    for (int i = 0; i < a.nb_requete; i++)
     {
-        camion_requete[tab_requete[i]][pos_curseur[tab_requete[i]]] = i;
-        pos_curseur[tab_requete[i]]++;
+        camion_requete[i] = calloc(a.nb_requete, sizeof(int));
     }
 
-    int new_tab[pos_curseur[1]];
-    for (int i = 0; i < pos_curseur[1] - 1; i++)
+    int n = 5;
+    int k = 3;
+
+    printf("Nombre de requete : %d\n", n);
+    printf("Nombre de camion  : %d\n", k);
+
+    int new_tab[k];
+    for (int i = 0; i < k - 1; i++)
     {
         new_tab[i] = 0;
     }
-    affiche_tableau(camion_requete[1], pos_curseur[1]);
 
-    int case_noir[pos_curseur[1]];
-    for (int i = 0; i < pos_curseur[1]; i++)
+    int tab_ref[n];
+    for (int i = 0; i < n; i++)
     {
-        case_noir[i] = 0;
+        tab_ref[i] = i;
     }
 
-    calcul_combinaison(camion_requete[1], pos_curseur[1], new_tab, case_noir, 0, r, a, graphe);
-
-    // calcul_meilleur_combinaison(camion_requete[i], pos_curseur[i]);
+    combinaison(new_tab, tab_ref, n, k, 0, 0, camion_requete, r, a, graphe);
+    // affiche_tableau(new_tab, k);
+    //  calcul_meilleur_combinaison(camion_requete[i], pos_curseur[i]);
 
     // On incrémente le tableau à chaque fois pour obtenir toutes les combinaisons possibles
+    for (int i = 0; i < a.nb_camion; i++)
+    {
+        free(camion_requete[i]);
+    }
+    free(camion_requete);
     return 0;
 }
