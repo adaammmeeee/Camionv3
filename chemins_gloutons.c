@@ -157,41 +157,41 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new
     float meilleur_cout = MAX;
     int insertion = -1;
 
-    for(int cpt_camion = 0; cpt_camion < a.nb_camion; cpt_camion++)
+    for (int cpt_camion = 0; cpt_camion < a.nb_camion; cpt_camion++)
     {
-        for(int position_insertion = 0; position_insertion < a.liste_camion[cpt_camion]->taille_trajet; position_insertion++)
+        for (int position_insertion = 0; position_insertion < a.liste_camion[cpt_camion]->taille_trajet; position_insertion++)
         {
             float cout_requete = 0;
             int taille_ajout = 0;
             int suite_trajet = position_insertion + 1;
             int trajet_vide = 1;
-            
+
             int depart = a.liste_camion[cpt_camion]->trajet[position_insertion];
             int arrivee;
-            //Si la requete n'est pas ajoutée à la fin du trajet et que le sommet position_insertion est l'origine d'un trajet vide
-            //l'arrivée est le prochain sommet de la liste de trajet
-            //sinon l'arrivee correspond au départ, un retour au point d'origine de la prochaine requête est nécessaire pour chercher la marchandise
+            // Si la requete n'est pas ajoutée à la fin du trajet et que le sommet position_insertion est l'origine d'un trajet vide
+            // l'arrivée est le prochain sommet de la liste de trajet
+            // sinon l'arrivee correspond au départ, un retour au point d'origine de la prochaine requête est nécessaire pour chercher la marchandise
             if ((position_insertion < a.liste_camion[cpt_camion]->taille_trajet - 1) && !a.liste_camion[cpt_camion]->charge[position_insertion])
                 arrivee = a.liste_camion[cpt_camion]->trajet[position_insertion + 1];
             else
                 arrivee = a.liste_camion[cpt_camion]->trajet[position_insertion];
 
-            if(a.liste_camion[cpt_camion]->distance_parcouru + graphe[depart][r.origine] + graphe[r.origine][r.destination] + graphe[r.destination][arrivee] <= DISTANCE_MAX)
+            if (a.liste_camion[cpt_camion]->distance_parcouru + graphe[depart][r.origine] + graphe[r.origine][r.destination] + graphe[r.destination][arrivee] <= DISTANCE_MAX)
             {
                 cout_requete += cout_distance(graphe[depart][r.origine]);
                 cout_requete += cout_distance(graphe[r.origine][r.destination]);
                 cout_requete += cout_distance(graphe[r.destination][arrivee]);
                 cout_requete -= cout_distance(graphe[depart][arrivee]);
 
-                if(cout_requete < meilleur_cout)
+                if (cout_requete < meilleur_cout)
                 {
-                    for(int i = 0; i <= position_insertion; i++)
+                    for (int i = 0; i <= position_insertion; i++)
                         new_trajet[i] = a.liste_camion[cpt_camion]->trajet[i];
-                    
-                    for(int i = 0; i < position_insertion; i++)
+
+                    for (int i = 0; i < position_insertion; i++)
                         new_charge[i] = a.liste_camion[cpt_camion]->charge[i];
 
-                    if(r.origine != depart)
+                    if (r.origine != depart)
                     {
                         new_trajet[suite_trajet] = r.origine;
                         new_charge[suite_trajet - 1] = 0;
@@ -201,26 +201,26 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new
                     }
                     else
                         new_charge[suite_trajet - 1] = 1;
-                        
-                    if(r.destination != arrivee)
+
+                    if (r.destination != arrivee)
                     {
                         new_trajet[suite_trajet] = r.destination;
                         new_charge[suite_trajet] = 0;
                         suite_trajet++;
                         taille_ajout++;
                     }
-                    if(arrivee == depart)
+                    if (arrivee == depart)
                     {
                         trajet_vide = 0;
                         taille_ajout++;
                     }
 
-                    for(int i = 0; i < (a.liste_camion[cpt_camion]->taille_trajet - (position_insertion + trajet_vide)); i++)
+                    for (int i = 0; i < (a.liste_camion[cpt_camion]->taille_trajet - (position_insertion + trajet_vide)); i++)
                         new_trajet[i + suite_trajet] = a.liste_camion[cpt_camion]->trajet[i + position_insertion + trajet_vide];
 
-                    for(int i = 0; i < ((a.liste_camion[cpt_camion]->taille_trajet - 1) - (position_insertion + trajet_vide)); i++)
+                    for (int i = 0; i < ((a.liste_camion[cpt_camion]->taille_trajet - 1) - (position_insertion + trajet_vide)); i++)
                         new_charge[i + suite_trajet] = a.liste_camion[cpt_camion]->charge[i + position_insertion + trajet_vide];
-                    
+
                     *taille_new_trajet = a.liste_camion[cpt_camion]->taille_trajet + taille_ajout;
                     *id_camion = cpt_camion;
                     meilleur_cout = cout_requete;
@@ -232,12 +232,11 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new
     if (meilleur_cout == MAX)
         return 0;
 
-    //printf("J'ai incrusté sur le sommet %d\n", insertion);
-    //printf("Cela m'a couté s: %.2f\n", meilleur_cout);
+    // printf("J'ai incrusté sur le sommet %d\n", insertion);
+    // printf("Cela m'a couté s: %.2f\n", meilleur_cout);
 
     return meilleur_cout;
 }
-
 
 entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, float **graphe)
 {
@@ -271,12 +270,12 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, float **g
         }
         else if (cout)
         {
-            for(int i = 0; i < taille_new_trajet; i++)
+            for (int i = 0; i < taille_new_trajet; i++)
                 a.liste_camion[camion]->trajet[i] = new_trajet[i];
 
-            for(int i = 0; i < taille_new_trajet - 1; i++)
+            for (int i = 0; i < taille_new_trajet - 1; i++)
                 a.liste_camion[camion]->charge[i] = new_charge[i];
-                
+
             a.liste_camion[camion]->taille_trajet = taille_new_trajet;
 
             gain_total -= cout;
@@ -334,41 +333,61 @@ float calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, en
 {
     float gain_total = 0;
     int pos_camion = a.id_entrepot;
-
+    if (tab[0] == -1)
+        return -10000000;
+    // printf("Itinéraire calculé : %d -> ", pos_camion);
     for (int i = 0; i < taille_tab; i++)
     {
         int indice_requete = tab[i];
         gain_total += tab_requete[indice_requete].gain;
+
         gain_total -= cout_distance(graphe[pos_camion][tab_requete[indice_requete].origine]);
+        pos_camion = tab_requete[indice_requete].origine;
+        // printf("%d -> ", pos_camion);
+
         gain_total -= cout_distance(graphe[tab_requete[indice_requete].origine][tab_requete[indice_requete].destination]);
         pos_camion = tab_requete[indice_requete].destination;
+        // printf("%d -> ", pos_camion);
     }
+
     gain_total -= cout_distance(graphe[pos_camion][a.id_entrepot]);
+    // printf("%d\n", a.id_entrepot);
+
     return gain_total;
 }
 
-int different_ordre(int *tab, int taille_tab, int *new_tab, int *case_noir, int cpt, requete *r, entrepot a, float **graphe)
+float different_ordre(int *tab, int taille_tab, int *new_tab, int *best_tab, int *case_noir, int cpt, requete *r, entrepot a, float **graphe)
 {
     if (cpt == taille_tab)
     {
-        affiche_tableau(new_tab, taille_tab);
-        // printf("cout : %.2f\n",calcul_cout_tab_requete(new_tab, taille_tab, r, a, graphe));
-        return 0;
+        new_tab[0] = tab[0];
+
+        float nouveau_cout = calcul_cout_tab_requete(new_tab, taille_tab, r, a, graphe);
+        float meilleur_cout = calcul_cout_tab_requete(best_tab, taille_tab, r, a, graphe);
+        if (nouveau_cout >= meilleur_cout)
+        {
+            // printf("Meilleur ordre trouvé ! \n");
+            memcpy(best_tab, new_tab, sizeof(int) * taille_tab);
+            // affiche_tableau(best_tab, taille_tab);
+            meilleur_cout = nouveau_cout;
+        }
+
+        return meilleur_cout;
     }
 
-    for (int i = 0; i < taille_tab; i++)
+    for (int i = 1; i < taille_tab; i++)
     {
         if (case_noir[i] == 0)
         {
             new_tab[cpt] = tab[i];
             case_noir[i] = 1;
-            different_ordre(tab, taille_tab, new_tab, case_noir, cpt + 1, r, a, graphe);
+            return different_ordre(tab, taille_tab, new_tab, best_tab, case_noir, cpt + 1, r, a, graphe);
             case_noir[i] = 0;
         }
     }
-    return -1;
 }
 
+// rempli tab_a_remplir avec touts les entiers qui ne sont pas présent dans cmp1 ET cmp2 à la fois, renvoi la taille de ce tableau
 int rempli_difference(int *tab_a_remplir, int *cmp1, int taille_cmp1, int *cmp2, int taille_cmp2)
 {
     int cpt = 0;
@@ -392,34 +411,41 @@ int rempli_difference(int *tab_a_remplir, int *cmp1, int taille_cmp1, int *cmp2,
     return cpt;
 }
 
-int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **camion_requete, requete *r, entrepot a, float **graphe)
+float combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **camion_requete, requete *r, entrepot a, float **graphe)
 {
     // On a trouvé une combinaison !
-    
+
     if (index == k)
     {
-        printf("Nouvelle combinaison : \n");
-        // Pour cette combinaison on test tous les ordres
+        // Camion requete est un tableau à double entrée [i][k], i désigne le numéro de camion et k son trajet
+        // On initialise le premier sommet de chaque camion afin de tous les rendre unique, d'après la combinaison calculer dans k
         for (int i = 0; i < k; i++)
             camion_requete[i][0] = tab[i];
 
-        // Maintenant que la première requete de chaque camion à été initialisé on rempli le reste du tableau avec les requete restante
+        int pos_curseur[k];
+
         int requete_restante[n];
         int nb_requete_restante = 0;
+        // Ici on charge toutes les requêtes qui ne sont pas utilisés dans requete_restante: on va les attribuer de manière différentes à tous les camion et recup la meilleure combinaison
         nb_requete_restante = rempli_difference(requete_restante, tab_ref, n, tab, k);
-        // les indices d'insignation représente le numéro de la requete
-        // La valeur des cases représente le camion qui prend la requête
+
+        // les indices d'assignation représente le numéro de la requete
+        // La valeur des cases d'assignation représente le numéro de camion qui prend la requête
         int *assignation = calloc(sizeof(int), nb_requete_restante);
         int nb_incrementation = k;
-        for (int i = 0; i < nb_requete_restante-1; i++)
-            nb_incrementation *= nb_incrementation;
+        for (int i = 0; i < nb_requete_restante - 1; i++) // On va incrémenteer k^(nb_requete_restante-1) fois pour obtenir toutes les combinaisons possibles
+            nb_incrementation *= nb_incrementation;       // Simplement utiliser la blibothèque math.h ?
 
-        for (int z = 0; z < nb_incrementation; z++) 
+        float total = 0;
+        for (int z = 0; z < nb_incrementation; z++)
         {
             // On passe par un tableau de position de curseur, pour pouvoir concaténer à chaque fois la requête à assigner bien à la fin sans parcourir en boucle le tableau
-            int pos_curseur[k];
+            // pos_curseur[k] désigne la taille actuelle du trajet du camion k
             for (int i = 0; i < k; i++)
+            {
                 pos_curseur[i] = 1;
+                memset(camion_requete[i] + 1, 0, sizeof(int) * (n - 1));
+            }
 
             for (int j = 0; j < nb_requete_restante; j++)
             {
@@ -435,15 +461,18 @@ int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **
                 {
                     case_noir[j] = 0;
                 }
-                printf("camion %d : ",i);
-                affiche_tableau(camion_requete[i], pos_curseur[i]);
-                different_ordre(camion_requete[i]+1, pos_curseur[i]-1, new_tab, case_noir, 0, r, a, graphe);
-                printf("\n");
-                memset(camion_requete[i] + 1, 0, sizeof(int) * (n - 1));
+                int best_tab[pos_curseur[i]];
+                memset(best_tab, -1, sizeof(int) * pos_curseur[i]);
+                total += different_ordre(camion_requete[i], pos_curseur[i], new_tab, best_tab, case_noir, 1, r, a, graphe);
+                memcpy(camion_requete[i], best_tab, sizeof(int) * pos_curseur[i]);
+                affiche_tableau(best_tab, pos_curseur[i]);
             }
-            printf("\n\n");
+            printf("Total de cette initialisation : %.2f\n", total);
+            total = 0;
+
             incremente_tableau(assignation, nb_requete_restante, k - 1);
         }
+
         free(assignation);
 
         return 0;
@@ -482,8 +511,8 @@ int assignation_requete(entrepot a, float **graphe)
         camion_requete[i] = calloc(a.nb_requete, sizeof(int));
     }
 
-    int n = 5;
-    int k = 3;
+    int n = a.nb_requete;
+    int k = a.nb_camion;
 
     printf("Nombre de requete : %d\n", n);
     printf("Nombre de camion  : %d\n", k);
@@ -501,10 +530,7 @@ int assignation_requete(entrepot a, float **graphe)
     }
 
     combinaison(new_tab, tab_ref, n, k, 0, 0, camion_requete, r, a, graphe);
-    // affiche_tableau(new_tab, k);
-    //  calcul_meilleur_combinaison(camion_requete[i], pos_curseur[i]);
 
-    // On incrémente le tableau à chaque fois pour obtenir toutes les combinaisons possibles
     for (int i = 0; i < a.nb_camion; i++)
     {
         free(camion_requete[i]);
