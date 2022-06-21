@@ -104,8 +104,10 @@ entrepot *enchere_echange_fin(requete *rv, int nb_requete_vendre, int nb_entrepo
 entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, float **graphe)
 {
     int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
+    int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
     int taille_new_trajet_min = 0;
     int *new_trajet_min;
+    int *new_charge_min;
 
     for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
     {
@@ -124,7 +126,8 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
                 int camion_offre = -1;
                 int taille_new_trajet = 0;
                 memset(new_trajet, 0, TAILLE_MAX_TRAJET);
-                float cout_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, &taille_new_trajet, graphe);
+                memset(new_charge, 0, TAILLE_MAX_TRAJET - 1);
+                float cout_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, graphe);
                 if((camion_offre == -1 || !taille_new_trajet) && cout_requete)
                 {
                     printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
@@ -137,6 +140,7 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
                     indice_e_offre_min = indice_e_offre;
                     indice_c_offre_min = camion_offre;
                     new_trajet_min = new_trajet;
+                    new_charge_min = new_charge;
                     taille_new_trajet_min = taille_new_trajet;
                     cpt_offre++;
                 }
@@ -145,10 +149,14 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
 
         if (cpt_offre)
         {
-            a[indice_e_offre_min].liste_camion[indice_c_offre_min]->trajet = new_trajet_min;
+            for(int i = 0; i < taille_new_trajet_min; i++)
+                a[indice_e_offre_min].liste_camion[indice_c_offre_min]->trajet[i] = new_trajet_min[i];
+
+            for(int i = 0; i < taille_new_trajet_min; i++)
+                a[indice_e_offre_min].liste_camion[indice_c_offre_min]->charge[i] = new_charge_min[i];
+                
             a[indice_e_offre_min].liste_camion[indice_c_offre_min]->taille_trajet = taille_new_trajet_min;
 
-            //il faut pas compter le retour il sera compter apres
             a[indice_e_offre_min].gain_total -= cout_requete_min;
             a[indice_e_offre_min].gain_total += cout_requete_min + 1;
             a[indice_e_demande].gain_total -= cout_requete_min + 1;
@@ -157,8 +165,7 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
         {
             int camion_demande = -1;
             int taille_new_trajet = 0;
-            int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
-            float cout_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, &taille_new_trajet, graphe);
+            float cout_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, new_charge, &taille_new_trajet, graphe);
             if(camion_demande == -1 && cout_requete)
             {
                 printf("ERREUR : lors du choix du camion faisant le trajet\n");
@@ -167,9 +174,13 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
             else if(camion_demande != -1 && cout_requete)
             {
                 int indice_c_demande = camion_demande;
-                a[indice_e_demande].liste_camion[indice_c_demande]->trajet = new_trajet;
-                a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet = taille_new_trajet;
+                for(int i = 0; i < taille_new_trajet; i++)
+                    a[indice_e_demande].liste_camion[indice_c_demande]->trajet[i] = new_trajet[i];
 
+                for(int i = 0; i < taille_new_trajet - 1; i++)
+                    a[indice_e_demande].liste_camion[indice_c_demande]->charge[i] = new_charge[i];
+                    
+                a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet = taille_new_trajet;
                 a[indice_e_demande].gain_total -= cout_requete;
             }
             else if(!cout_requete)
@@ -181,6 +192,7 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
         a[indice_e_demande].gain_total += rv[cpt_requete].gain;
     }
     free(new_trajet);
+    free(new_charge);
 
     return a;
 }
