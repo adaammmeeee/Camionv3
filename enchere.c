@@ -106,8 +106,8 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
     int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
     int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
     int taille_new_trajet_min = 0;
-    int *new_trajet_min;
-    int *new_charge_min;
+    int *new_trajet_min = calloc(TAILLE_MAX_TRAJET, sizeof(int));
+    int *new_charge_min = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
 
     for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
     {
@@ -126,8 +126,6 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
             {
                 int camion_offre = -1;
                 int taille_new_trajet = 0;
-                memset(new_trajet, 0, TAILLE_MAX_TRAJET);
-                memset(new_charge, 0, TAILLE_MAX_TRAJET - 1);
                 float distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, graphe);
                 float cout_requete = cout_distance(distance_requete);
 
@@ -143,8 +141,11 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
                     cout_requete_min = cout_requete;
                     indice_e_offre_min = indice_e_offre;
                     indice_c_offre_min = camion_offre;
-                    new_trajet_min = new_trajet;
-                    new_charge_min = new_charge;
+                    for(int i = 0; i < taille_new_trajet_min; i++)
+                        new_trajet_min[i] = new_trajet[i];
+
+                    for(int i = 0; i < taille_new_trajet_min; i++)
+                        new_charge_min[i] = new_charge[i];
                     taille_new_trajet_min = taille_new_trajet;
                     cpt_offre++;
                 }
@@ -201,6 +202,8 @@ entrepot *enchere_echange_insertion(requete *rv, int nb_requete_vendre, int nb_e
     }
     free(new_trajet);
     free(new_charge);
+    free(new_trajet_min);
+    free(new_charge_min);
 
     return a;
 }
