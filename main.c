@@ -91,7 +91,6 @@ int main()
 			if (a[i].nb_requete)
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
 		}
-		
 		for (int i = 0; i < nb_entrepots; i++)
 			a[i] = retour_a_la_casa(a[i], graphe);
 	}
@@ -132,14 +131,16 @@ int main()
 			printf("On va maintenant faire l'ajout de requête par insertion\n");
 			int nb_requete_vente = 0;
 			int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
+			int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
 			for (int i = 0; i < nb_entrepots; i++)
 			{
 				if (a[i].nb_requete > 1)
 				{
 					a[i] = init_insertion(a[i].LR, a[i], a[i].nb_requete - 1, graphe);
 					memset(new_trajet, 0, TAILLE_MAX_TRAJET);
+					memset(new_trajet, 0, TAILLE_MAX_TRAJET - 1);
 					int camion = -1; int taille_new_trajet = 0;
-					int cout_requete = insertion(*(a[i].LR->dern), a[i], &camion, new_trajet, &taille_new_trajet, graphe);
+					int cout_requete = insertion(*(a[i].LR->dern), a[i], &camion, new_trajet, new_charge, &taille_new_trajet, graphe);
 					if((camion == -1 || !taille_new_trajet)&& cout_requete)
 						return 1;
 					else if(!cout_requete)
@@ -150,6 +151,7 @@ int main()
 				}
 			}
 			free(new_trajet);
+			free(new_charge);
 
 			if(nb_requete_vente)
 				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
@@ -198,25 +200,53 @@ int main()
 	if(a[0].liste_camion[0]->taille_trajet > 2)
 	{
 		int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
+		int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
 		int taille_new_trajet = 0;
 
 		requete nouv;
-		nouv.origine = a[0].liste_camion[0]->trajet[a[0].liste_camion[0]->taille_trajet-2];
-		nouv.destination = a[0].id_entrepot;
+		nouv.origine = 81;
+		nouv.destination = 27;
 		nouv.prec = NULL;
 		nouv.suiv = NULL;
-		nouv.gain = 350;
+		nouv.gain = cout_distance(graphe[0][81]);
+		nouv.gain += cout_distance(graphe[81][27]);
+		nouv.gain += cout_distance(graphe[27][0]);
 		nouv.perte = 600;
 		int cout = 0;
 
-		cout = insertion(nouv, a[0], &id_camion, new_trajet, &taille_new_trajet, graphe);
-		printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, id_camion);
+		cout = insertion(nouv, a[0], &id_camion, new_trajet, new_charge, &taille_new_trajet, graphe);
+		printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, a[0].liste_camion[id_camion]->id_camion);
 
 		for(int i = 0; i < taille_new_trajet; i++)
 			printf("-%d", new_trajet[i]);
 
+		printf("-\nLa nouvelle charge serait : ");
+		for(int i = 0; i < taille_new_trajet - 1; i++)
+			printf("-%d", new_charge[i]);
+
 		printf("-\nCela nous rapportera : %.2f\n", nouv.gain - cout);
 
+		for(int i = 0; i < taille_new_trajet; i++)
+			a[0].liste_camion[id_camion]->trajet[i] = new_trajet[i];
+		for(int i = 0; i < taille_new_trajet - 1; i++)
+			a[0].liste_camion[id_camion]->charge[i] = new_charge[i];
+			
+		a[0].liste_camion[id_camion]->taille_trajet = taille_new_trajet;
+
+		int id = 0;
+		for (int i = 0; i < a[id].nb_camion; i++)
+		{
+			printf("trajet du camion %d : ", a[id].liste_camion[i]->id_camion);
+			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
+				printf("-%d", a[id].liste_camion[i]->trajet[j]);
+
+			printf("-\ncharge du camion %d : ", a[id].liste_camion[i]->id_camion);
+			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
+				printf("-%d", a[id].liste_camion[i]->charge[j]);
+			printf("-\n");
+		}
+
+		free(new_charge);
 		free(new_trajet);
 	}
 	for (int i = 0; i < nb_entrepots; i++)
