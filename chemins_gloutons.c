@@ -398,7 +398,6 @@ int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **
     
     if (index == k)
     {
-        sleep(1);
         printf("Nouvelle combinaison : \n");
         // Pour cette combinaison on test tous les ordres
         for (int i = 0; i < k; i++)
