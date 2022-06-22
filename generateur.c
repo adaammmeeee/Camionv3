@@ -22,13 +22,14 @@ int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
     for (int i = 0; i < nb_entrepots; i++)
     {
         int nombre_requetes = 10; // entre 300 et 2000 requetes
-        int nombre_camions = 8;   // 10 requetes par camion
+        int nombre_camions = 7;   // 10 requetes par camion
+        int destination = 0 ;
         fprintf(f, "entrepot : %d\nnombre de camion : %d\nnombre de requete : %d\n\n", i, nombre_camions, nombre_requetes);
         float gain = 0;
         for (int j = 0; j < nombre_requetes; j++)
         {
-            int origine = i;
-            int destination = rand() % nb_entrepots;
+            int origine =  destination;
+            destination = rand() % nb_entrepots;
             while (destination == origine)
             {
                 destination = rand() % nb_entrepots;
