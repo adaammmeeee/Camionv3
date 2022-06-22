@@ -43,13 +43,18 @@ entrepot retour_a_la_casa(entrepot a, float **graphe)
 	return a;
 }
 
-int main()
+int main(int argc, char **argv)
 {
 
 	int nb_entrepots = 0;
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
-	float **graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
+	float **graphe;
+	if(argc = 2)
+		graphe = charge_graphe(argv[1], &nb_entrepots);
+	else
+		graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
+		
 	genere_acteur(nomfic, graphe, nb_entrepots);
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
@@ -207,62 +212,7 @@ int main()
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
 	}
-	//////////////////////// On test la fonction insertion
-	printf("\n\n\nTest insertion\n");
-	int id_camion = 0;
 
-	if(a[0].liste_camion[0]->taille_trajet > 2)
-	{
-		int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
-		int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
-		int taille_new_trajet = 0;
-
-		requete nouv;
-		nouv.origine = 81;
-		nouv.destination = 27;
-		nouv.prec = NULL;
-		nouv.suiv = NULL;
-		nouv.gain = cout_distance(graphe[0][81]);
-		nouv.gain += cout_distance(graphe[81][27]);
-		nouv.gain += cout_distance(graphe[27][0]);
-		nouv.perte = 600;
-		int cout = 0;
-
-		cout = insertion(nouv, a[0], &id_camion, new_trajet, new_charge, &taille_new_trajet, graphe);
-		printf("Si on voulait insérer une requete %d->%d ayant pour gain %.2f\nAlors on la confierai au camion %d et son nouveau trajet serait :",nouv.origine, nouv.destination, nouv.gain, a[0].liste_camion[id_camion]->id_camion);
-
-		for(int i = 0; i < taille_new_trajet; i++)
-			printf("-%d", new_trajet[i]);
-
-		printf("-\nLa nouvelle charge serait : ");
-		for(int i = 0; i < taille_new_trajet - 1; i++)
-			printf("-%d", new_charge[i]);
-
-		printf("-\nCela nous rapportera : %.2f\n", nouv.gain - cout);
-
-		for(int i = 0; i < taille_new_trajet; i++)
-			a[0].liste_camion[id_camion]->trajet[i] = new_trajet[i];
-		for(int i = 0; i < taille_new_trajet - 1; i++)
-			a[0].liste_camion[id_camion]->charge[i] = new_charge[i];
-			
-		a[0].liste_camion[id_camion]->taille_trajet = taille_new_trajet;
-
-		int id = 0;
-		for (int i = 0; i < a[id].nb_camion; i++)
-		{
-			printf("trajet du camion %d : ", a[id].liste_camion[i]->id_camion);
-			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
-				printf("-%d", a[id].liste_camion[i]->trajet[j]);
-
-			printf("-\ncharge du camion %d : ", a[id].liste_camion[i]->id_camion);
-			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
-				printf("-%d", a[id].liste_camion[i]->charge[j]);
-			printf("-\n");
-		}
-
-		free(new_charge);
-		free(new_trajet);
-	}
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);
 	free(a);

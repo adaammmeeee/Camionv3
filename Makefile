@@ -10,6 +10,10 @@ OBJS = main.c\
 run: main
 	echo $(CSRC)
 	./main
+
+test: main
+	echo $(CSRC)
+	./main "matrice_distance_10_sommets.csv"
 	
 debug: main
 	valgrind --leak-check=full --show-leak-kinds=all ./main
