@@ -62,10 +62,11 @@ float calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, en
     kilometrage += graphe[pos_camion][a.id_entrepot];
     gain_total -= cout_distance(graphe[pos_camion][a.id_entrepot]);
     // printf("%d\n", a.id_entrepot);
+    
     if (kilometrage > DISTANCE_MAX)
     {
-        printf("Impossible de parcourir la distance\n");
-        return -1;
+        //printf("Impossible de parcourir la distance\n");
+        return -10000;
     }
 
     return gain_total;
@@ -228,7 +229,7 @@ float combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int 
                 different_ordre(camion_requete[i], pos_curseur[i], new_tab, best_tab, case_noir, 1, &meilleur_cout, r, a, graphe);
 
                 // printf("On a récupérer le meilleur cout %f$ \n", meilleur_cout);
-
+                    
                 organisation_actuelle += meilleur_cout;
                 memcpy(camion_requete[i], best_tab, sizeof(int) * pos_curseur[i]);
                 // printf("Le meilleur ordre nous a rapporté : %f$, le voici : \n", meilleur_cout);
@@ -317,7 +318,7 @@ int assignation_requete(entrepot a, float **graphe)
             tab_ref[i] = i;
         }
 
-        float cout_meilleure_assignation = -10000;
+        float cout_meilleure_assignation = -100000;
 
         combinaison(new_tab, tab_ref, n, k, 0, 0, camion_requete, meilleure_assignation, &cout_meilleure_assignation, r, a, graphe);
         printf("Voici la meilleure assignation possible des requêtes pour %d camions :  \n", k);
