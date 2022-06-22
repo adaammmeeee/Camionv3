@@ -15,5 +15,3 @@ int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, float 
 float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new_charge, int *taille_new_trajet, float **graphe);
 
 entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, float **graphe);
-
-int assignation_requete(entrepot a, float ** graphe);

@@ -3,7 +3,6 @@
 #define NB_MAX_CAMION 256
 #define TAILLE_MAX_TRAJET 256
 #define cout_distance(d) ((d)?(((1.1)*d) + 50):(0))
-#define distance_cout(c) ((c)?((c - 50)/(1.1)):(0))
 
 typedef struct requete
 {

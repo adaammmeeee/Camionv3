@@ -4,7 +4,7 @@ CFLAGS = -Wall -c -g
 LDFLAGS = -Wall -g
 CSRC = *.c
 OBJS = main.c\
-	init.o chemins_gloutons.o enchere.o generateur.o affichage.o
+	init.o chemins_gloutons.o enchere.o generateur.o affichage.o brute_force.o
 
 .PHONY: run
 run: main

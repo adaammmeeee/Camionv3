@@ -6,6 +6,7 @@
 #include "init.h"
 #include "chemins_gloutons.h"
 #include "enchere.h"
+#include "brute_force.h"
 
 void affichage_requete(liste_requete *LR)
 {
@@ -50,16 +51,16 @@ int main(int argc, char **argv)
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	float **graphe;
-	if(argc = 2)
+	if(argc == 2)
 		graphe = charge_graphe(argv[1], &nb_entrepots);
 	else
 		graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
-		
+
 	genere_acteur(nomfic, graphe, nb_entrepots);
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
-/*
+
 	assignation_requete(a[0], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
