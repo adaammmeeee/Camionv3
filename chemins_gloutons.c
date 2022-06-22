@@ -81,26 +81,24 @@ void tri_fusion_camion_proximite(float **graphe, int origine_requete, camion **l
     }
 }
 
-int cout_requete_fin_trajet(requete nouv, entrepot a, int *indice_camion, float **graphe)
+int cout_requete_fin_trajet(requete *nouv, entrepot a, int *indice_camion, float **graphe)
 {
-    float cout = 0;
-    tri_fusion_camion_proximite(graphe, nouv.origine, a.liste_camion, 0, a.nb_camion - 1);
+    float distance = 0;
+    tri_fusion_camion_proximite(graphe, nouv->origine, a.liste_camion, 0, a.nb_camion - 1);
     for (int i = 0; i < a.nb_camion; i++)
     {
         int taille_trajet = a.liste_camion[i]->taille_trajet;
         int pos_camion = a.liste_camion[i]->trajet[taille_trajet - 1];
         float distance_parcouru = a.liste_camion[i]->distance_parcouru;
 
-        if (distance_parcouru + graphe[pos_camion][nouv.origine] + graphe[nouv.origine][nouv.destination] + graphe[nouv.destination][a.id_entrepot] <= DISTANCE_MAX)
+        if (distance_parcouru + graphe[pos_camion][nouv->origine] + graphe[nouv->origine][nouv->destination] + graphe[nouv->destination][a.id_entrepot] <= DISTANCE_MAX)
         {
             *indice_camion = i;
-            cout += cout_distance(graphe[pos_camion][nouv.origine]);
-            cout += cout_distance(graphe[nouv.origine][nouv.destination]);
-            cout += cout_distance(graphe[nouv.destination][a.id_entrepot]);
+            distance = graphe[pos_camion][nouv->origine] + graphe[nouv->origine][nouv->destination] + graphe[nouv->destination][a.id_entrepot];
             break;
         }
     }
-    return cout;
+    return distance;
 }
 
 entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_requete, float **graphe)
@@ -121,7 +119,8 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     while (actuelle && nb_requete)
     {
         int camion = -1;
-        float cout = cout_requete_fin_trajet(*actuelle, a, &camion, graphe);
+        float distance = cout_requete_fin_trajet(actuelle, a, &camion, graphe);
+        float cout = cout_distance(distance);
         if (camion == -1 && cout)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
@@ -134,9 +133,10 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
             gain_total -= faire_course(a.liste_camion[camion], pos_camion, actuelle->origine, graphe, 0);
             gain_total -= faire_course(a.liste_camion[camion], actuelle->origine, actuelle->destination, graphe, 1);
             gain_total += actuelle->gain;
+            actuelle->a_vendre = 0;
         }
         else
-            gain_total -= actuelle->perte;
+            actuelle->a_vendre = 1;
 
         actuelle = actuelle->suiv;
         nb_requete--;
@@ -151,12 +151,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     return a;
 }
 
-int arrondi(float nombre)
-{
-    return (int) nombre;
-}
-
-float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new_charge, int *taille_new_trajet, float **graphe)
+float insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_charge, int *taille_new_trajet, float **graphe)
 {
     float meilleure_distance = DISTANCE_MAX;
     float distance_parcourue_min = DISTANCE_MAX;
@@ -181,12 +176,12 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new
             else
                 arrivee = a.liste_camion[cpt_camion]->trajet[position_insertion];
 
-            distance_requete = graphe[depart][r.origine] + graphe[r.origine][r.destination] + graphe[r.destination][arrivee] - graphe[depart][arrivee];
+            distance_requete = graphe[depart][r->origine] + graphe[r->origine][r->destination] + graphe[r->destination][arrivee] - graphe[depart][arrivee];
                   
             if(a.liste_camion[cpt_camion]->distance_parcouru + distance_requete <= DISTANCE_MAX)
             {
-                if((arrondi(distance_requete) < arrondi(meilleure_distance)) || 
-                   ((arrondi(distance_requete) == arrondi(meilleure_distance)) && (arrondi(a.liste_camion[cpt_camion]->distance_parcouru) < arrondi(distance_parcourue_min))))
+                if((((int) distance_requete) < ((int) meilleure_distance)) || 
+                  ((((int) distance_requete) == ((int) meilleure_distance) && ((int) a.liste_camion[cpt_camion]->distance_parcouru)) < ((int) distance_parcourue_min)))
                 {
                     for (int i = 0; i <= position_insertion; i++)
                         new_trajet[i] = a.liste_camion[cpt_camion]->trajet[i];
@@ -194,9 +189,9 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new
                     for (int i = 0; i < position_insertion; i++)
                         new_charge[i] = a.liste_camion[cpt_camion]->charge[i];
 
-                    if (r.origine != depart)
+                    if (r->origine != depart)
                     {
-                        new_trajet[suite_trajet] = r.origine;
+                        new_trajet[suite_trajet] = r->origine;
                         new_charge[suite_trajet - 1] = 0;
                         new_charge[suite_trajet] = 1;
                         suite_trajet++;
@@ -205,9 +200,9 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new
                     else
                         new_charge[suite_trajet - 1] = 1;
 
-                    if (r.destination != arrivee)
+                    if (r->destination != arrivee)
                     {
-                        new_trajet[suite_trajet] = r.destination;
+                        new_trajet[suite_trajet] = r->destination;
                         new_charge[suite_trajet] = 0;
                         suite_trajet++;
                         taille_ajout++;
@@ -232,11 +227,8 @@ float insertion(requete r, entrepot a, int *id_camion, int *new_trajet, int *new
             }
         }
     }
-    if (meilleure_distance == MAX)
+    if (meilleure_distance == DISTANCE_MAX)
         return 0;
-
-    // printf("J'ai incrusté sur le sommet %d\n", insertion);
-    // printf("Cela m'a couté s: %.2f\n", meilleur_cout);
 
     return meilleure_distance;
 }
@@ -263,9 +255,7 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, float **g
     {
         int camion = -1;
         int taille_new_trajet = 0;
-        memset(new_trajet, 0, TAILLE_MAX_TRAJET);
-        memset(new_charge, 0, TAILLE_MAX_TRAJET - 1);
-        float distance = insertion(*actuelle, a, &camion, new_trajet, new_charge, &taille_new_trajet, graphe);
+        float distance = insertion(actuelle, a, &camion, new_trajet, new_charge, &taille_new_trajet, graphe);
         float cout = cout_distance(distance);
 
         if ((camion == -1 || !taille_new_trajet) && cout)
@@ -286,9 +276,10 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, float **g
             a.liste_camion[camion]->distance_parcouru += distance;
             gain_total -= cout;
             gain_total += actuelle->gain;
+            actuelle->a_vendre = 0;
         }
         else
-            gain_total -= actuelle->perte;
+            actuelle->a_vendre = 1;
 
         actuelle = actuelle->suiv;
         nb_requete--;
