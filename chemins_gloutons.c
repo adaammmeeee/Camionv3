@@ -465,9 +465,9 @@ float combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int 
                 memset(best_tab, -1, sizeof(int) * pos_curseur[i]);
                 total += different_ordre(camion_requete[i], pos_curseur[i], new_tab, best_tab, case_noir, 1, r, a, graphe);
                 memcpy(camion_requete[i], best_tab, sizeof(int) * pos_curseur[i]);
-                affiche_tableau(best_tab, pos_curseur[i]);
+                //affiche_tableau(best_tab, pos_curseur[i]);
             }
-            printf("Total de cette initialisation : %.2f\n", total);
+            //printf("Total de cette initialisation : %.2f\n", total);
             total = 0;
 
             incremente_tableau(assignation, nb_requete_restante, k - 1);
