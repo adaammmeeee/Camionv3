@@ -1,7 +1,7 @@
 #Définition des macros
 CC = gcc
 CFLAGS = -Wall -c -g
-LDFLAGS = -Wall -g
+LDFLAGS = -Wall -g -lm
 CSRC = *.c
 OBJS = main.c\
 	init.o chemins_gloutons.o enchere.o generateur.o affichage.o brute_force.o
