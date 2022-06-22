@@ -233,6 +233,7 @@ int ajout_requete(liste_requete *LR, int origine, int destination, float gain, f
     nouv->prix_propose_vente = 0;
     nouv->origine = origine;
     nouv->id_entrepot = id_entrepot;
+    nouv->a_vendre = 0;
 
     nouv->prec = NULL;
     nouv->suiv = NULL;
