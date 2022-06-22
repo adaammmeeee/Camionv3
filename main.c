@@ -87,7 +87,7 @@ int main(int argc, char **argv)
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
 
-	/*
+	
 	assignation_requete(a[0], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 	return 0;
 
 	printf("//////////////////////////////////////////////\n");
-	//affichage_entrepot(a[1]);*/
+	//affichage_entrepot(a[1]);
 
 	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
 	requete liste_vente[nb_entrepots];
