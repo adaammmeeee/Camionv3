@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "structures.h"
 #include "generateur.h"
 #include "init.h"
@@ -32,6 +33,31 @@ void affichage_entrepot(entrepot a)
 	affichage_requete(a.LR);
 }
 
+void analyse_donnees(entrepot *a, int nb_entrepot)
+{
+	float nb_entrepots = (float) nb_entrepot;
+	float somme_m = 0;
+	float somme_var = 0;
+	float min = MAX;
+	float max = 0;
+	for (int i = 0; i < nb_entrepots; i++)
+	{
+		if(a[i].gain_total < min)
+			min = a[i].gain_total;
+		if(a[i].gain_total > max)
+			max = a[i].gain_total;
+
+		somme_m += a[i].gain_total;
+		somme_var = somme_var + a[i].gain_total * a[i].gain_total;
+		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, a[i].gain_total);
+	}
+	float moyenne = somme_m/nb_entrepots;
+	float variance = somme_var/nb_entrepots-moyenne*moyenne;
+	float ecart_type = sqrt(variance);
+	printf("\nGain global %.2f, moyenne par acteur : %.2f\n", somme_m, moyenne);
+	printf("Le gain le plus haut : %.2f, le gain le plus bas : %.2f et un ecart-type : %.2f\n\n", max, min, ecart_type);
+}
+
 // Tous les camions de l'entrepot a retourne à leurs positions initiales (l'id de l'entrepot a)
 entrepot retour_a_la_casa(entrepot a, float **graphe)
 {
@@ -61,6 +87,7 @@ int main(int argc, char **argv)
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
 
+	/*
 	assignation_requete(a[0], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
@@ -182,9 +209,8 @@ int main(int argc, char **argv)
 	else
 		printf("Je ne comprend pas ce que tu me demandes, arrête\n");
 
-	for (int i = 0; i < nb_entrepots; i++)
-		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, a[i].gain_total);
-
+	analyse_donnees(a, nb_entrepots);
+/*
 	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");
 	fflush(stdout);
 	scanf("%[^\n]", buffer);
@@ -212,7 +238,7 @@ int main(int argc, char **argv)
 		fflush(stdout);
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
-	}
+	}*/
 
 	for (int i = 0; i < nb_entrepots; i++)
 		libere_acteur(a[i]);

@@ -247,7 +247,7 @@ int ajout_requete(liste_requete *LR, int origine, int destination, float gain, f
     requete *comparateur = LR->dern;
     int test = 0;
     // C'est ici qu'on parcourt notre liste chainée pour insérer notre nouvelle requete conformément au tri
-    while (graphe[nouv->origine][nouv->destination] > graphe[comparateur->origine][comparateur->destination])
+    while (graphe[nouv->origine][nouv->destination] < graphe[comparateur->origine][comparateur->destination])
     {
         if (comparateur->prec)
         {
