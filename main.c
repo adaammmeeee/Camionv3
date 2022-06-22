@@ -54,7 +54,7 @@ int main()
 	struct entrepot *a = NULL;
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
-
+/*
 	assignation_requete(a[0], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
@@ -70,7 +70,7 @@ int main()
 	return 0;
 
 	printf("//////////////////////////////////////////////\n");
-	//affichage_entrepot(a[1]);
+	//affichage_entrepot(a[1]);*/
 
 	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
 	requete liste_vente[nb_entrepots];
@@ -86,23 +86,37 @@ int main()
 	if (buffer[0] == 'n')
 	{
 		printf("On procède sans enchères\n");
-		for (int i = 0; i < nb_entrepots; i++)
-		{
-			if (a[i].nb_requete)
-				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
-		}
-		for (int i = 0; i < nb_entrepots; i++)
-			a[i] = retour_a_la_casa(a[i], graphe);
-	}
-	else if (buffer[0] == 'y')
-	{
-		printf("On va maintenant faire l'ajout de requête à la fin d'un trajet existant\n");
 		printf("Quel type de glouton voulez-vous utiliser, ajout à la fin ou par insertion ? (0/1) \n");
 		fflush(stdout);
 		scanf("%[^\n]", buffer);
 		fgetc(stdin);
 		if (buffer[0] == '0')
 		{
+			printf("On va maintenant faire l'ajout de requête à la fin d'un trajet existant\n");
+			for (int i = 0; i < nb_entrepots; i++)
+				if (a[i].nb_requete)
+					a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
+
+			for (int i = 0; i < nb_entrepots; i++)
+				a[i] = retour_a_la_casa(a[i], graphe);
+		}
+		else if(buffer[0] == '1')
+		{
+			printf("On va maintenant faire l'ajout de requête par insertion\n");
+			for (int i = 0; i < nb_entrepots; i++)
+				if (a[i].nb_requete)
+					a[i] = init_insertion(a[i].LR, a[i], a[i].nb_requete, graphe);
+		}
+	}
+	else if (buffer[0] == 'y')
+	{
+		printf("Quel type de glouton voulez-vous utiliser, ajout à la fin ou par insertion ? (0/1) \n");
+		fflush(stdout);
+		scanf("%[^\n]", buffer);
+		fgetc(stdin);
+		if (buffer[0] == '0')
+		{
+			printf("On va maintenant faire l'ajout de requête à la fin d'un trajet existant\n");
 			int nb_requete_vente = 0;
 			for (int i = 0; i < nb_entrepots; i++)
 			{
