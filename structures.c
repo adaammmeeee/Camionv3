@@ -16,7 +16,7 @@ void affichage_requete(liste_requete *LR, int **graphe)
 	requete *actuelle = LR->prem;
 	while (actuelle)
 	{
-		printf("entrepot : %d requete : %d->%d\nGains : %.2f Perte : %.2f\nDistance : %.2f Cout : %.2f Benefice : %.2f\n",
+		printf("entrepot : %d requete : %d->%d\nGains : %.2f Perte : %.2f\nDistance : %.2f Cout : %.2f Benefice : %.2f\n\n",
 			   actuelle->id_entrepot, actuelle->origine, actuelle->destination, (float) actuelle->gain/10000, (float) actuelle->perte/10000, 
                (float) graphe[actuelle->origine][actuelle->destination]/10000, (float) cout_distance(graphe[actuelle->origine][actuelle->destination])/10000, 
                (float) (actuelle->gain - cout_distance(graphe[actuelle->origine][actuelle->destination]))/10000);
@@ -59,5 +59,5 @@ void analyse_donnees(entrepot *a, int nb_entrepot)
 	float variance = somme_var/nb_entrepots-moyenne*moyenne;
 	float ecart_type = sqrt(variance);
 	printf("\nGain global %.2f, moyenne par acteur : %.2f\n", somme_m, moyenne);
-	printf("Le gain le plus haut : %.2f, le gain le plus bas : %.2f et un ecart-type : %.2f\n\n", max, min, ecart_type);
+	printf("Le gain le plus haut : %.2f, le gain le plus bas : %.2f et un ecart-type : %.2f\n\n", (float) max/10000, (float) min/10000, ecart_type);
 }
