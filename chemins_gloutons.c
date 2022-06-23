@@ -120,13 +120,12 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     {
         int camion = -1;
         int distance = cout_requete_fin_trajet(actuelle, a, &camion, graphe);
-        int cout = cout_distance(distance);
-        if (camion == -1 && cout)
+        if (camion == -1 && distance)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
             return err;
         }
-        else if (cout)
+        else if (distance)
         {
             int taille_trajet = a.liste_camion[camion]->taille_trajet;
             int pos_camion = a.liste_camion[camion]->trajet[taille_trajet - 1];
@@ -135,8 +134,9 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
             benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
-        else
+        else{
             actuelle->a_vendre = 1;
+        }
 
         actuelle = actuelle->suiv;
         nb_requete--;
@@ -227,8 +227,6 @@ int insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_
             }
         }
     }
-    if (meilleure_distance == DISTANCE_MAX)
-        return 0;
 
     return meilleure_distance;
 }
@@ -258,12 +256,12 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
         int distance = insertion(actuelle, a, &camion, new_trajet, new_charge, &taille_new_trajet, graphe);
         int cout = cout_distance(distance);
 
-        if ((camion == -1 || !taille_new_trajet) && cout)
+        if ((camion == -1 || !taille_new_trajet) && distance)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
             return err;
         }
-        else if (cout)
+        else if (distance < DISTANCE_MAX)
         {
             for (int i = 0; i < taille_new_trajet; i++)
                 a.liste_camion[camion]->trajet[i] = new_trajet[i];
@@ -278,7 +276,7 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
             benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
-        else
+        else if(distance == DISTANCE_MAX)
             actuelle->a_vendre = 1;
 
         actuelle = actuelle->suiv;

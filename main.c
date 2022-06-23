@@ -42,31 +42,36 @@ int main(int argc, char **argv)
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	int **graphe;
-	if(argc == 2)
-		graphe = charge_graphe(argv[1], &nb_entrepots);
-	else
-		graphe = charge_graphe("matrice_distance.csv", &nb_entrepots);
-
-	genere_acteur(nomfic, graphe, nb_entrepots);
 	struct entrepot *a = NULL;
-	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
-	a = charge_entrepots(nomfic, graphe);
-
-	
-	assignation_requete(a[0], graphe);
-
-	for (int i = 0; i < nb_entrepots; i++)
-		libere_acteur(a[i]);
-	free(a);
-
-	for (int i = 0; i < nb_entrepots; i++)
+	if(argc < 2)
 	{
-		free(graphe[i]);
+		printf("besoin d'arguments %s nom_fichier.csv <option>brute\n", argv[0]);
+		return -1;
 	}
-	free(graphe);
+	else
+	{
+		graphe = charge_graphe(argv[1], &nb_entrepots);
+		genere_acteur(nomfic, graphe, nb_entrepots);
+		printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
+		a = charge_entrepots(nomfic, graphe);
 
-	return 0;
+		if(argc == 3 && !strcmp(argv[2],"brute"))
+		{
+			assignation_requete(a[0], graphe);
 
+			for (int i = 0; i < nb_entrepots; i++)
+				libere_acteur(a[i]);
+			free(a);
+
+			for (int i = 0; i < nb_entrepots; i++)
+			{
+				free(graphe[i]);
+			}
+			free(graphe);
+
+			return 0;
+		}
+	}
 	printf("//////////////////////////////////////////////\n");
 
 	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
@@ -101,7 +106,6 @@ int main(int argc, char **argv)
 		}
 		for (int i = 0; i < nb_entrepots; i++)
 		{
-			affichage_entrepot(a[i], graphe);
 			a[i] = retour_a_la_casa(a[i], graphe);
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 		}

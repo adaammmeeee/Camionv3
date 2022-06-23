@@ -12,6 +12,7 @@ int nb_vente(entrepot *a, int nb_entrepot)
         requete *actuelle = a[i].LR->prem;
         while(actuelle)
         {
+            printf("requeteàvendre %d\n", actuelle->a_vendre);
             if(actuelle->a_vendre){
                 nb_requete++;
             }
