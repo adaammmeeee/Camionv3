@@ -18,6 +18,10 @@ void affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, float **
     float kilometrage = 0;
     float cout_trajet = 0;
     float gain = 0;
+    if (tab[0] == -1)
+    {
+        printf("Pas de trajet possible\n");
+    }
 
     int pos_camion = a.id_entrepot;
     printf("%d ", pos_camion);
@@ -38,7 +42,7 @@ void affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, float **
         kilometrage += graphe[pos_camion][r[indice_requete].destination];
         cout_trajet += cout_distance(graphe[pos_camion][r[indice_requete].destination]);
         pos_camion = r[indice_requete].destination;
-        gain += r[i].gain;
+        gain += r[indice_requete].gain;
         printf(" -> %d", pos_camion);
     }
     kilometrage += graphe[pos_camion][a.id_entrepot];
@@ -68,8 +72,10 @@ void incremente_tableau(int *tableau, int taille, int limite)
 
 float calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, entrepot a, float **graphe)
 {
-    float gain_total = 0;
+    float benefice = 0;
     float kilometrage = 0;
+    float gain = 0;
+    float cout_trajet = 0;
     int pos_camion = a.id_entrepot;
     if (tab[0] == -1)
     {
@@ -80,32 +86,33 @@ float calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, en
     {
         int indice_requete = tab[i];
 
-        gain_total -= cout_distance(graphe[pos_camion][tab_requete[indice_requete].origine]);
+        cout_trajet += cout_distance(graphe[pos_camion][tab_requete[indice_requete].origine]);
         kilometrage += graphe[pos_camion][tab_requete[indice_requete].origine];
 
         pos_camion = tab_requete[indice_requete].origine;
         // printf("%d -> ", pos_camion);
 
-        gain_total -= cout_distance(graphe[tab_requete[indice_requete].origine][tab_requete[indice_requete].destination]);
+        cout_trajet += cout_distance(graphe[pos_camion][tab_requete[indice_requete].destination]);
         kilometrage += graphe[pos_camion][tab_requete[indice_requete].destination];
         pos_camion = tab_requete[indice_requete].destination;
-
-        gain_total += tab_requete[indice_requete].gain;
+        gain += tab_requete[indice_requete].gain;
 
         // printf("%d -> ", pos_camion);
     }
     // On rentre à l'entrepot
     kilometrage += graphe[pos_camion][a.id_entrepot];
-    gain_total -= cout_distance(graphe[pos_camion][a.id_entrepot]);
+    cout_trajet += cout_distance(graphe[pos_camion][a.id_entrepot]);
     // printf("%d\n", a.id_entrepot);
+    benefice = gain - cout_trajet;
 
     if (kilometrage > DISTANCE_MAX)
     {
-        // printf("Impossible de parcourir la distance\n");
-        return -10000;
+        printf("Impossible de parcourir la distance\n");
     }
-
-    return gain_total;
+    affiche_tableau(tab, taille_tab);
+    //printf("Benefice: %.2f km : %.2f  gain brut : %.2f\n", benefice, kilometrage, gain);
+    //printf("\n\n");
+    return benefice;
 }
 
 float different_ordre(int *tab, int taille_tab, int *new_tab, int *best_tab, int *case_noir, int cpt, float *meilleur_cout, requete *r, entrepot a, float **graphe)
