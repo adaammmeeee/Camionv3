@@ -5,10 +5,10 @@
 #include "structures.h"
 #include "init.h"
 
-int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
+int charge_requete(FILE *f, liste_requete *LR, int **graphe, int id_entrepot)
 {
     int origine, destination;
-    float gain, perte;
+    int gain, perte;
     char c = 0;
     while (!isdigit(c))
     {
@@ -54,7 +54,7 @@ int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
         cpt++;
         c = fgetc(f);
     }
-    gain = atof(buff);
+    gain = atoi(buff);
     // On a recupéré le gain de la requete
 
     memset(buff, 0, 256);
@@ -70,13 +70,13 @@ int charge_requete(FILE *f, liste_requete *LR, float **graphe, int id_entrepot)
         cpt++;
         c = fgetc(f);
     }
-    perte = atof(buff);
+    perte = atoi(buff);
     // On a recupéré la perte de la requete
 
     return ajout_requete(LR, origine, destination, gain, perte, graphe, id_entrepot);
 }
 
-float **charge_graphe(char *nomfic, int * nb_entrepot)
+int **charge_graphe(char *nomfic, int * nb_entrepot)
 {
     FILE *f = fopen(nomfic, "r");
     char c = 0;
@@ -89,7 +89,7 @@ float **charge_graphe(char *nomfic, int * nb_entrepot)
     *nb_entrepot = nb_entrepots;
     fseek(f, 0, SEEK_SET);
 
-    float **graphe = calloc(nb_entrepots, sizeof(int *));
+    int **graphe = calloc(nb_entrepots, sizeof(int *));
 
     for (int i = 0; i < nb_entrepots; i++)
     {
@@ -112,7 +112,7 @@ float **charge_graphe(char *nomfic, int * nb_entrepot)
             }
             nombre[cpt] = '\0';
 
-            graphe[i][j] = atof(nombre);
+            graphe[i][j] = (int) (atof(nombre)*1000);
         }
     }
 
@@ -120,7 +120,7 @@ float **charge_graphe(char *nomfic, int * nb_entrepot)
     return graphe;
 }
 
-entrepot *charge_entrepots(char *nomfic, float **graphe)
+entrepot *charge_entrepots(char *nomfic, int **graphe)
 {
     int nb_entrepot_buff = 0;
     entrepot *a = NULL;
@@ -218,7 +218,7 @@ void init_liste_requete(liste_requete *LR)
     LR->prem = NULL;
 }
 
-int ajout_requete(liste_requete *LR, int origine, int destination, float gain, float perte, float **graphe, int id_entrepot)
+int ajout_requete(liste_requete *LR, int origine, int destination, int gain, int perte, int **graphe, int id_entrepot)
 {
     requete *nouv = calloc(1, sizeof(requete));
     if (!nouv)

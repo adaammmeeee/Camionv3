@@ -1,3 +1,3 @@
-int genere_acteur(char *nomfic, float **graphe, int nb_entrepots);
+int genere_acteur(char *nomfic, int **graphe, int nb_entrepots);
 
 

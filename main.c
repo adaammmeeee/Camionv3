@@ -9,57 +9,8 @@
 #include "enchere.h"
 #include "brute_force.h"
 
-void affichage_requete(liste_requete *LR)
-{
-	requete *actuelle = LR->prem;
-	while (actuelle)
-	{
-		printf("origine : %d\ndestination : %d\ngains : %.2f\nperte : %.2f\n\n",
-			   actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
-		actuelle = actuelle->suiv;
-	}
-}
-
-void affichage_entrepot(entrepot a)
-{
-	printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
-	for (int i = 0; i < a.nb_camion; i++)
-	{
-		printf("\nid_camion : %d\ndistance_parcouru : %.2f\nTrajet effectué :", i, a.liste_camion[i]->distance_parcouru);
-		for (int j = 0; j < a.liste_camion[i]->taille_trajet; j++)
-			printf("-%d-", a.liste_camion[i]->trajet[j]);
-		printf("-\n");
-	}
-	affichage_requete(a.LR);
-}
-
-void analyse_donnees(entrepot *a, int nb_entrepot)
-{
-	float nb_entrepots = (float) nb_entrepot;
-	float somme_m = 0;
-	float somme_var = 0;
-	float min = MAX;
-	float max = 0;
-	for (int i = 0; i < nb_entrepots; i++)
-	{
-		if(a[i].gain_total < min)
-			min = a[i].gain_total;
-		if(a[i].gain_total > max)
-			max = a[i].gain_total;
-
-		somme_m += a[i].gain_total;
-		somme_var = somme_var + a[i].gain_total * a[i].gain_total;
-		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, a[i].gain_total);
-	}
-	float moyenne = somme_m/nb_entrepots;
-	float variance = somme_var/nb_entrepots-moyenne*moyenne;
-	float ecart_type = sqrt(variance);
-	printf("\nGain global %.2f, moyenne par acteur : %.2f\n", somme_m, moyenne);
-	printf("Le gain le plus haut : %.2f, le gain le plus bas : %.2f et un ecart-type : %.2f\n\n", max, min, ecart_type);
-}
-
 // Tous les camions de l'entrepot a retourne à leurs positions initiales (l'id de l'entrepot a)
-entrepot retour_a_la_casa(entrepot a, float **graphe)
+entrepot retour_a_la_casa(entrepot a, int **graphe)
 {
 	for (int i = 0; i < a.nb_camion; i++)
 	{
@@ -70,7 +21,7 @@ entrepot retour_a_la_casa(entrepot a, float **graphe)
 	return a;
 }
 
-entrepot le_deficit_ou_pas(entrepot a, float **graphe)
+entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 {
 	requete *actuelle = a.LR->prem;
 	while(actuelle)
@@ -90,7 +41,7 @@ int main(int argc, char **argv)
 	int nb_entrepots = 0;
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
-	float **graphe;
+	int **graphe;
 	if(argc == 2)
 		graphe = charge_graphe(argv[1], &nb_entrepots);
 	else
@@ -101,7 +52,7 @@ int main(int argc, char **argv)
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
 
-	
+	/*
 	assignation_requete(a[0], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
@@ -114,7 +65,7 @@ int main(int argc, char **argv)
 	}
 	free(graphe);
 
-	return 0;
+	return 0;*/
 
 	printf("//////////////////////////////////////////////\n");
 
