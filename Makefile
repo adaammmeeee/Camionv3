@@ -9,12 +9,20 @@ OBJS = main.c\
 .PHONY: run
 run: main
 	echo $(CSRC)
-	./main
+	./main "matrice_distance.csv"
 
 test: main
 	echo $(CSRC)
 	./main "matrice_distance_10_sommets.csv"
-	
+
+brute: main
+	echo $(CSRC)
+	./main "matrice_distance.csv" brute
+
+brute_test: main
+	echo $(CSRC)
+	./main "matrice_distance_10_sommets.csv" brute
+
 debug: main
 	valgrind --leak-check=full --show-leak-kinds=all ./main
 	
