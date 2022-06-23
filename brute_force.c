@@ -13,11 +13,11 @@ void affiche_tableau(int *tableau, int taille)
     printf("\n");
 }
 
-void affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, float **graphe)
+void affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **graphe)
 {
-    float kilometrage = 0;
-    float cout_trajet = 0;
-    float gain = 0;
+    int kilometrage = 0;
+    int cout_trajet = 0;
+    int gain = 0;
     if (tab[0] == -1)
     {
         printf("Pas de trajet possible\n");
@@ -47,7 +47,7 @@ void affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, float **
     }
     kilometrage += graphe[pos_camion][a.id_entrepot];
     cout_trajet += cout_distance(graphe[pos_camion][a.id_entrepot]);
-    printf(" -v-> %d\nkm : %.2f\ngain brut: %.2f\ncout essence: %.2f\nbenefice : %.2f\n\n", a.id_entrepot, kilometrage, gain, cout_trajet, gain - cout_trajet);
+    printf(" -v-> %d\nkm : %d\ngain brut: %d\ncout essence: %d\nbenefice : %d\n\n", a.id_entrepot, kilometrage, gain, cout_trajet, gain - cout_trajet);
 }
 
 void incremente_tableau(int *tableau, int taille, int limite)
@@ -70,12 +70,12 @@ void incremente_tableau(int *tableau, int taille, int limite)
     }
 }
 
-float calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, entrepot a, float **graphe)
+int calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, entrepot a, int **graphe)
 {
-    float benefice = 0;
-    float kilometrage = 0;
-    float gain = 0;
-    float cout_trajet = 0;
+    int benefice = 0;
+    int kilometrage = 0;
+    int gain = 0;
+    int cout_trajet = 0;
     int pos_camion = a.id_entrepot;
     if (tab[0] == -1)
     {
@@ -110,20 +110,20 @@ float calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, en
         printf("Impossible de parcourir la distance\n");
     }
     affiche_tableau(tab, taille_tab);
-    //printf("Benefice: %.2f km : %.2f  gain brut : %.2f\n", benefice, kilometrage, gain);
+    //printf("Benefice: %d km : %d  gain brut : %d\n", benefice, kilometrage, gain);
     //printf("\n\n");
     return benefice;
 }
 
-float different_ordre(int *tab, int taille_tab, int *new_tab, int *best_tab, int *case_noir, int cpt, float *meilleur_cout, requete *r, entrepot a, float **graphe)
+int different_ordre(int *tab, int taille_tab, int *new_tab, int *best_tab, int *case_noir, int cpt, int *meilleur_cout, requete *r, entrepot a, int **graphe)
 {
     if (cpt >= taille_tab)
     {
         new_tab[0] = tab[0];
-        float nouveau_cout = calcul_cout_tab_requete(new_tab, taille_tab, r, a, graphe);
-        // printf("Valeur : %f$          tableau :", nouveau_cout);
+        int nouveau_cout = calcul_cout_tab_requete(new_tab, taille_tab, r, a, graphe);
+        // printf("Valeur : %d$          tableau :", nouveau_cout);
         // affiche_tableau(new_tab, taille_tab);
-        //  printf("best (cout %f$)  :  ", *meilleur_cout);
+        //  printf("best (cout %d$)  :  ", *meilleur_cout);
         //  affiche_tableau(best_tab, taille_tab);
         if (nouveau_cout > *meilleur_cout)
         {
@@ -187,7 +187,7 @@ int int_pow(int base, int exp)
     return result;
 }
 
-float combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **camion_requete, int **meilleure_assignation, float *cout_meilleure_assignation, requete *r, entrepot a, float **graphe)
+int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **camion_requete, int **meilleure_assignation, int *cout_meilleure_assignation, requete *r, entrepot a, int **graphe)
 {
     // On a trouvé une combinaison !
     if (index == k)
@@ -209,7 +209,7 @@ float combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int 
         int *assignation = calloc(sizeof(int), nb_requete_restante);
         int nb_incrementation = int_pow(k, nb_requete_restante);
         // printf("Nombre d'incrementation : %d\n", nb_incrementation);
-        float organisation_actuelle = 0;
+        int organisation_actuelle = 0;
 
         for (int z = 0; z < nb_incrementation; z++)
         {
@@ -249,19 +249,19 @@ float combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int 
                 // printf("On va récupérer le meilleur ordre de requete pour : \n");
                 // affiche_tableau(camion_requete[i], pos_curseur[i]);
                 // printf("Les ordres possibles (hors premier élément) sont : \n");
-                float meilleur_cout = -100000;
+                int meilleur_cout = -100000;
 
                 different_ordre(camion_requete[i], pos_curseur[i], new_tab, best_tab, case_noir, 1, &meilleur_cout, r, a, graphe);
 
-                // printf("On a récupérer le meilleur cout %f$ \n", meilleur_cout);
+                // printf("On a récupérer le meilleur cout %d$ \n", meilleur_cout);
 
                 organisation_actuelle += meilleur_cout;
                 memcpy(camion_requete[i], best_tab, sizeof(int) * pos_curseur[i]);
-                // printf("Le meilleur ordre nous a rapporté : %f$, le voici : \n", meilleur_cout);
+                // printf("Le meilleur ordre nous a rapporté : %d$, le voici : \n", meilleur_cout);
                 // affiche_tableau(camion_requete[i], pos_curseur[i]);
             }
 
-            // printf("Total de cette organisation : %.2f\n", organisation_actuelle);
+            // printf("Total de cette organisation : %d\n", organisation_actuelle);
             if (organisation_actuelle > *cout_meilleure_assignation)
             {
                 // printf("Nouvelle meilleure assignation trouvé !\n");
@@ -295,7 +295,7 @@ float combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int 
 }
 
 // brut force
-int assignation_requete(entrepot a, float **graphe)
+int assignation_requete(entrepot a, int **graphe)
 {
 
     // chaque indice du tab_requete représente le numéro de requête, la valeur dans cette case représente le numéro de camion qui traite la demande
@@ -343,7 +343,7 @@ int assignation_requete(entrepot a, float **graphe)
             tab_ref[i] = i;
         }
 
-        float cout_meilleure_assignation = -100000;
+        int cout_meilleure_assignation = -100000;
 
         combinaison(new_tab, tab_ref, n, k, 0, 0, camion_requete, meilleure_assignation, &cout_meilleure_assignation, r, a, graphe);
         printf("Voici la meilleure assignation possible des requêtes pour %d camions :  \n", k);
@@ -353,7 +353,7 @@ int assignation_requete(entrepot a, float **graphe)
             affiche_tableau(meilleure_assignation[i], n);
             affichage_trajet(meilleure_assignation[i], n, r, a, graphe);
         }
-        printf("Tout cela nous rapporte : %f$\n", cout_meilleure_assignation);
+        printf("Tout cela nous rapporte : %d$\n", cout_meilleure_assignation);
 
         for (int i = 0; i < k; i++)
         {
