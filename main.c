@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 	a = charge_entrepots(nomfic, graphe);
 
-	/*
+	
 	assignation_requete(a[0], graphe);
 
 	for (int i = 0; i < nb_entrepots; i++)
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 	}
 	free(graphe);
 
-	return 0;*/
+	return 0;
 
 	printf("//////////////////////////////////////////////\n");
 

@@ -1,0 +1,1826 @@
+nombre d'entrepot : 96
+
+entrepot : 0
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 90
+gains : 120625440
+perte : 1206254400
+
+origine : 90
+destination : 49
+gains : 22323720
+perte : 223237200
+
+origine : 49
+destination : 24
+gains : 57684760
+perte : 576847600
+
+entrepot : 1
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 72
+gains : 110687380
+perte : 1106873800
+
+origine : 72
+destination : 81
+gains : 99829280
+perte : 998292800
+
+origine : 81
+destination : 28
+gains : 92515380
+perte : 925153800
+
+entrepot : 2
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 72
+gains : 110687380
+perte : 1106873800
+
+origine : 72
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+origine : 16
+destination : 1
+gains : 244258400
+perte : -1852383296
+
+entrepot : 3
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+origine : 16
+destination : 10
+gains : 134694220
+perte : 1346942200
+
+origine : 10
+destination : 4
+gains : 75078180
+perte : 750781800
+
+entrepot : 4
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 33
+gains : 183369000
+perte : 1833690000
+
+origine : 33
+destination : 43
+gains : 164591780
+perte : 1645917800
+
+origine : 43
+destination : 58
+gains : 97687140
+perte : 976871400
+
+entrepot : 5
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 9
+gains : 83019960
+perte : 830199600
+
+origine : 9
+destination : 72
+gains : 46853940
+perte : 468539400
+
+origine : 72
+destination : 79
+gains : 136625820
+perte : 1366258200
+
+entrepot : 6
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 49
+gains : 139743220
+perte : 1397432200
+
+origine : 49
+destination : 39
+gains : 198610160
+perte : 1986101600
+
+origine : 39
+destination : 67
+gains : 182582060
+perte : 1825820600
+
+entrepot : 7
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 54
+gains : 113870560
+perte : 1138705600
+
+origine : 54
+destination : 94
+gains : 18083660
+perte : 180836600
+
+origine : 94
+destination : 90
+gains : 152701660
+perte : 1527016600
+
+entrepot : 8
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 49
+gains : 139743220
+perte : 1397432200
+
+origine : 49
+destination : 71
+gains : 122109780
+perte : 1221097800
+
+origine : 71
+destination : 77
+gains : 94306620
+perte : 943066200
+
+entrepot : 9
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 41
+gains : 70646280
+perte : 706462800
+
+origine : 41
+destination : 52
+gains : 155494340
+perte : 1554943400
+
+origine : 52
+destination : 94
+gains : 94902160
+perte : 949021600
+
+entrepot : 10
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 94
+gains : 137221580
+perte : 1372215800
+
+origine : 94
+destination : 46
+gains : 125144240
+perte : 1251442400
+
+origine : 46
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+entrepot : 11
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 86
+gains : 40382640
+perte : 403826400
+
+origine : 86
+destination : 1
+gains : 100955900
+perte : 1009559000
+
+origine : 1
+destination : 19
+gains : 294869400
+perte : -1346273296
+
+entrepot : 12
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 62
+gains : 113501620
+perte : 1135016200
+
+origine : 62
+destination : 82
+gains : 7232600
+perte : 72326000
+
+origine : 82
+destination : 84
+gains : 5559940
+perte : 55599400
+
+entrepot : 13
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 46
+gains : 12047300
+perte : 120473000
+
+origine : 46
+destination : 92
+gains : 116830660
+perte : 1168306600
+
+origine : 92
+destination : 88
+gains : 118473180
+perte : 1184731800
+
+entrepot : 14
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 79
+gains : 222311200
+perte : -2071855296
+
+origine : 79
+destination : 40
+gains : 229747200
+perte : -1997495296
+
+origine : 40
+destination : 19
+gains : 225727800
+perte : -2037689296
+
+entrepot : 15
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 57
+gains : 73548300
+perte : 735483000
+
+origine : 57
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+origine : 16
+destination : 2
+gains : 247481400
+perte : -1820153296
+
+entrepot : 16
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 10
+gains : 104803260
+perte : 1048032600
+
+origine : 10
+destination : 23
+gains : 105960240
+perte : 1059602400
+
+origine : 23
+destination : 37
+gains : 123613700
+perte : 1236137000
+
+entrepot : 17
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 64
+gains : 121587940
+perte : 1215879400
+
+origine : 64
+destination : 21
+gains : 131108440
+perte : 1311084400
+
+origine : 21
+destination : 32
+gains : 185869300
+perte : 1858693000
+
+entrepot : 18
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 17
+gains : 122713900
+perte : 1227139000
+
+origine : 17
+destination : 60
+gains : 20897240
+perte : 208972400
+
+origine : 60
+destination : 77
+gains : 110010000
+perte : 1100100000
+
+entrepot : 19
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 26
+gains : 178948760
+perte : 1789487600
+
+origine : 26
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+origine : 16
+destination : 43
+gains : 147631100
+perte : 1476311000
+
+entrepot : 20
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 25
+gains : 23626560
+perte : 236265600
+
+origine : 25
+destination : 31
+gains : 110010000
+perte : 1100100000
+
+origine : 31
+destination : 59
+gains : 110010000
+perte : 1100100000
+
+entrepot : 21
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 79
+gains : 222311200
+perte : -2071855296
+
+origine : 79
+destination : 21
+gains : 134245420
+perte : 1342454200
+
+origine : 21
+destination : 61
+gains : 128073980
+perte : 1280739800
+
+entrepot : 22
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 2
+gains : 93922500
+perte : 939225000
+
+origine : 2
+destination : 52
+gains : 197529080
+perte : 1975290800
+
+origine : 52
+destination : 47
+gains : 89226380
+perte : 892263800
+
+entrepot : 23
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 86
+gains : 40382640
+perte : 403826400
+
+origine : 86
+destination : 2
+gains : 104180000
+perte : 1041800000
+
+origine : 2
+destination : 11
+gains : 110010000
+perte : 1100100000
+
+entrepot : 24
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 47
+gains : 114927880
+perte : 1149278800
+
+origine : 47
+destination : 82
+gains : 6673580
+perte : 66735800
+
+origine : 82
+destination : 51
+gains : 14423740
+perte : 144237400
+
+entrepot : 25
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 66
+gains : 116769720
+perte : 1167697200
+
+origine : 66
+destination : 43
+gains : 104513300
+perte : 1045133000
+
+origine : 43
+destination : 35
+gains : 153140780
+perte : 1531407800
+
+entrepot : 26
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 36
+gains : 148302100
+perte : 1483021000
+
+origine : 36
+destination : 53
+gains : 8788440
+perte : 87884400
+
+origine : 53
+destination : 26
+gains : 199909920
+perte : 1999099200
+
+entrepot : 27
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 74
+gains : 146916980
+perte : 1469169800
+
+origine : 74
+destination : 21
+gains : 157671020
+perte : 1576710200
+
+origine : 21
+destination : 48
+gains : 126244240
+perte : 1262442400
+
+entrepot : 28
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 74
+gains : 146916980
+perte : 1469169800
+
+origine : 74
+destination : 6
+gains : 202708320
+perte : 2027083200
+
+origine : 6
+destination : 12
+gains : 109041780
+perte : 1090417800
+
+entrepot : 29
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 55
+gains : 89259160
+perte : 892591600
+
+origine : 55
+destination : 33
+gains : 249083000
+perte : -1804137296
+
+origine : 33
+destination : 93
+gains : 164284220
+perte : 1642842200
+
+entrepot : 30
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 2
+gains : 93922500
+perte : 939225000
+
+origine : 2
+destination : 26
+gains : 178577840
+perte : 1785778400
+
+origine : 26
+destination : 28
+gains : 129944420
+perte : 1299444200
+
+entrepot : 31
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 62
+gains : 113501620
+perte : 1135016200
+
+origine : 62
+destination : 9
+gains : 50499780
+perte : 504997800
+
+origine : 9
+destination : 49
+gains : 66808380
+perte : 668083800
+
+entrepot : 32
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 91
+gains : 114333660
+perte : 1143336600
+
+origine : 91
+destination : 12
+gains : 66361120
+perte : 663611200
+
+origine : 12
+destination : 69
+gains : 109566040
+perte : 1095660400
+
+entrepot : 33
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 42
+gains : 30737180
+perte : 307371800
+
+origine : 42
+destination : 66
+gains : 105728360
+perte : 1057283600
+
+origine : 66
+destination : 72
+gains : 7877200
+perte : 78772000
+
+entrepot : 34
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 53
+gains : 145966360
+perte : 1459663600
+
+origine : 53
+destination : 17
+gains : 62636300
+perte : 626363000
+
+origine : 17
+destination : 58
+gains : 52766660
+perte : 527666600
+
+entrepot : 35
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 73
+gains : 116595700
+perte : 1165957000
+
+origine : 73
+destination : 51
+gains : 6833080
+perte : 68330800
+
+origine : 51
+destination : 69
+gains : 174477480
+perte : 1744774800
+
+entrepot : 36
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 76
+gains : 153716960
+perte : 1537169600
+
+origine : 76
+destination : 56
+gains : 163685160
+perte : 1636851600
+
+origine : 56
+destination : 26
+gains : 131439540
+perte : 1314395400
+
+entrepot : 37
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 7
+gains : 129494960
+perte : 1294949600
+
+origine : 7
+destination : 34
+gains : 162432260
+perte : 1624322600
+
+origine : 34
+destination : 15
+gains : 124447500
+perte : 1244475000
+
+entrepot : 38
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 23
+gains : 168713260
+perte : 1687132600
+
+origine : 23
+destination : 76
+gains : 40934180
+perte : 409341800
+
+origine : 76
+destination : 85
+gains : 176424480
+perte : 1764244800
+
+entrepot : 39
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 35
+gains : 155041580
+perte : 1550415800
+
+origine : 35
+destination : 22
+gains : 208661740
+perte : 2086617400
+
+origine : 22
+destination : 0
+gains : 86807260
+perte : 868072600
+
+entrepot : 40
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 5
+gains : 110010000
+perte : 1100100000
+
+origine : 5
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+origine : 16
+destination : 28
+gains : 60576660
+perte : 605766600
+
+entrepot : 41
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 67
+gains : 118277160
+perte : 1182771600
+
+origine : 67
+destination : 26
+gains : 158378760
+perte : 1583787600
+
+origine : 26
+destination : 46
+gains : 170724280
+perte : 1707242800
+
+entrepot : 42
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 62
+gains : 113501620
+perte : 1135016200
+
+origine : 62
+destination : 6
+gains : 167926100
+perte : 1679261000
+
+origine : 6
+destination : 19
+gains : 263572200
+perte : -1659245296
+
+entrepot : 43
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 72
+gains : 110687380
+perte : 1106873800
+
+origine : 72
+destination : 40
+gains : 93771580
+perte : 937715800
+
+origine : 40
+destination : 91
+gains : 99081720
+perte : 990817200
+
+entrepot : 44
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 94
+gains : 137221580
+perte : 1372215800
+
+origine : 94
+destination : 58
+gains : 92716680
+perte : 927166800
+
+origine : 58
+destination : 21
+gains : 52509040
+perte : 525090400
+
+entrepot : 45
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 39
+gains : 115675440
+perte : 1156754400
+
+origine : 39
+destination : 13
+gains : 209931360
+perte : 2099313600
+
+origine : 13
+destination : 90
+gains : 99220100
+perte : 992201000
+
+entrepot : 46
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 83
+gains : 91660900
+perte : 916609000
+
+origine : 83
+destination : 37
+gains : 111913660
+perte : 1119136600
+
+origine : 37
+destination : 84
+gains : 86215240
+perte : 862152400
+
+entrepot : 47
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 90
+gains : 120625440
+perte : 1206254400
+
+origine : 90
+destination : 71
+gains : 102823480
+perte : 1028234800
+
+origine : 71
+destination : 67
+gains : 100235620
+perte : 1002356200
+
+entrepot : 48
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 81
+gains : 28797880
+perte : 287978800
+
+origine : 81
+destination : 51
+gains : 111485760
+perte : 1114857600
+
+origine : 51
+destination : 57
+gains : 160709000
+perte : 1607090000
+
+entrepot : 49
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 21
+gains : 149147780
+perte : 1491477800
+
+origine : 21
+destination : 54
+gains : 62502980
+perte : 625029800
+
+origine : 54
+destination : 47
+gains : 146984740
+perte : 1469847400
+
+entrepot : 50
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 85
+gains : 49072640
+perte : 490726400
+
+origine : 85
+destination : 60
+gains : 152404880
+perte : 1524048800
+
+origine : 60
+destination : 64
+gains : 110010000
+perte : 1100100000
+
+entrepot : 51
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 18
+gains : 110010000
+perte : 1100100000
+
+origine : 18
+destination : 95
+gains : 110010000
+perte : 1100100000
+
+origine : 95
+destination : 58
+gains : 156503040
+perte : 1565030400
+
+entrepot : 52
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 32
+gains : 89656480
+perte : 896564800
+
+origine : 32
+destination : 30
+gains : 110010000
+perte : 1100100000
+
+origine : 30
+destination : 32
+gains : 123283480
+perte : 1232834800
+
+entrepot : 53
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 51
+gains : 122426800
+perte : 1224268000
+
+origine : 51
+destination : 70
+gains : 120504440
+perte : 1205044400
+
+origine : 70
+destination : 72
+gains : 122625680
+perte : 1226256800
+
+entrepot : 54
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 15
+gains : 41846080
+perte : 418460800
+
+origine : 15
+destination : 36
+gains : 166905740
+perte : 1669057400
+
+origine : 36
+destination : 34
+gains : 71102120
+perte : 711021200
+
+entrepot : 55
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 4
+gains : 105601860
+perte : 1056018600
+
+origine : 4
+destination : 75
+gains : 79054900
+perte : 790549000
+
+origine : 75
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+entrepot : 56
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 63
+gains : 124025540
+perte : 1240255400
+
+origine : 63
+destination : 31
+gains : 110010000
+perte : 1100100000
+
+origine : 31
+destination : 53
+gains : 110010000
+perte : 1100100000
+
+entrepot : 57
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 19
+gains : 219531060
+perte : -2099656696
+
+origine : 19
+destination : 89
+gains : 76445480
+perte : 764454800
+
+origine : 89
+destination : 93
+gains : 170825260
+perte : 1708252600
+
+entrepot : 58
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 87
+gains : 188061600
+perte : 1880616000
+
+origine : 87
+destination : 75
+gains : 169654860
+perte : 1696548600
+
+origine : 75
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+entrepot : 59
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 16
+gains : 110010000
+perte : 1100100000
+
+origine : 16
+destination : 64
+gains : 48662340
+perte : 486623400
+
+origine : 64
+destination : 39
+gains : 186084900
+perte : 1860849000
+
+entrepot : 60
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 63
+gains : 124025540
+perte : 1240255400
+
+origine : 63
+destination : 53
+gains : 44469800
+perte : 444698000
+
+origine : 53
+destination : 3
+gains : 64849940
+perte : 648499400
+
+entrepot : 61
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 95
+gains : 84100160
+perte : 841001600
+
+origine : 95
+destination : 71
+gains : 71283840
+perte : 712838400
+
+origine : 71
+destination : 66
+gains : 98728400
+perte : 987284000
+
+entrepot : 62
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 57
+gains : 73548300
+perte : 735483000
+
+origine : 57
+destination : 7
+gains : 120717620
+perte : 1207176200
+
+origine : 7
+destination : 0
+gains : 128935280
+perte : 1289352800
+
+entrepot : 63
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 57
+gains : 73548300
+perte : 735483000
+
+origine : 57
+destination : 27
+gains : 173067280
+perte : 1730672800
+
+origine : 27
+destination : 39
+gains : 166445940
+perte : 1664459400
+
+entrepot : 64
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 34
+gains : 104833840
+perte : 1048338400
+
+origine : 34
+destination : 42
+gains : 104680060
+perte : 1046800600
+
+origine : 42
+destination : 75
+gains : 89625240
+perte : 896252400
+
+entrepot : 65
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 36
+gains : 148302100
+perte : 1483021000
+
+origine : 36
+destination : 14
+gains : 119286300
+perte : 1192863000
+
+origine : 14
+destination : 23
+gains : 149688760
+perte : 1496887600
+
+entrepot : 66
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 20
+gains : 129556560
+perte : 1295565600
+
+origine : 20
+destination : 77
+gains : 144664840
+perte : 1446648400
+
+origine : 77
+destination : 54
+gains : 145724140
+perte : 1457241400
+
+entrepot : 67
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 42
+gains : 30737180
+perte : 307371800
+
+origine : 42
+destination : 1
+gains : 98887460
+perte : 988874600
+
+origine : 1
+destination : 47
+gains : 199626120
+perte : 1996261200
+
+entrepot : 68
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 39
+gains : 115675440
+perte : 1156754400
+
+origine : 39
+destination : 56
+gains : 54687700
+perte : 546877000
+
+origine : 56
+destination : 26
+gains : 131439540
+perte : 1314395400
+
+entrepot : 69
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 23
+gains : 168713260
+perte : 1687132600
+
+origine : 23
+destination : 72
+gains : 80318360
+perte : 803183600
+
+origine : 72
+destination : 90
+gains : 13697080
+perte : 136970800
+
+entrepot : 70
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 62
+gains : 113501620
+perte : 1135016200
+
+origine : 62
+destination : 39
+gains : 178517120
+perte : 1785171200
+
+origine : 39
+destination : 48
+gains : 180826900
+perte : 1808269000
+
+entrepot : 71
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 33
+gains : 183369000
+perte : 1833690000
+
+origine : 33
+destination : 7
+gains : 79097800
+perte : 790978000
+
+origine : 7
+destination : 87
+gains : 66748540
+perte : 667485400
+
+entrepot : 72
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 68
+gains : 94845840
+perte : 948458400
+
+origine : 68
+destination : 32
+gains : 190399100
+perte : 1903991000
+
+origine : 32
+destination : 95
+gains : 110010000
+perte : 1100100000
+
+entrepot : 73
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 68
+gains : 94845840
+perte : 948458400
+
+origine : 68
+destination : 90
+gains : 209785720
+perte : 2097857200
+
+origine : 90
+destination : 11
+gains : 110010000
+perte : 1100100000
+
+entrepot : 74
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 28
+gains : 108478800
+perte : 1084788000
+
+origine : 28
+destination : 4
+gains : 147202320
+perte : 1472023200
+
+origine : 4
+destination : 55
+gains : 73472180
+perte : 734721800
+
+entrepot : 75
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 32
+gains : 89656480
+perte : 896564800
+
+origine : 32
+destination : 18
+gains : 110010000
+perte : 1100100000
+
+origine : 18
+destination : 78
+gains : 110010000
+perte : 1100100000
+
+entrepot : 76
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 53
+gains : 145966360
+perte : 1459663600
+
+origine : 53
+destination : 64
+gains : 39986200
+perte : 399862000
+
+origine : 64
+destination : 36
+gains : 38558400
+perte : 385584000
+
+entrepot : 77
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 95
+gains : 84100160
+perte : 841001600
+
+origine : 95
+destination : 65
+gains : 168712160
+perte : 1687121600
+
+origine : 65
+destination : 83
+gains : 110010000
+perte : 1100100000
+
+entrepot : 78
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 6
+gains : 85384740
+perte : 853847400
+
+origine : 6
+destination : 25
+gains : 64140660
+perte : 641406600
+
+origine : 25
+destination : 78
+gains : 224319800
+perte : -2051769296
+
+entrepot : 79
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 93
+gains : 32219980
+perte : 322199800
+
+origine : 93
+destination : 1
+gains : 98727300
+perte : 987273000
+
+origine : 1
+destination : 72
+gains : 195370880
+perte : 1953708800
+
+entrepot : 80
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 28
+gains : 108478800
+perte : 1084788000
+
+origine : 28
+destination : 8
+gains : 77302820
+perte : 773028200
+
+origine : 8
+destination : 88
+gains : 92617460
+perte : 926174600
+
+entrepot : 81
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 61
+gains : 118351520
+perte : 1183515200
+
+origine : 61
+destination : 15
+gains : 127115440
+perte : 1271154400
+
+origine : 15
+destination : 80
+gains : 110010000
+perte : 1100100000
+
+entrepot : 82
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 33
+gains : 183369000
+perte : 1833690000
+
+origine : 33
+destination : 48
+gains : 102173380
+perte : 1021733800
+
+origine : 48
+destination : 47
+gains : 3750220
+perte : 37502200
+
+entrepot : 83
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 70
+gains : 146185040
+perte : 1461850400
+
+origine : 70
+destination : 42
+gains : 120119660
+perte : 1201196600
+
+origine : 42
+destination : 41
+gains : 81367980
+perte : 813679800
+
+entrepot : 84
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 49
+gains : 139743220
+perte : 1397432200
+
+origine : 49
+destination : 38
+gains : 171975200
+perte : 1719752000
+
+origine : 38
+destination : 45
+gains : 138704600
+perte : 1387046000
+
+entrepot : 85
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 8
+gains : 141576480
+perte : 1415764800
+
+origine : 8
+destination : 70
+gains : 24830180
+perte : 248301800
+
+origine : 70
+destination : 31
+gains : 110010000
+perte : 1100100000
+
+entrepot : 86
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 54
+gains : 113870560
+perte : 1138705600
+
+origine : 54
+destination : 91
+gains : 147626920
+perte : 1476269200
+
+origine : 91
+destination : 95
+gains : 165981520
+perte : 1659815200
+
+entrepot : 87
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 90
+gains : 120625440
+perte : 1206254400
+
+origine : 90
+destination : 58
+gains : 75940140
+perte : 759401400
+
+origine : 58
+destination : 32
+gains : 133211860
+perte : 1332118600
+
+entrepot : 88
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 46
+gains : 12047300
+perte : 120473000
+
+origine : 46
+destination : 64
+gains : 126086940
+perte : 1260869400
+
+origine : 64
+destination : 57
+gains : 161703620
+perte : 1617036200
+
+entrepot : 89
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 28
+gains : 108478800
+perte : 1084788000
+
+origine : 28
+destination : 30
+gains : 56196020
+perte : 561960200
+
+origine : 30
+destination : 26
+gains : 162023500
+perte : 1620235000
+
+entrepot : 90
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 68
+gains : 94845840
+perte : 948458400
+
+origine : 68
+destination : 58
+gains : 193536960
+perte : 1935369600
+
+origine : 58
+destination : 35
+gains : 121998460
+perte : 1219984600
+
+entrepot : 91
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 61
+gains : 118351520
+perte : 1183515200
+
+origine : 61
+destination : 87
+gains : 167607320
+perte : 1676073200
+
+origine : 87
+destination : 18
+gains : 110010000
+perte : 1100100000
+
+entrepot : 92
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 13
+gains : 192637600
+perte : 1926376000
+
+origine : 13
+destination : 89
+gains : 46996940
+perte : 469969400
+
+origine : 89
+destination : 34
+gains : 139124360
+perte : 1391243600
+
+entrepot : 93
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 60
+gains : 119921220
+perte : 1199212200
+
+origine : 60
+destination : 31
+gains : 110010000
+perte : 1100100000
+
+origine : 31
+destination : 76
+gains : 110010000
+perte : 1100100000
+
+entrepot : 94
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 69
+gains : 80416040
+perte : 804160400
+
+origine : 69
+destination : 80
+gains : 110010000
+perte : 1100100000
+
+origine : 80
+destination : 82
+gains : 176857440
+perte : 1768574400
+
+entrepot : 95
+nombre de camion : 2
+nombre de requete : 3
+
+origine : 0
+destination : 82
+gains : 120226140
+perte : 1202261400
+
+origine : 82
+destination : 57
+gains : 160886100
+perte : 1608861000
+
+origine : 57
+destination : 25
+gains : 51167040
+perte : 511670400
+
