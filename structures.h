@@ -1,4 +1,4 @@
-#define DISTANCE_MAX 100000
+#define DISTANCE_MAX 2500000
 #define MAX 0x7fffffff                  // Valeur maximale pour une variable de type int
 #define NB_MAX_CAMION 256
 #define TAILLE_MAX_TRAJET 256
@@ -34,7 +34,7 @@ typedef struct camion
 typedef struct entrepot
 {
     int id_entrepot;
-    int gain_total;
+    int benefice_total;
     int nb_requete;
     int nb_camion;
     liste_requete *LR;

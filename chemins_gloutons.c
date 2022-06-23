@@ -105,7 +105,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
 {
     // Gestion d'erreur
     entrepot err;
-    err.gain_total = -1;
+    err.benefice_total = -1;
 
     if (!LR || nb_requete == 0)
     {
@@ -114,29 +114,29 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     }
 
     // Debut du glouton
-    int gain_total = 0;
+    int benefice_total = 0;
     requete *actuelle = LR->prem;
     while (actuelle && nb_requete)
     {
         int camion = -1;
         int distance = cout_requete_fin_trajet(actuelle, a, &camion, graphe);
-        int cout = cout_distance(distance);
-        if (camion == -1 && cout)
+        if (camion == -1 && distance)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
             return err;
         }
-        else if (cout)
+        else if (distance)
         {
             int taille_trajet = a.liste_camion[camion]->taille_trajet;
             int pos_camion = a.liste_camion[camion]->trajet[taille_trajet - 1];
-            gain_total -= faire_course(a.liste_camion[camion], pos_camion, actuelle->origine, graphe, 0);
-            gain_total -= faire_course(a.liste_camion[camion], actuelle->origine, actuelle->destination, graphe, 1);
-            gain_total += actuelle->gain;
+            benefice_total -= faire_course(a.liste_camion[camion], pos_camion, actuelle->origine, graphe, 0);
+            benefice_total -= faire_course(a.liste_camion[camion], actuelle->origine, actuelle->destination, graphe, 1);
+            benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
-        else
+        else{
             actuelle->a_vendre = 1;
+        }
 
         actuelle = actuelle->suiv;
         nb_requete--;
@@ -147,7 +147,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
         printf("Attention la liste de requete contient moins de requete que le nombre indiqué en argument\n");
         return err;
     }
-    a.gain_total = gain_total;
+    a.benefice_total = benefice_total;
     return a;
 }
 
@@ -180,8 +180,8 @@ int insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_
                   
             if(a.liste_camion[cpt_camion]->distance_parcouru + distance_requete <= DISTANCE_MAX)
             {
-                if((((int) distance_requete) < ((int) meilleure_distance)) || 
-                  ((((int) distance_requete) == ((int) meilleure_distance) && ((int) a.liste_camion[cpt_camion]->distance_parcouru)) < ((int) distance_parcourue_min)))
+                if((distance_requete < meilleure_distance) || 
+                  ((distance_requete == meilleure_distance) && (a.liste_camion[cpt_camion]->distance_parcouru < distance_parcourue_min)))
                 {
                     for (int i = 0; i <= position_insertion; i++)
                         new_trajet[i] = a.liste_camion[cpt_camion]->trajet[i];
@@ -227,8 +227,6 @@ int insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_
             }
         }
     }
-    if (meilleure_distance == DISTANCE_MAX)
-        return 0;
 
     return meilleure_distance;
 }
@@ -237,7 +235,7 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
 {
     // Gestion d'erreur
     entrepot err;
-    err.gain_total = -1;
+    err.benefice_total = -1;
 
     if (!LR || nb_requete == 0)
     {
@@ -246,7 +244,7 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
     }
 
     // Debut du glouton
-    int gain_total = 0;
+    int benefice_total = 0;
     requete *actuelle = LR->prem;
     int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
     int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
@@ -258,12 +256,12 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
         int distance = insertion(actuelle, a, &camion, new_trajet, new_charge, &taille_new_trajet, graphe);
         int cout = cout_distance(distance);
 
-        if ((camion == -1 || !taille_new_trajet) && cout)
+        if ((camion == -1 || !taille_new_trajet) && distance)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
             return err;
         }
-        else if (cout)
+        else if (distance < DISTANCE_MAX)
         {
             for (int i = 0; i < taille_new_trajet; i++)
                 a.liste_camion[camion]->trajet[i] = new_trajet[i];
@@ -274,11 +272,11 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
             a.liste_camion[camion]->taille_trajet = taille_new_trajet;
 
             a.liste_camion[camion]->distance_parcouru += distance;
-            gain_total -= cout;
-            gain_total += actuelle->gain;
+            benefice_total -= cout;
+            benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
-        else
+        else if(distance == DISTANCE_MAX)
             actuelle->a_vendre = 1;
 
         actuelle = actuelle->suiv;
@@ -292,7 +290,7 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
     }
     free(new_trajet);
     free(new_charge);
-    a.gain_total = gain_total;
+    a.benefice_total = benefice_total;
 
     return a;
 }

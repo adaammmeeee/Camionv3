@@ -16,7 +16,7 @@ entrepot retour_a_la_casa(entrepot a, int **graphe)
 	{
 		int taille = a.liste_camion[i]->taille_trajet;
 		int origine = a.liste_camion[i]->trajet[taille - 1];
-		a.gain_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
+		a.benefice_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
 	}
 	return a;
 }
@@ -27,7 +27,8 @@ entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 	while(actuelle)
 	{
 		if(actuelle->a_vendre){
-			a.gain_total -= actuelle->perte;
+			printf("pourquoi %d'>%d\n", actuelle->origine, actuelle->destination);
+			a.benefice_total -= actuelle->perte;
 		}
 		actuelle = actuelle->suiv;
 	}
@@ -101,7 +102,6 @@ int main(int argc, char **argv)
 		}
 		for (int i = 0; i < nb_entrepots; i++)
 		{
-			affichage_entrepot(a[i], graphe);
 			a[i] = retour_a_la_casa(a[i], graphe);
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 		}

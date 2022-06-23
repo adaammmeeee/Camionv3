@@ -68,7 +68,7 @@ void incremente_tableau(int *tableau, int taille, int limite)
 
 int calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, entrepot a, int **graphe)
 {
-    int gain_total = 0;
+    int benefice_total = 0;
     int kilometrage = 0;
     int pos_camion = a.id_entrepot;
     if (tab[0] == -1)
@@ -80,23 +80,23 @@ int calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, entr
     {
         int indice_requete = tab[i];
 
-        gain_total -= cout_distance(graphe[pos_camion][tab_requete[indice_requete].origine]);
+        benefice_total -= cout_distance(graphe[pos_camion][tab_requete[indice_requete].origine]);
         kilometrage += graphe[pos_camion][tab_requete[indice_requete].origine];
 
         pos_camion = tab_requete[indice_requete].origine;
         // printf("%d -> ", pos_camion);
 
-        gain_total -= cout_distance(graphe[tab_requete[indice_requete].origine][tab_requete[indice_requete].destination]);
+        benefice_total -= cout_distance(graphe[tab_requete[indice_requete].origine][tab_requete[indice_requete].destination]);
         kilometrage += graphe[pos_camion][tab_requete[indice_requete].destination];
         pos_camion = tab_requete[indice_requete].destination;
 
-        gain_total += tab_requete[indice_requete].gain;
+        benefice_total += tab_requete[indice_requete].gain;
 
         // printf("%d -> ", pos_camion);
     }
     // On rentre à l'entrepot
     kilometrage += graphe[pos_camion][a.id_entrepot];
-    gain_total -= cout_distance(graphe[pos_camion][a.id_entrepot]);
+    benefice_total -= cout_distance(graphe[pos_camion][a.id_entrepot]);
     // printf("%d\n", a.id_entrepot);
 
     if (kilometrage > DISTANCE_MAX)
@@ -105,7 +105,7 @@ int calcul_cout_tab_requete(int *tab, int taille_tab, requete *tab_requete, entr
         return -10000;
     }
 
-    return gain_total;
+    return benefice_total;
 }
 
 int different_ordre(int *tab, int taille_tab, int *new_tab, int *best_tab, int *case_noir, int cpt, int *meilleur_cout, requete *r, entrepot a, int **graphe)
