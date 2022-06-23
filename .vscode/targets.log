@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 23 13:20:51 2022
+# Make data base, printed on Thu Jun 23 14:40:58 2022
 
 # Variables
 
@@ -75,7 +77,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=618559cd94710452250
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'Makefile', line 6)
-OBJS = main.c init.o chemins_gloutons.o enchere.o generateur.o affichage.o brute_force.o
+OBJS = main.c structures.o init.o chemins_gloutons.o enchere.o generateur.o brute_force.o
 # environment
 MANAGERPID = 986
 # environment
@@ -191,7 +193,7 @@ CC = gcc
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-483d9861-b0bc-4a4f-902f-df45df759f20.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e8d3d280-49ae-4c3c-af3b-dc7239feaef4.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -241,11 +243,11 @@ LC_ALL = C
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/0b09dc8f_d39a_4aed_8d4b_acf1617cde85
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/45a7f0a3_ce8b_40c5_9e74_0c23f0a29972
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.87
+GNOME_TERMINAL_SERVICE = :1.586
 # default
 SUFFIXES := 
 # environment
@@ -263,7 +265,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 2960
+VSCODE_PID = 12566
 # environment
 DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=618559cd94710452250ffe0362b44c1a
 # variable set hash-table stats:
@@ -275,18 +277,15 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=618559cd94710452250ffe0
 
 # Directories
 
-# . (device 66309, inode 925697): 23 files, no impossibilities.
+# . (device 66309, inode 925697): 22 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 %.o: %.c %.h structure.h
 #  recipe to execute (from 'Makefile', line 25):
 	$(CC) $(CFLAGS) $<
-
- 
-make: *** No rule to make target 'all'.  Stop.
 
 # 1 implicit rules, 0 (0.0%) terminal.
 
@@ -299,6 +298,7 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
+ 
 .PHONY: run clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -319,7 +319,7 @@ main.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-23 10:09:34.876003256
+#  Last modified 2022-06-23 13:29:04
 #  File has been updated.
 #  Successfully updated.
 
@@ -352,12 +352,6 @@ chemins_gloutons.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-affichage.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 run: main
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -384,7 +378,13 @@ init.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-main: main.c init.o chemins_gloutons.o enchere.o generateur.o affichage.o brute_force.o
+# Not a target:
+structures.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+main: main.c structures.o init.o chemins_gloutons.o enchere.o generateur.o brute_force.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -411,12 +411,12 @@ enchere.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 44 / storage = 462 B / avg = 10 B
-# current buf: size = 8162 B / used = 462 B / count = 44 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 43 / storage = 452 B / avg = 10 B
+# current buf: size = 8162 B / used = 452 B / count = 43 / avg = 10 B
 
-# strcache performance: lookups = 62 / hit rate = 29%
+# strcache performance: lookups = 61 / hit rate = 29%
 # hash-table stats:
-# Load=44/8192=1%, Rehash=0, Collisions=2/62=3%
-# Finished Make data base on Thu Jun 23 13:20:51 2022
+# Load=43/8192=1%, Rehash=0, Collisions=2/61=3%
+# Finished Make data base on Thu Jun 23 14:40:58 2022
 
  

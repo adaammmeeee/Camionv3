@@ -34,7 +34,7 @@ typedef struct camion
 typedef struct entrepot
 {
     int id_entrepot;
-    int gain_total;
+    int benefice_total;
     int nb_requete;
     int nb_camion;
     liste_requete *LR;

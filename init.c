@@ -183,7 +183,7 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
         // Ici on a recupéré le nombre de requetes
 
         // On passe à l'initialisation des autres champs de l'entrepots
-        a[i].gain_total = 0;
+        a[i].benefice_total = 0;
         a[i].liste_camion = calloc(a[i].nb_camion, sizeof(camion *));
         for (int j = 0; j < a[i].nb_camion; j++)
         {

@@ -6,7 +6,7 @@
 int cout_distance(int distance)
 {
     if(distance)
-        return 110*distance + 5000;
+        return 11*distance + 500000;
     else
         return 0;
 }
@@ -18,7 +18,7 @@ void affichage_requete(liste_requete *LR, int **graphe)
 	{
 		printf("entrepot : %d requete : %d->%d\nGains : %.2f Perte : %.2f\nDistance : %.2f Cout : %.2f Benefice : %.2f\n\n",
 			   actuelle->id_entrepot, actuelle->origine, actuelle->destination, (float) actuelle->gain/10000, (float) actuelle->perte/10000, 
-               (float) graphe[actuelle->origine][actuelle->destination]/10000, (float) cout_distance(graphe[actuelle->origine][actuelle->destination])/10000, 
+               (float) graphe[actuelle->origine][actuelle->destination]/1000, (float) cout_distance(graphe[actuelle->origine][actuelle->destination])/10000, 
                (float) (actuelle->gain - cout_distance(graphe[actuelle->origine][actuelle->destination]))/10000);
 		actuelle = actuelle->suiv;
 	}
@@ -46,14 +46,14 @@ void analyse_donnees(entrepot *a, int nb_entrepot)
 	float max = 0;
 	for (int i = 0; i < nb_entrepots; i++)
 	{
-		if(a[i].gain_total < min)
-			min = a[i].gain_total;
-		if(a[i].gain_total > max)
-			max = a[i].gain_total;
+		if(a[i].benefice_total < min)
+			min = a[i].benefice_total;
+		if(a[i].benefice_total > max)
+			max = a[i].benefice_total;
 
-		somme_m += (float) a[i].gain_total/10000;
-		somme_var = somme_var + ((float) a[i].gain_total/10000) * ((float) a[i].gain_total/10000);
-		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, (float) a[i].gain_total/10000);
+		somme_m += (float) a[i].benefice_total/10000;
+		somme_var = somme_var + ((float) a[i].benefice_total/10000) * ((float) a[i].benefice_total/10000);
+		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, (float) a[i].benefice_total/10000);
 	}
 	float moyenne = somme_m/nb_entrepots;
 	float variance = somme_var/nb_entrepots-moyenne*moyenne;
