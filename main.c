@@ -101,6 +101,7 @@ int main(int argc, char **argv)
 		}
 		for (int i = 0; i < nb_entrepots; i++)
 		{
+			affichage_entrepot(a[i], graphe);
 			a[i] = retour_a_la_casa(a[i], graphe);
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 		}

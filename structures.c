@@ -11,18 +11,20 @@ int cout_distance(int distance)
         return 0;
 }
 
-void affichage_requete(liste_requete *LR)
+void affichage_requete(liste_requete *LR, int **graphe)
 {
 	requete *actuelle = LR->prem;
 	while (actuelle)
 	{
-		printf("origine : %d\ndestination : %d\ngains : %d\nperte : %d\n\n",
-			   actuelle->origine, actuelle->destination, actuelle->gain, actuelle->perte);
+		printf("entrepot : %d requete : %d->%d\nGains : %.2f Perte : %.2f\nDistance : %.2f Cout : %.2f Benefice : %.2f\n",
+			   actuelle->id_entrepot, actuelle->origine, actuelle->destination, (float) actuelle->gain/10000, (float) actuelle->perte/10000, 
+               (float) graphe[actuelle->origine][actuelle->destination]/10000, (float) cout_distance(graphe[actuelle->origine][actuelle->destination])/10000, 
+               (float) (actuelle->gain - cout_distance(graphe[actuelle->origine][actuelle->destination]))/10000);
 		actuelle = actuelle->suiv;
 	}
 }
 
-void affichage_entrepot(entrepot a)
+void affichage_entrepot(entrepot a, int **graphe)
 {
 	printf("id_entrepot : %d\nnb_requete : %d\n", a.id_entrepot, a.nb_requete);
 	for (int i = 0; i < a.nb_camion; i++)
@@ -32,7 +34,7 @@ void affichage_entrepot(entrepot a)
 			printf("-%d-", a.liste_camion[i]->trajet[j]);
 		printf("-\n");
 	}
-	affichage_requete(a.LR);
+	affichage_requete(a.LR, graphe);
 }
 
 void analyse_donnees(entrepot *a, int nb_entrepot)
@@ -49,9 +51,9 @@ void analyse_donnees(entrepot *a, int nb_entrepot)
 		if(a[i].gain_total > max)
 			max = a[i].gain_total;
 
-		somme_m += a[i].gain_total;
-		somme_var = somme_var + a[i].gain_total * a[i].gain_total;
-		printf("rentabilité de l'acteur %d : %d\n", a[i].id_entrepot, a[i].gain_total);
+		somme_m += (float) a[i].gain_total/10000;
+		somme_var = somme_var + ((float) a[i].gain_total/10000) * ((float) a[i].gain_total/10000);
+		printf("rentabilité de l'acteur %d : %.2f\n", a[i].id_entrepot, (float) a[i].gain_total/10000);
 	}
 	float moyenne = somme_m/nb_entrepots;
 	float variance = somme_var/nb_entrepots-moyenne*moyenne;

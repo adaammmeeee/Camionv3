@@ -43,8 +43,8 @@ typedef struct entrepot
 
 int cout_distance(int distance);
 
-void affichage_requete(liste_requete *LR);
+void affichage_requete(liste_requete *LR, int **graphe);
 
-void affichage_entrepot(entrepot a);
+void affichage_entrepot(entrepot a, int **graphe);
 
 void analyse_donnees(entrepot *a, int nb_entrepot);
