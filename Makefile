@@ -24,7 +24,7 @@ brute_test: main
 	./main "matrice_distance_10_sommets.csv" brute
 
 debug: main
-	valgrind --leak-check=full --show-leak-kinds=all ./main
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv"
 	
 main: $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS) 

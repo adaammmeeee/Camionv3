@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "structures.h"
 #include "chemins_gloutons.h"
 
@@ -153,7 +154,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
 
 int insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_charge, int *taille_new_trajet, int **graphe)
 {
-    int meilleure_distance = DISTANCE_MAX;
+    int meilleure_distance = INT_MAX;
     int distance_parcourue_min = DISTANCE_MAX;
     int position_insertion;
 
@@ -256,12 +257,12 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
         int distance = insertion(actuelle, a, &camion, new_trajet, new_charge, &taille_new_trajet, graphe);
         int cout = cout_distance(distance);
 
-        if ((camion == -1 || !taille_new_trajet) && distance)
+        if ((camion == -1 || !taille_new_trajet) && distance != INT_MAX)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
             return err;
         }
-        else if (distance < DISTANCE_MAX)
+        else if (distance < INT_MAX)
         {
             for (int i = 0; i < taille_new_trajet; i++)
                 a.liste_camion[camion]->trajet[i] = new_trajet[i];
@@ -276,7 +277,7 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
             benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
-        else if(distance == DISTANCE_MAX)
+        else if(distance == INT_MAX)
             actuelle->a_vendre = 1;
 
         actuelle = actuelle->suiv;
