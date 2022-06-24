@@ -166,7 +166,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
             {
                 int camion_offre = -1;
                 int taille_new_trajet = 0;
-                int distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, graphe);
+                int distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
                 int cout_requete = cout_distance(distance_requete);
 
                 if((camion_offre == -1 || !taille_new_trajet) && cout_requete)
@@ -215,7 +215,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
         {
             int camion_demande = -1;
             int taille_new_trajet = 0;
-            int distance_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, new_charge, &taille_new_trajet, graphe);
+            int distance_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
             int cout_requete = cout_distance(distance_requete);
 
             if(camion_demande == -1 && cout_requete)
