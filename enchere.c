@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "structures.h"
 #include "enchere.h"
 
@@ -12,7 +13,6 @@ int nb_vente(entrepot *a, int nb_entrepot)
         requete *actuelle = a[i].LR->prem;
         while(actuelle)
         {
-            printf("requeteàvendre %d\n", actuelle->a_vendre);
             if(actuelle->a_vendre){
                 nb_requete++;
             }
@@ -169,13 +169,13 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
                 int distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
                 int cout_requete = cout_distance(distance_requete);
 
-                if((camion_offre == -1 || !taille_new_trajet) && cout_requete)
+                if((camion_offre == -1 || !taille_new_trajet) && distance_requete != INT_MAX)
                 {
                     printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
                     return NULL;
                 }
 
-                if (cout_requete && cout_requete < cout_requete_min)
+                if (distance_requete != INT_MAX && cout_requete < cout_requete_min)
                 {
                     distance_requete_min = distance_requete;
                     cout_requete_min = cout_requete;
@@ -218,12 +218,12 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
             int distance_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
             int cout_requete = cout_distance(distance_requete);
 
-            if(camion_demande == -1 && cout_requete)
+            if(camion_demande == -1 && distance_requete != INT_MAX)
             {
                 printf("ERREUR : lors du choix du camion faisant le trajet\n");
                 return NULL;
             }
-            else if(camion_demande != -1 && cout_requete)
+            else if(camion_demande != -1 && distance_requete != INT_MAX)
             {
                 int indice_c_demande = camion_demande;
                 for(int i = 0; i < taille_new_trajet; i++)
@@ -258,3 +258,14 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
 
     return a;
 }
+/*
+void insertion_ensemble(requete **rv, )
+{
+
+}
+
+entrepot *enchere_insertion_mieux(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+{
+
+    return a;
+}*/
