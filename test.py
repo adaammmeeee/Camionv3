@@ -35,7 +35,7 @@ w = Canvas(master,
 w.pack(expand=YES, fill=BOTH)
 
 
-create_circle(largeur/2,hauteur/2,10, w,"1")
+create_circle(200,30,10, w,"1")
 
 
 
