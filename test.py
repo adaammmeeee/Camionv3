@@ -1,4 +1,6 @@
+from multiprocessing.connection import wait
 from operator import length_hint
+from select import select
 from tkinter import *
 import tkinter
 from turtle import distance
@@ -7,7 +9,7 @@ import tkintermapview
 from tkinter import messagebox
 from matplotlib import pyplot as plt
 from dataclasses import dataclass
-import re
+import time
 import string 
 
 @dataclass
@@ -85,10 +87,6 @@ def extraction_trajet():
                 c.charge = numbers_in_str(line)
                 current_a.liste_camion.append(c)
             a.append(current_a)
-
-
-    
-
     return a
 
 
@@ -107,7 +105,7 @@ def gestionnaire_entrepot(numero):
     cnv=Canvas(entrepot, width=x, height=y, bg = "white")
     cnv.pack()
 
-    # Création de la liste
+    # Création de la liste de camion
 
     liste = Listbox(entrepot, width=largeur_liste, height=nombre_camion)
     for i in range(nombre_camion):
@@ -155,23 +153,10 @@ def gestionnaire_entrepot(numero):
 
 
 
-def click_airport_marker_event(marker):
+def click_sur_icone_entrepot(marker):
     values = ['Voir requêtes', 'Voir trajet']
     gestionnaire_entrepot(digit_in_str(marker.text))
 
-
-# Création d'une fenêtre Tkinter
-root_tk = tkinter.Tk()
-root_tk.geometry(f"{900}x{650}")
-root_tk.title("map_view_example.py")
-
-
-# Création de la map
-map_widget = tkintermapview.TkinterMapView(
-    root_tk, width=900, height=650, corner_radius=0)
-map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
-map_widget.set_position(46.8734246, 2.6397020)  # Paris, France
-map_widget.set_zoom(6.1)
 
 
 # Lecture du fichier pour récupérer la position de tous les agents qu'on stockera dans la variable position
@@ -183,17 +168,57 @@ for line in lignes:
     tuple = line.partition(";")
     positions.append(tuple)
 
+# Création d'une fenêtre Tkinter
+root_tk = tkinter.Tk()
+root_tk.geometry(f"{1000}x{650}")
+root_tk.title("Camion")
+
+
+# Création de la map
+map_widget = tkintermapview.TkinterMapView(
+    root_tk, width=900, height=650, corner_radius=0)
+map_widget.place(relx=0.57, rely=0.5, anchor=tkinter.CENTER)
+map_widget.set_position(46.8734246, 2.6397020)  # Paris, France
+map_widget.set_zoom(6.1)
 
 
 # Placement de tous les entrepots sur la carte
 cpt = 0
 marker_list = []
 for position in positions:  
-    marker = map_widget.set_marker(float(position[0]), float(position[2]), command=click_airport_marker_event, text="Entrepot " + str(
+    marker = map_widget.set_marker(float(position[0]), float(position[2]), command=click_sur_icone_entrepot, text="Entrepot " + str(
         cpt), text_color="black", marker_color_outside="#A9A9A9", marker_color_circle="#808080", font=10)
     marker_list.append(marker)
     marker = None
     cpt += 1
+
+
+# Création de la liste d'entrepots
+liste = Listbox(root_tk, width=20, height=int(650/16))
+for i in range(len(positions)):
+    liste.insert(i, "Entrepot " + str(i))
+    liste.place(x=0, y=0)
+
+global old
+def items_selected(event):
+    global old
+    # get selected indices
+    selected_indice = digit_in_str(str(liste.curselection()))
+    marker_list[selected_indice] = map_widget.set_marker(float(positions[selected_indice][0]), float(positions[selected_indice][2]), command=click_sur_icone_entrepot, text="Entrepot " + str(
+        selected_indice), text_color="black", marker_color_outside="red", marker_color_circle="red", font=10)
+
+    try:
+        marker_list[old] = map_widget.set_marker(float(positions[old][0]), float(positions[old][2]), command=click_sur_icone_entrepot, text="Entrepot " + str(
+            old), text_color="black", marker_color_outside="#A9A9A9", marker_color_circle="#808080", font=10)
+    except:
+        pass
+
+    old = selected_indice
+    
+
+    
+    
+liste.bind('<<ListboxSelect>>', items_selected)
 
 
 root_tk.mainloop()
