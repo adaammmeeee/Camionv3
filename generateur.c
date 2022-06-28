@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
+int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
 {
 
     FILE *f = fopen(nomfic, "w");
@@ -22,13 +22,13 @@ int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
     for (int i = 0; i < nb_entrepots; i++)
     {
         int nombre_requetes = 10; // entre 300 et 2000 requetes
-        int nombre_camions = 7;   // 10 requetes par camion
+        int nombre_camions = 6;   // 10 requetes par camion
         int destination = 0 ;
         fprintf(f, "entrepot : %d\nnombre de camion : %d\nnombre de requete : %d\n\n", i, nombre_camions, nombre_requetes);
-        float gain = 0;
+        int gain = 0;
         for (int j = 0; j < nombre_requetes; j++)
         {
-            int origine =  destination;
+            int origine =  i;
             destination = rand() % nb_entrepots;
             while (destination == origine)
             {
@@ -36,9 +36,9 @@ int genere_acteur(char *nomfic, float **graphe, int nb_entrepots)
             }
             gain = cout_distance(graphe[origine][destination]);
             gain = gain * 2.5;
-            float perte = 10000000;
+            int perte = gain * 10;
 
-            fprintf(f, "origine : %d\ndestination : %d\ngains : %f\nperte : %f\n\n", origine, destination, gain, perte);
+            fprintf(f, "origine : %d\ndestination : %d\ngains : %d\nperte : %d\n\n", origine, destination, gain, perte);
         }
     }
 
