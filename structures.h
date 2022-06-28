@@ -48,3 +48,5 @@ void affichage_requete(liste_requete *LR, int **graphe);
 void affichage_entrepot(entrepot a, int **graphe);
 
 void analyse_donnees(entrepot *a, int nb_entrepot);
+
+void exporte_trajet(entrepot * a, int nb_entrepot);

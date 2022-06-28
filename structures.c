@@ -77,3 +77,42 @@ void analyse_donnees(entrepot *a, int nb_entrepot)
 	printf("\nGain global %.2f, moyenne par acteur : %.2f\n", somme_m, moyenne);
 	printf("Le gain le plus haut : %.2f, le gain le plus bas : %.2f et un ecart-type : %.2f\n\n", (float) max/10000, (float) min/10000, ecart_type);
 }
+
+void exporte_trajet(entrepot * a, int nb_entrepot)
+{
+	
+	FILE *f = fopen("trajet", "w");
+    if (f == NULL)
+    {
+        printf("Erreur d'ouverture du fichier\n");
+        return -1;
+    }
+	for (int i = 0; i < nb_entrepot; i++)
+	{
+		fprintf(f,"Entrepot : %d\n",a[i].id_entrepot);
+		fprintf(f,"Nombre de camion : %d\n",a[i].nb_camion);
+		for (int j = 0; j < a[i].nb_camion; j++)
+		{
+			fprintf(f,"Camion : %d\n",j);
+			fprintf(f,"Distance parcourue : %.2f\n",(float) a[i].liste_camion[j]->distance_parcouru/1000);
+			fprintf(f,"Trajet : ");
+			for (int k = 0; k < a[i].liste_camion[j]->taille_trajet; k++)
+			{
+				fprintf(f,"%d",a[i].liste_camion[j]->trajet[k]);
+				if(k < a[i].liste_camion[j]->taille_trajet - 1)
+					fprintf(f,"-");
+			}
+			fprintf(f,"\n");
+			fprintf(f,"Charge : ");
+			for (int k = 0; k<a[i].liste_camion[j]->taille_trajet-1; k++)
+			{
+				fprintf(f,"%d",a[i].liste_camion[j]->charge[k]);
+				if(k < a[i].liste_camion[j]->taille_trajet - 2)
+					fprintf(f,"-");
+			}
+			fprintf(f,"\n");
+		}
+	}
+
+	fclose(f);
+}

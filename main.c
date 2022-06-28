@@ -137,10 +137,8 @@ int main(int argc, char **argv)
 
 	analyse_donnees(a, nb_entrepots);
 
-	printf("Souhaitez vous voir le trajet que chaque camion à fait ? (y/n) \n");
-	fflush(stdout);
-	scanf("%[^\n]", buffer);
-	fgetc(stdin);
+	printf("Les trajets des camions ont étés exportés vers l'application\n");
+	exporte_trajet(a, nb_entrepots);
 	while (buffer[0] == 'y')
 	{
 		memset(buffer, 0, 64);
