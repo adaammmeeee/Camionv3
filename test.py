@@ -1,3 +1,4 @@
+from operator import length_hint
 from tkinter import *
 import tkinter
 from turtle import distance
@@ -94,31 +95,64 @@ def extraction_trajet():
 def gestionnaire_entrepot(numero):
     # Initialisation des entrepots
     a = extraction_trajet()
-    entrepot = tkinter.Tk()
+    nombre_camion = a[numero].nb_camion
+    entrepot = Tk()
     x = 300
-    y = 300
-    entrepot.geometry(f"{x}x{y}")
+    y = 16*nombre_camion + 22
+    entrepot.configure(width = x, height = y)
     entrepot.title("Entrepot " + str(numero))
+    largeur_liste = 17
+
+    # Création du canvas
+    cnv=Canvas(entrepot, width=x, height=y, bg = "white")
+    cnv.pack()
+
     # Création de la liste
-    nombre_camion = 8
-    liste = Listbox(entrepot, width=0, height=nombre_camion)
+
+    liste = Listbox(entrepot, width=largeur_liste, height=nombre_camion)
     for i in range(nombre_camion):
         liste.insert(i, "Camion " + str(i))
     liste.place(x=0, y=0)
-    cnv=Canvas(entrepot, width=x-30, height=y, bg="ivory")
-    cnv.pack(padx=55, pady=0)
+   
 
     def affiche_trajet():
         try:
+            global ligne_trajet
+            cnv.delete("all")
             selection = liste.selection_get()
             selection = digit_in_str(selection)
-            print(a[numero])
+            trajet = a[numero].liste_camion[selection].trajet
+            affichage = ""
+            for i in range(len(trajet)-1):
+                affichage = affichage + str(trajet[i]) + "->"
+            affichage = affichage + str(trajet[len(trajet)-1])
+            affichage = affichage + "\n"
+            affichage = affichage + "Distance parcourue : " + str(a[numero].liste_camion[selection].kilometrage)
+            affichage = affichage + "km\n"
+            affichage = affichage + "Charge : " + str(a[numero].liste_camion[selection].charge)
 
+            cnv.create_text(largeur_liste +185, 25, text= affichage , fill="black", font=("Arial",10), justify= 'left', )
+            try: 
+                ligne_trajet.delete()
+            except:
+                pass
+            ligne_trajet =  map_widget.set_path([marker_list[trajet[i]].position for i in range(len(trajet))], color='red')
+            def clear_trajet():
+                ligne_trajet.delete()
+                entrepot.destroy()
+            entrepot.protocol("WM_DELETE_WINDOW", clear_trajet)
         except:
-            print("Aucune requête n'a été sélectionnée")
+           print("Erreur")
 
-    but = Button(entrepot, text="Voir le trajet", command=affiche_trajet)
+
+
+    but = Button(entrepot, text="Voir le trajet", command=affiche_trajet, width=largeur_liste-3)
     but.place(x=0, y=16*nombre_camion+2)
+
+
+
+    
+
 
 
 def click_airport_marker_event(marker):
@@ -128,13 +162,13 @@ def click_airport_marker_event(marker):
 
 # Création d'une fenêtre Tkinter
 root_tk = tkinter.Tk()
-root_tk.geometry(f"{700}x{500}")
+root_tk.geometry(f"{900}x{650}")
 root_tk.title("map_view_example.py")
 
 
 # Création de la map
 map_widget = tkintermapview.TkinterMapView(
-    root_tk, width=800, height=600, corner_radius=0)
+    root_tk, width=900, height=650, corner_radius=0)
 map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 map_widget.set_position(46.8734246, 2.6397020)  # Paris, France
 map_widget.set_zoom(6.1)
@@ -154,10 +188,12 @@ for line in lignes:
 # Placement de tous les entrepots sur la carte
 cpt = 0
 marker_list = []
-for position in positions:
+for position in positions:  
     marker = map_widget.set_marker(float(position[0]), float(position[2]), command=click_airport_marker_event, text="Entrepot " + str(
         cpt), text_color="black", marker_color_outside="#A9A9A9", marker_color_circle="#808080", font=10)
     marker_list.append(marker)
+    marker = None
     cpt += 1
+
 
 root_tk.mainloop()
