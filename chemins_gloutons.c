@@ -152,11 +152,16 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     return a;
 }
 
-int insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_charge, int *taille_new_trajet, int amelioration, int **graphe)
+int insertion(requete *r, entrepot a, int *id_camion, camion *cam, int amelioration, int **graphe)
 {
+    cam->taille_trajet = 1;
+    cam->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
+    cam->charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
+    cam->distance_parcouru = 0;
+
+    int position_insertion;
     int meilleure_distance = INT_MAX;
     int distance_parcourue_min = DISTANCE_MAX;
-    int position_insertion;
 
     for (int cpt_camion = 0; cpt_camion < a.nb_camion; cpt_camion++)
     {
@@ -185,26 +190,26 @@ int insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_
                 if((distance_requete < meilleure_distance) || condition)
                 {
                     for (int i = 0; i <= position_insertion; i++)
-                        new_trajet[i] = a.liste_camion[cpt_camion]->trajet[i];
+                        cam->trajet[i] = a.liste_camion[cpt_camion]->trajet[i];
 
                     for (int i = 0; i < position_insertion; i++)
-                        new_charge[i] = a.liste_camion[cpt_camion]->charge[i];
+                        cam->charge[i] = a.liste_camion[cpt_camion]->charge[i];
 
                     if (r->origine != depart)
                     {
-                        new_trajet[suite_trajet] = r->origine;
-                        new_charge[suite_trajet - 1] = 0;
-                        new_charge[suite_trajet] = 1;
+                        cam->trajet[suite_trajet] = r->origine;
+                        cam->charge[suite_trajet - 1] = 0;
+                        cam->charge[suite_trajet] = 1;
                         suite_trajet++;
                         taille_ajout++;
                     }
                     else
-                        new_charge[suite_trajet - 1] = 1;
+                        cam->charge[suite_trajet - 1] = 1;
 
                     if (r->destination != arrivee)
                     {
-                        new_trajet[suite_trajet] = r->destination;
-                        new_charge[suite_trajet] = 0;
+                        cam->trajet[suite_trajet] = r->destination;
+                        cam->charge[suite_trajet] = 0;
                         suite_trajet++;
                         taille_ajout++;
                     }
@@ -215,18 +220,26 @@ int insertion(requete *r, entrepot a, int *id_camion, int *new_trajet, int *new_
                     }
 
                     for (int i = 0; i < (a.liste_camion[cpt_camion]->taille_trajet - (position_insertion + trajet_vide)); i++)
-                        new_trajet[i + suite_trajet] = a.liste_camion[cpt_camion]->trajet[i + position_insertion + trajet_vide];
+                        cam->trajet[i + suite_trajet] = a.liste_camion[cpt_camion]->trajet[i + position_insertion + trajet_vide];
 
                     for (int i = 0; i < ((a.liste_camion[cpt_camion]->taille_trajet - 1) - (position_insertion + trajet_vide)); i++)
-                        new_charge[i + suite_trajet] = a.liste_camion[cpt_camion]->charge[i + position_insertion + trajet_vide];
+                        cam->charge[i + suite_trajet] = a.liste_camion[cpt_camion]->charge[i + position_insertion + trajet_vide];
 
-                    *taille_new_trajet = a.liste_camion[cpt_camion]->taille_trajet + taille_ajout;
+                    cam->taille_trajet = a.liste_camion[cpt_camion]->taille_trajet + taille_ajout;
+                    cam->distance_parcouru = a.liste_camion[cpt_camion]->distance_parcouru + distance_requete;
                     *id_camion = cpt_camion;
+
                     meilleure_distance = distance_requete;
                     distance_parcourue_min = a.liste_camion[cpt_camion]->distance_parcouru;
                 }
             }
         }
+    }
+    if(meilleure_distance == INT_MAX)
+    {
+        free(cam->trajet);
+        free(cam->charge);
+        free(cam);
     }
 
     return meilleure_distance;
@@ -247,38 +260,35 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
     // Debut du glouton
     int benefice_total = 0;
     requete *actuelle = LR->prem;
-    int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
-    int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
 
     while (actuelle && nb_requete)
     {
-        int camion = -1;
-        int taille_new_trajet = 0;
-        int distance = insertion(actuelle, a, &camion, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
+        camion *cam = calloc(NB_MAX_CAMION, sizeof(camion));;
+        int c = -1;
+        int distance = insertion(actuelle, a, &c, cam, 0, graphe);
         int cout = cout_distance(distance);
 
-        if ((camion == -1 || !taille_new_trajet) && distance != INT_MAX)
+        if ((c == -1 || !cam) && distance != INT_MAX)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
             return err;
         }
         else if (distance < INT_MAX)
         {
-            for (int i = 0; i < taille_new_trajet; i++)
-                a.liste_camion[camion]->trajet[i] = new_trajet[i];
+            camion *tmp = a.liste_camion[c];
+            a.liste_camion[c] = cam;
+            free(tmp->trajet);
+            free(tmp->charge);
+            free(tmp);
 
-            for (int i = 0; i < taille_new_trajet - 1; i++)
-                a.liste_camion[camion]->charge[i] = new_charge[i];
-
-            a.liste_camion[camion]->taille_trajet = taille_new_trajet;
-
-            a.liste_camion[camion]->distance_parcouru += distance;
             benefice_total -= cout;
             benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
         else if(distance == INT_MAX)
+        {
             actuelle->a_vendre = 1;
+        }
 
         actuelle = actuelle->suiv;
         nb_requete--;
@@ -289,8 +299,6 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
         printf("Attention la liste de requete contient moins de requete que le nombre indiqué en argument\n");
         return err;
     }
-    free(new_trajet);
-    free(new_charge);
     a.benefice_total = benefice_total;
 
     return a;
