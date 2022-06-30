@@ -1,3 +1,4 @@
+from locale import currency
 from multiprocessing.connection import wait
 from operator import length_hint
 from select import select
@@ -24,6 +25,7 @@ class Camion:
 class Entrepot:
     id : int
     nb_camion : int
+    nb_requete : int
     liste_camion : list
 
 
@@ -64,7 +66,7 @@ def extraction_trajet():
     with open("trajet", "r") as f:
        
         while True:
-            current_a = Entrepot(0,0,[])
+            current_a = Entrepot(0,0,0,[])
             line = f.readline()
             if not line :
                 break
@@ -96,7 +98,7 @@ def gestionnaire_entrepot(numero):
     nombre_camion = a[numero].nb_camion
     entrepot = Tk()
     x = 300
-    y = 16*nombre_camion + 22
+    y = 16*nombre_camion + 200
     entrepot.configure(width = x, height = y)
     entrepot.title("Entrepot " + str(numero))
     largeur_liste = 17
@@ -156,6 +158,8 @@ def gestionnaire_entrepot(numero):
 def click_sur_icone_entrepot(marker):
     values = ['Voir requêtes', 'Voir trajet']
     gestionnaire_entrepot(digit_in_str(marker.text))
+
+
 
 
 

@@ -135,9 +135,9 @@ int main(int argc, char **argv)
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 	}
 
-	analyse_donnees(a, nb_entrepots);
 
-	printf("Les trajets des camions ont étés exportés vers l'application\n");
+	printf("Les données ont été exportés vers l'application\n");
+	analyse_donnees(a, nb_entrepots);
 	exporte_trajet(a, nb_entrepots);
 	while (buffer[0] == 'y')
 	{

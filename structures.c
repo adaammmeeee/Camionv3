@@ -85,7 +85,7 @@ void exporte_trajet(entrepot * a, int nb_entrepot)
     if (f == NULL)
     {
         printf("Erreur d'ouverture du fichier\n");
-        return -1;
+        return;
     }
 	for (int i = 0; i < nb_entrepot; i++)
 	{
@@ -113,6 +113,4 @@ void exporte_trajet(entrepot * a, int nb_entrepot)
 			fprintf(f,"\n");
 		}
 	}
-
-	fclose(f);
 }

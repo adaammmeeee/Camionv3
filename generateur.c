@@ -21,15 +21,15 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
 
     for (int i = 0; i < nb_entrepots; i++)
     {
-        int comparateur = rand()%100
+        int comparateur = rand()%100;
         int nombre_requetes;
         if (comparateur < 85)
         { 
-            nombre_requetes = rand()%10; // Petit acteur
+            nombre_requetes = rand()%10+5; // Petit acteur
         }
         else
         {
-            nombre_requetes = rand()%100 + 20; // Grand acteur
+            nombre_requetes = rand()%50 + 50; // Grand acteur
         }
         int nombre_camions = nombre_requetes/5;   // 5 requetes par camion
         int destination = 0 ;

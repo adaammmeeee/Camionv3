@@ -1,260 +1,1350 @@
 Entrepot : 0
-Nombre de camion : 6
+Nombre de camion : 2
 Camion : 0
-Distance parcourue : 1660.46
-Trajet : 0-5-0-6-0
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 0
+Charge : 
 Camion : 1
-Distance parcourue : 1660.46
-Trajet : 0-5-0-6-0
-Charge : 1-0-1-0
-Camion : 2
-Distance parcourue : 2126.15
-Trajet : 0-8-0-1-0
-Charge : 1-0-1-0
-Camion : 3
-Distance parcourue : 2140.67
-Trajet : 0-8-0-2-0
-Charge : 1-0-1-0
-Camion : 4
-Distance parcourue : 968.15
-Trajet : 0-4-0
-Charge : 1-0
-Camion : 5
-Distance parcourue : 968.15
-Trajet : 0-4-0
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 0
+Charge : 
 Entrepot : 1
-Nombre de camion : 6
+Nombre de camion : 17
 Camion : 0
-Distance parcourue : 1487.56
-Trajet : 1-9-1-2-1
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
 Camion : 1
-Distance parcourue : 1638.31
-Trajet : 1-3-1-2-1
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
 Camion : 2
-Distance parcourue : 803.45
-Trajet : 1-4-1
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
 Camion : 3
-Distance parcourue : 2473.79
-Trajet : 1-8-1-5-1
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
 Camion : 4
-Distance parcourue : 2473.79
-Trajet : 1-8-1-5-1
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
 Camion : 5
-Distance parcourue : 680.87
-Trajet : 1-5-1
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 14
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 15
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
+Camion : 16
+Distance parcourue : 0.00
+Trajet : 1
+Charge : 
 Entrepot : 2
-Nombre de camion : 6
+Nombre de camion : 1
 Camion : 0
-Distance parcourue : 2021.78
-Trajet : 2-7-2-6-2
-Charge : 1-0-1-0
-Camion : 1
-Distance parcourue : 831.49
-Trajet : 2-4-2
-Charge : 1-0
-Camion : 2
-Distance parcourue : 831.49
-Trajet : 2-4-2
-Charge : 1-0
-Camion : 3
-Distance parcourue : 831.49
-Trajet : 2-4-2
-Charge : 1-0
-Camion : 4
-Distance parcourue : 2330.45
-Trajet : 2-7-2-5-2
-Charge : 1-0-1-0
-Camion : 5
-Distance parcourue : 1623.15
-Trajet : 2-3-2
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 2
+Charge : 
 Entrepot : 3
-Nombre de camion : 6
+Nombre de camion : 1
 Camion : 0
-Distance parcourue : 2093.58
-Trajet : 3-6-3-0-3
-Charge : 1-0-1-0
-Camion : 1
-Distance parcourue : 1139.36
-Trajet : 3-5-3
-Charge : 1-0
-Camion : 2
-Distance parcourue : 1060.92
-Trajet : 3-7-3
-Charge : 1-0
-Camion : 3
-Distance parcourue : 1091.25
-Trajet : 3-8-3
-Charge : 1-0
-Camion : 4
-Distance parcourue : 1091.25
-Trajet : 3-8-3
-Charge : 1-0
-Camion : 5
-Distance parcourue : 1091.25
-Trajet : 3-8-3
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 3
+Charge : 
 Entrepot : 4
-Nombre de camion : 6
+Nombre de camion : 1
 Camion : 0
-Distance parcourue : 1801.28
-Trajet : 4-8-4-1-4
-Charge : 1-0-1-0
-Camion : 1
-Distance parcourue : 1829.32
-Trajet : 4-8-4-2-4
-Charge : 1-0-1-0
-Camion : 2
-Distance parcourue : 1942.34
-Trajet : 4-9-4-2-4
-Charge : 1-0-1-0
-Camion : 3
-Distance parcourue : 1942.34
-Trajet : 4-9-4-2-4
-Charge : 1-0-1-0
-Camion : 4
-Distance parcourue : 913.24
-Trajet : 4-7-4
-Charge : 1-0
-Camion : 5
-Distance parcourue : 913.24
-Trajet : 4-7-4
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 4
+Charge : 
 Entrepot : 5
-Nombre de camion : 6
+Nombre de camion : 1
 Camion : 0
-Distance parcourue : 1659.82
-Trajet : 5-7-5-6-5
-Charge : 1-0-1-0
-Camion : 1
-Distance parcourue : 1659.82
-Trajet : 5-7-5-6-5
-Charge : 1-0-1-0
-Camion : 2
-Distance parcourue : 1816.39
-Trajet : 5-7-5-1-5
-Charge : 1-0-1-0
-Camion : 3
-Distance parcourue : 1820.23
-Trajet : 5-3-5-1-5
-Charge : 1-0-1-0
-Camion : 4
-Distance parcourue : 680.87
-Trajet : 5-1-5
-Charge : 1-0
-Camion : 5
-Distance parcourue : 738.14
-Trajet : 5-4-5
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 5
+Charge : 
 Entrepot : 6
-Nombre de camion : 6
+Nombre de camion : 1
 Camion : 0
-Distance parcourue : 883.13
-Trajet : 6-5-6-1-6
-Charge : 1-0-1-0
-Camion : 1
-Distance parcourue : 1700.33
-Trajet : 6-3-6-2-6
-Charge : 1-0-1-0
-Camion : 2
-Distance parcourue : 1700.33
-Trajet : 6-3-6-2-6
-Charge : 1-0-1-0
-Camion : 3
-Distance parcourue : 1891.33
-Trajet : 6-8-6-2-6
-Charge : 1-0-1-0
-Camion : 4
-Distance parcourue : 774.12
-Trajet : 6-0-6
-Charge : 1-0
-Camion : 5
-Distance parcourue : 774.12
-Trajet : 6-0-6
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 6
+Charge : 
 Entrepot : 7
-Nombre de camion : 6
+Nombre de camion : 18
 Camion : 0
-Distance parcourue : 2231.61
-Trajet : 7-6-7-4-7
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
 Camion : 1
-Distance parcourue : 2453.89
-Trajet : 7-6-7-5-7
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
 Camion : 2
-Distance parcourue : 2379.29
-Trajet : 7-6-7-3-7
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
 Camion : 3
-Distance parcourue : 1174.59
-Trajet : 7-0-7
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
 Camion : 4
-Distance parcourue : 1318.37
-Trajet : 7-6-7
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
 Camion : 5
-Distance parcourue : 1318.37
-Trajet : 7-6-7
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 14
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 15
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 16
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
+Camion : 17
+Distance parcourue : 0.00
+Trajet : 7
+Charge : 
 Entrepot : 8
-Nombre de camion : 6
+Nombre de camion : 17
 Camion : 0
-Distance parcourue : 1663.61
-Trajet : 8-6-8-7-8
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
 Camion : 1
-Distance parcourue : 1232.25
-Trajet : 8-5-8
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
 Camion : 2
-Distance parcourue : 1232.25
-Trajet : 8-5-8
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
 Camion : 3
-Distance parcourue : 1091.25
-Trajet : 8-3-8
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
 Camion : 4
-Distance parcourue : 1091.25
-Trajet : 8-3-8
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
 Camion : 5
-Distance parcourue : 1091.25
-Trajet : 8-3-8
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 14
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 15
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
+Camion : 16
+Distance parcourue : 0.00
+Trajet : 8
+Charge : 
 Entrepot : 9
-Nombre de camion : 6
+Nombre de camion : 2
 Camion : 0
-Distance parcourue : 1225.65
-Trajet : 9-0-9-3-9
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 9
+Charge : 
 Camion : 1
-Distance parcourue : 1635.64
-Trajet : 9-6-9-3-9
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 9
+Charge : 
+Entrepot : 10
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 10
+Charge : 
+Entrepot : 11
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 11
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 11
+Charge : 
+Entrepot : 12
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 12
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 12
+Charge : 
+Entrepot : 13
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 13
+Charge : 
+Entrepot : 14
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 14
+Charge : 
+Entrepot : 15
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 15
+Charge : 
+Entrepot : 16
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 16
+Charge : 
+Entrepot : 17
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 17
+Charge : 
+Entrepot : 18
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 18
+Charge : 
+Entrepot : 19
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 19
+Charge : 
+Entrepot : 20
+Nombre de camion : 19
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
 Camion : 2
-Distance parcourue : 1716.84
-Trajet : 9-6-9-7-9
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
 Camion : 3
-Distance parcourue : 2088.88
-Trajet : 9-1-9-8-9
-Charge : 1-0-1-0
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
 Camion : 4
-Distance parcourue : 644.51
-Trajet : 9-8-9
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
 Camion : 5
-Distance parcourue : 644.51
-Trajet : 9-8-9
-Charge : 1-0
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 14
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 15
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 16
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 17
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Camion : 18
+Distance parcourue : 0.00
+Trajet : 20
+Charge : 
+Entrepot : 21
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 21
+Charge : 
+Entrepot : 22
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 22
+Charge : 
+Entrepot : 23
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 23
+Charge : 
+Entrepot : 24
+Nombre de camion : 14
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 24
+Charge : 
+Entrepot : 25
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 25
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 25
+Charge : 
+Entrepot : 26
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 26
+Charge : 
+Entrepot : 27
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 27
+Charge : 
+Entrepot : 28
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 28
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 28
+Charge : 
+Entrepot : 29
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 29
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 29
+Charge : 
+Entrepot : 30
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 30
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 30
+Charge : 
+Entrepot : 31
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 31
+Charge : 
+Entrepot : 32
+Nombre de camion : 16
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 14
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Camion : 15
+Distance parcourue : 0.00
+Trajet : 32
+Charge : 
+Entrepot : 33
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 33
+Charge : 
+Entrepot : 34
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 34
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 34
+Charge : 
+Entrepot : 35
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 35
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 35
+Charge : 
+Entrepot : 36
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 36
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 36
+Charge : 
+Entrepot : 37
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 37
+Charge : 
+Entrepot : 38
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 38
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 38
+Charge : 
+Entrepot : 39
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 39
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 39
+Charge : 
+Entrepot : 40
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 40
+Charge : 
+Entrepot : 41
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 41
+Charge : 
+Entrepot : 42
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 42
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 42
+Charge : 
+Entrepot : 43
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 43
+Charge : 
+Entrepot : 44
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 44
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 44
+Charge : 
+Entrepot : 45
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 45
+Charge : 
+Entrepot : 46
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 46
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 46
+Charge : 
+Entrepot : 47
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 47
+Charge : 
+Entrepot : 48
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 48
+Charge : 
+Entrepot : 49
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 49
+Charge : 
+Entrepot : 50
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 50
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 50
+Charge : 
+Entrepot : 51
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 51
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 51
+Charge : 
+Entrepot : 52
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 52
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 52
+Charge : 
+Entrepot : 53
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 53
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 53
+Charge : 
+Entrepot : 54
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 54
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 54
+Charge : 
+Entrepot : 55
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 55
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 55
+Charge : 
+Entrepot : 56
+Nombre de camion : 16
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 14
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Camion : 15
+Distance parcourue : 0.00
+Trajet : 56
+Charge : 
+Entrepot : 57
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 57
+Charge : 
+Entrepot : 58
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 58
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 58
+Charge : 
+Entrepot : 59
+Nombre de camion : 11
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 59
+Charge : 
+Entrepot : 60
+Nombre de camion : 16
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 11
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 12
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 13
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 14
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Camion : 15
+Distance parcourue : 0.00
+Trajet : 60
+Charge : 
+Entrepot : 61
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 61
+Charge : 
+Entrepot : 62
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 62
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 62
+Charge : 
+Entrepot : 63
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 63
+Charge : 
+Entrepot : 64
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 64
+Charge : 
+Entrepot : 65
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 65
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 65
+Charge : 
+Entrepot : 66
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 66
+Charge : 
+Entrepot : 67
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 67
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 67
+Charge : 
+Entrepot : 68
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 68
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 68
+Charge : 
+Entrepot : 69
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 69
+Charge : 
+Entrepot : 70
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 70
+Charge : 
+Entrepot : 71
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 71
+Charge : 
+Entrepot : 72
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 72
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 72
+Charge : 
+Entrepot : 73
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 73
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 73
+Charge : 
+Entrepot : 74
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 74
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 74
+Charge : 
+Entrepot : 75
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 75
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 75
+Charge : 
+Entrepot : 76
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 76
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 76
+Charge : 
+Entrepot : 77
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 77
+Charge : 
+Entrepot : 78
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 78
+Charge : 
+Entrepot : 79
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 79
+Charge : 
+Entrepot : 80
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 80
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 80
+Charge : 
+Entrepot : 81
+Nombre de camion : 11
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 81
+Charge : 
+Entrepot : 82
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 82
+Charge : 
+Entrepot : 83
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 83
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 83
+Charge : 
+Entrepot : 84
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 84
+Charge : 
+Entrepot : 85
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 85
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 85
+Charge : 
+Entrepot : 86
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 86
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 86
+Charge : 
+Entrepot : 87
+Nombre de camion : 11
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Camion : 10
+Distance parcourue : 0.00
+Trajet : 87
+Charge : 
+Entrepot : 88
+Nombre de camion : 10
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 2
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 3
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 4
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 5
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 6
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 7
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 8
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Camion : 9
+Distance parcourue : 0.00
+Trajet : 88
+Charge : 
+Entrepot : 89
+Nombre de camion : 1
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 89
+Charge : 
+Entrepot : 90
+Nombre de camion : 2
+Camion : 0
+Distance parcourue : 0.00
+Trajet : 90
+Charge : 
+Camion : 1
+Distance parcourue : 0.00
+Trajet : 90
+Charge : 
