@@ -21,8 +21,17 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
 
     for (int i = 0; i < nb_entrepots; i++)
     {
-        int nombre_requetes = 10; // entre 300 et 2000 requetes
-        int nombre_camions = 6;   // 10 requetes par camion
+        int comparateur = rand()%100
+        int nombre_requetes;
+        if (comparateur < 85)
+        { 
+            nombre_requetes = rand()%10; // Petit acteur
+        }
+        else
+        {
+            nombre_requetes = rand()%100 + 20; // Grand acteur
+        }
+        int nombre_camions = nombre_requetes/5;   // 5 requetes par camion
         int destination = 0 ;
         fprintf(f, "entrepot : %d\nnombre de camion : %d\nnombre de requete : %d\n\n", i, nombre_camions, nombre_requetes);
         int gain = 0;
@@ -30,7 +39,7 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
         {
             int origine =  i;
             destination = rand() % nb_entrepots;
-            while (destination == origine)
+            while (destination == origine || graphe[origine][destination] > (1000*1000)) // 1000km en mètre
             {
                 destination = rand() % nb_entrepots;
             }
