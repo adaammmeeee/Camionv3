@@ -139,7 +139,7 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
 
     return a;
 }
-
+/*
 
 entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
 {
@@ -250,7 +250,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
     free(rv);
 
     return a;
-}
+}*/
 /*
 int insertion_ensemble(requete **nouv, entrepot a, int nb_requete, requete *meilleure_requete, int *camion, int *new_trajet, int new_charge, int *new_taille_trajet, int **graphe)
 {

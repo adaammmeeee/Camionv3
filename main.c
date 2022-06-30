@@ -127,8 +127,8 @@ int main(int argc, char **argv)
 			int nb_requete_vente = 0;
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
 
-			if (nb_requete_vente && liste_vente)
-				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+			//if (nb_requete_vente && liste_vente)
+				//a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
 
 		for (int i = 0; i < nb_entrepots; i++)
