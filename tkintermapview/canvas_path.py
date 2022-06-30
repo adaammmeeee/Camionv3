@@ -97,7 +97,7 @@ class CanvasPath:
             if self.canvas_line is None:
                 self.map_widget.canvas.delete(self.canvas_line)
                 self.canvas_line = self.map_widget.canvas.create_line(self.canvas_line_positions,
-                                                                      width=9, fill=self.path_color,
+                                                                      width=3, fill=self.path_color,
                                                                       capstyle=tkinter.ROUND, joinstyle=tkinter.ROUND,
                                                                       tag="path")
 
