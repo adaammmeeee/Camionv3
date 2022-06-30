@@ -127,8 +127,8 @@ int main(int argc, char **argv)
 			int nb_requete_vente = 0;
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
 
-			//if (nb_requete_vente && liste_vente)
-				//a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+			if (nb_requete_vente && liste_vente)
+				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
 
 		for (int i = 0; i < nb_entrepots; i++)
@@ -139,6 +139,10 @@ int main(int argc, char **argv)
 
 	printf("Les trajets des camions ont étés exportés vers l'application\n");
 	exporte_trajet(a, nb_entrepots);
+	printf("Souhaitez vous voir les trajets de camions d'un entrepot ? (y/n)\n");
+	fflush(stdout);
+	scanf("%[^\n]", buffer);
+	fgetc(stdin);
 	while (buffer[0] == 'y')
 	{
 		memset(buffer, 0, 64);
