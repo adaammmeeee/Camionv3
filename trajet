@@ -15,21 +15,21 @@ Distance parcourue : 0.00
 Trajet : 1
 Charge : 
 Camion : 1
-Distance parcourue : 0.00
-Trajet : 1
-Charge : 
+Distance parcourue : 1638.31
+Trajet : 1-3-1-2-1
+Charge : 1-1-1-0
 Camion : 2
 Distance parcourue : 0.00
 Trajet : 1
 Charge : 
 Camion : 3
-Distance parcourue : 0.00
-Trajet : 1
-Charge : 
+Distance parcourue : 2461.53
+Trajet : 1-8-7-1-5-1
+Charge : 1-0-1-1-0
 Camion : 4
-Distance parcourue : 0.00
-Trajet : 1
-Charge : 
+Distance parcourue : 2473.79
+Trajet : 1-8-1-5-1
+Charge : 1-1-1-0
 Camion : 5
 Distance parcourue : 0.00
 Trajet : 1
@@ -81,9 +81,29 @@ Charge :
 Entrepot : 2
 Nombre de camion : 1
 Camion : 0
-Distance parcourue : 0.00
-Trajet : 2
-Charge : 
+Distance parcourue : 2228.90
+Trajet : 2-7-8-6-2-6-2
+Charge : 1-0-1-0-1-0
+Camion : 1
+Distance parcourue : 831.49
+Trajet : 2-4-2
+Charge : 1-0
+Camion : 2
+Distance parcourue : 831.49
+Trajet : 2-4-2
+Charge : 1-0
+Camion : 3
+Distance parcourue : 831.49
+Trajet : 2-4-2
+Charge : 1-0
+Camion : 4
+Distance parcourue : 2330.45
+Trajet : 2-7-2-5-2
+Charge : 1-0-1-0
+Camion : 5
+Distance parcourue : 1623.15
+Trajet : 2-3-2
+Charge : 1-1
 Entrepot : 3
 Nombre de camion : 1
 Camion : 0
@@ -105,9 +125,29 @@ Charge :
 Entrepot : 6
 Nombre de camion : 1
 Camion : 0
-Distance parcourue : 0.00
-Trajet : 6
-Charge : 
+Distance parcourue : 883.13
+Trajet : 6-5-6-1-6
+Charge : 1-0-1-0
+Camion : 1
+Distance parcourue : 2042.03
+Trajet : 6-3-4-6-2-6
+Charge : 1-1-0-1-0
+Camion : 2
+Distance parcourue : 1700.33
+Trajet : 6-3-6-2-6
+Charge : 1-0-1-0
+Camion : 3
+Distance parcourue : 1891.33
+Trajet : 6-8-6-2-6
+Charge : 1-1-1-0
+Camion : 4
+Distance parcourue : 774.12
+Trajet : 6-0-6
+Charge : 1-0
+Camion : 5
+Distance parcourue : 774.12
+Trajet : 6-0-6
+Charge : 1-0
 Entrepot : 7
 Nombre de camion : 18
 Camion : 0
@@ -185,13 +225,13 @@ Charge :
 Entrepot : 8
 Nombre de camion : 17
 Camion : 0
-Distance parcourue : 0.00
-Trajet : 8
-Charge : 
+Distance parcourue : 2015.81
+Trajet : 8-6-2-8-7-8
+Charge : 1-0-1-1-0
 Camion : 1
-Distance parcourue : 0.00
-Trajet : 8
-Charge : 
+Distance parcourue : 1605.07
+Trajet : 8-5-2-8
+Charge : 1-0-1
 Camion : 2
 Distance parcourue : 0.00
 Trajet : 8

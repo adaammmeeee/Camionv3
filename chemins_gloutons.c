@@ -152,7 +152,7 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     return a;
 }
 
-int insertion(requete *r, entrepot a, int *id_camion, camion *cam, int amelioration, int **graphe)
+int insertion(requete *r, entrepot a, camion *cam, int amelioration, int **graphe)
 {
     cam->taille_trajet = 1;
     cam->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
@@ -227,7 +227,7 @@ int insertion(requete *r, entrepot a, int *id_camion, camion *cam, int ameliorat
 
                     cam->taille_trajet = a.liste_camion[cpt_camion]->taille_trajet + taille_ajout;
                     cam->distance_parcouru = a.liste_camion[cpt_camion]->distance_parcouru + distance_requete;
-                    *id_camion = cpt_camion;
+                    cam->id_camion = cpt_camion;
 
                     meilleure_distance = distance_requete;
                     distance_parcourue_min = a.liste_camion[cpt_camion]->distance_parcouru;
@@ -240,6 +240,7 @@ int insertion(requete *r, entrepot a, int *id_camion, camion *cam, int ameliorat
         free(cam->trajet);
         free(cam->charge);
         free(cam);
+        cam = NULL;
     }
 
     return meilleure_distance;
@@ -263,32 +264,28 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
 
     while (actuelle && nb_requete)
     {
-        camion *cam = calloc(NB_MAX_CAMION, sizeof(camion));;
-        int c = -1;
-        int distance = insertion(actuelle, a, &c, cam, 0, graphe);
+        camion *cam = calloc(NB_MAX_CAMION, sizeof(camion));
+        int distance = insertion(actuelle, a, cam, 0, graphe);
         int cout = cout_distance(distance);
 
-        if ((c == -1 || !cam) && distance != INT_MAX)
+        if (!cam && distance != INT_MAX)
         {
             printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
             return err;
         }
-        else if (distance < INT_MAX)
+        else if(distance < INT_MAX)
         {
-            camion *tmp = a.liste_camion[c];
-            a.liste_camion[c] = cam;
-            free(tmp->trajet);
-            free(tmp->charge);
-            free(tmp);
+            free(a.liste_camion[cam->id_camion]->trajet);
+            free(a.liste_camion[cam->id_camion]->charge);
+            free(a.liste_camion[cam->id_camion]);
+            a.liste_camion[cam->id_camion] = cam;
 
             benefice_total -= cout;
             benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
-        else if(distance == INT_MAX)
-        {
+        else if(!cam)
             actuelle->a_vendre = 1;
-        }
 
         actuelle = actuelle->suiv;
         nb_requete--;
