@@ -113,4 +113,5 @@ void exporte_trajet(entrepot * a, int nb_entrepot)
 			fprintf(f,"\n");
 		}
 	}
+	fclose(f);
 }

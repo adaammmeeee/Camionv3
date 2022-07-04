@@ -1,1 +1,1 @@
-int assignation_requete(entrepot a, int ** graphe);
+float assignation_requete(entrepot a, int ** graphe);

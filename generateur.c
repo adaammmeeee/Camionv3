@@ -29,9 +29,9 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
         }
         else
         {
-            nombre_requetes = rand()%50 + 50; // Grand acteur
+            nombre_requetes = rand()%50 + 10; // Grand acteur
         }
-        int nombre_camions = nombre_requetes/5;   // 5 requetes par camion
+        int nombre_camions = nombre_requetes/2 + 1;   // 2 requetes par camion
         int destination = 0 ;
         fprintf(f, "entrepot : %d\nnombre de camion : %d\nnombre de requete : %d\n\n", i, nombre_camions, nombre_requetes);
         int gain = 0;

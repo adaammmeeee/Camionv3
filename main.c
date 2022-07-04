@@ -24,9 +24,10 @@ entrepot retour_a_la_casa(entrepot a, int **graphe)
 entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 {
 	requete *actuelle = a.LR->prem;
-	while(actuelle)
+	while (actuelle)
 	{
-		if(actuelle->a_vendre){
+		if (actuelle->a_vendre)
+		{
 			a.benefice_total -= actuelle->perte;
 		}
 		actuelle = actuelle->suiv;
@@ -43,7 +44,7 @@ int main(int argc, char **argv)
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	int **graphe;
 	struct entrepot *a = NULL;
-	if(argc < 2)
+	if (argc < 2)
 	{
 		printf("besoin d'arguments %s nom_fichier.csv <option>brute\n", argv[0]);
 		return -1;
@@ -55,10 +56,22 @@ int main(int argc, char **argv)
 		printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
 		a = charge_entrepots(nomfic, graphe);
 
-		if(argc == 3 && !strcmp(argv[2],"brute"))
+		if (argc == 3 && !strcmp(argv[2], "brute"))
 		{
-			assignation_requete(a[0], graphe);
 
+			FILE *f = fopen("resultat_brute", "w");
+			if (f == NULL)
+			{
+				printf("Erreur d'ouverture du fichier\n");
+				return -1;
+			}
+
+			for (int i = 0; i < nb_entrepots; i++)
+			{
+				printf("entrepot %d\n", i);
+				fprintf(f,"acteur %d : %f\n", a[i].id_entrepot, assignation_requete(a[i], graphe));
+			}
+			fclose(f);
 			for (int i = 0; i < nb_entrepots; i++)
 				libere_acteur(a[i]);
 			free(a);
@@ -97,7 +110,7 @@ int main(int argc, char **argv)
 		fgetc(stdin);
 		if (buffer[0] == 'y')
 		{
-			requete ** liste_vente;
+			requete **liste_vente;
 			int nb_requete_vente = 0;
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
 
@@ -110,7 +123,7 @@ int main(int argc, char **argv)
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 		}
 	}
-	else if(buffer[0] == '1')
+	else if (buffer[0] == '1')
 	{
 		printf("On va maintenant faire l'ajout de requête par insertion\n");
 		for (int i = 0; i < nb_entrepots; i++)
@@ -123,7 +136,7 @@ int main(int argc, char **argv)
 		fgetc(stdin);
 		if (buffer[0] == 'y')
 		{
-			requete ** liste_vente;
+			requete **liste_vente;
 			int nb_requete_vente = 0;
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
 
@@ -134,7 +147,6 @@ int main(int argc, char **argv)
 		for (int i = 0; i < nb_entrepots; i++)
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 	}
-
 
 	printf("Les données ont été exportés vers l'application\n");
 	analyse_donnees(a, nb_entrepots);
