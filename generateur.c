@@ -25,11 +25,11 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
         int nombre_requetes;
         if (comparateur < 85)
         { 
-            nombre_requetes = rand()%10+5; // Petit acteur
+            nombre_requetes = rand()%8+3; // Petit acteur
         }
         else
         {
-            nombre_requetes = rand()%50 + 10; // Grand acteur
+            nombre_requetes = rand()%8 + 3; // Grand acteur
         }
         int nombre_camions = nombre_requetes/2 + 1;   // 2 requetes par camion
         int destination = 0 ;

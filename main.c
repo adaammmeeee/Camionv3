@@ -58,7 +58,8 @@ int main(int argc, char **argv)
 
 		if (argc == 3 && !strcmp(argv[2], "brute"))
 		{
-
+			struct entrepot *a2 = NULL;
+			a2 = charge_entrepots(nomfic, graphe);
 			FILE *f = fopen("resultat_brute", "w");
 			if (f == NULL)
 			{
@@ -68,12 +69,47 @@ int main(int argc, char **argv)
 
 			for (int i = 0; i < nb_entrepots; i++)
 			{
-				printf("entrepot %d\n", i);
-				fprintf(f,"acteur %d : %f\n", a[i].id_entrepot, assignation_requete(a[i], graphe));
+				float benefice = assignation_requete(a[i], graphe);
+				fprintf(f, "acteur %d : %f\n", a[i].id_entrepot, benefice);
 			}
 			fclose(f);
+
+			f = fopen("resultat_insertion_fin", "w");
+			if (f == NULL)
+			{
+				printf("Erreur d'ouverture du fichier\n");
+				return -1;
+			}
+
 			for (int i = 0; i < nb_entrepots; i++)
+			{
+				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
+				a[i] = retour_a_la_casa(a[i], graphe);
+				fprintf(f, "acteur %d : %f\n", a[i].id_entrepot, (float)(a[i].benefice_total) / 10000);
+			}
+			fclose(f);
+
+
+			f = fopen("resultat_insertion", "w");
+			if (f == NULL)
+			{
+				printf("Erreur d'ouverture du fichier\n");
+				return -1;
+			}
+
+			for (int i = 0; i < nb_entrepots; i++)
+			{
+				a2[i] = init_insertion(a2[i].LR, a2[i], a2[i].nb_requete, graphe);
+				fprintf(f, "acteur %d : %f\n", a2[i].id_entrepot, (float)(a2[i].benefice_total) / 10000);
+			}
+			fclose(f);
+
+			for (int i = 0; i < nb_entrepots; i++)
+			{
 				libere_acteur(a[i]);
+				libere_acteur(a2[i]);
+			}
+
 			free(a);
 
 			for (int i = 0; i < nb_entrepots; i++)
