@@ -255,7 +255,6 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
         int camion = -1;
         int taille_new_trajet = 0;
         int distance = insertion(actuelle, a, &camion, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
-        int cout = cout_distance(distance);
 
         if ((camion == -1 || !taille_new_trajet) && distance != INT_MAX)
         {
