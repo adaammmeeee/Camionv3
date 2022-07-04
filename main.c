@@ -34,9 +34,9 @@ entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 		actuelle = actuelle->suiv;
 	}
 
-	for(int i = 0; i < a.nb_camion; i++)
-		for(int j = 0; j < a.liste_camion[i]->taille_trajet - 1; j++)
-			a.benefice_total -= cout_distance(graphe[a.liste_camion[i]->trajet[j]][a.liste_camion[i]->trajet[j+1]]);
+	for (int i = 0; i < a.nb_camion; i++)
+		for (int j = 0; j < a.liste_camion[i]->taille_trajet - 1; j++)
+			a.benefice_total -= cout_distance(graphe[a.liste_camion[i]->trajet[j]][a.liste_camion[i]->trajet[j + 1]]);
 
 	return a;
 }
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 
 		if (argc == 3 && !strcmp(argv[2], "brute"))
 		{
-			
+
 			FILE *f = fopen("resultat_brute", "w");
 			if (f == NULL)
 			{
@@ -89,11 +89,11 @@ int main(int argc, char **argv)
 			{
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
 				a[i] = retour_a_la_casa(a[i], graphe);
+				a[i] = le_deficit_ou_pas(a[i], graphe);
 				fprintf(f, "acteur %d : %f\n", a[i].id_entrepot, (float)(a[i].benefice_total) / 10000);
 			}
 			fclose(f);
 
-			/*
 			struct entrepot *a2 = NULL;
 			a2 = charge_entrepots(nomfic, graphe);
 
@@ -107,15 +107,15 @@ int main(int argc, char **argv)
 			for (int i = 0; i < nb_entrepots; i++)
 			{
 				a2[i] = init_insertion(a2[i].LR, a2[i], a2[i].nb_requete, graphe);
+				a2[i] = le_deficit_ou_pas(a2[i], graphe);
 				fprintf(f, "acteur %d : %f\n", a2[i].id_entrepot, (float)(a2[i].benefice_total) / 10000);
 			}
 			fclose(f);
-			*/
-			
+
 			for (int i = 0; i < nb_entrepots; i++)
 			{
 				libere_acteur(a[i]);
-				//libere_acteur(a2[i]);
+				// libere_acteur(a2[i]);
 			}
 
 			free(a);
@@ -222,7 +222,7 @@ int main(int argc, char **argv)
 			int distance_trajet = 0;
 			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
 				distance_trajet = cout_distance(graphe[a[id].liste_camion[i]->trajet[j]][a[id].liste_camion[i]->trajet[j + 1]]);
-			printf("%.2f distance parcourue %.2f\n", (float) distance_trajet / 10000, (float) a[id].liste_camion[i]->distance_parcouru/1000);//4581,24
+			printf("%.2f distance parcourue %.2f\n", (float)distance_trajet / 10000, (float)a[id].liste_camion[i]->distance_parcouru / 1000); // 4581,24
 		}
 		printf("Souhaitez vous voir les trajets d'un autre acteur ? (y/n) \n");
 		fflush(stdout);
