@@ -93,8 +93,8 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
             int taille_trajet = a[indice_e_offre_min].liste_camion[indice_c_offre_min]->taille_trajet;
             int pos_camion = a[indice_e_offre_min].liste_camion[indice_c_offre_min]->trajet[taille_trajet - 1];
 
-            a[indice_e_offre_min].benefice_total -= faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min], pos_camion, rv[cpt_requete]->origine, graphe, 0);
-            a[indice_e_offre_min].benefice_total -= faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min], rv[cpt_requete]->origine, rv[cpt_requete]->destination, graphe, 1);
+            faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min], pos_camion, rv[cpt_requete]->origine, graphe, 0);
+            faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min], rv[cpt_requete]->origine, rv[cpt_requete]->destination, graphe, 1);
             a[indice_e_offre_min].benefice_total += cout_requete_min + 1;
             a[indice_e_demande].benefice_total -= cout_requete_min + 1;
             rv[cpt_requete]->a_vendre = 0;
@@ -117,8 +117,8 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
                 int taille_trajet = a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet;
                 int pos_camion = a[indice_e_demande].liste_camion[indice_c_demande]->trajet[taille_trajet - 1];
 
-                a[indice_e_demande].benefice_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], pos_camion, rv[cpt_requete]->origine, graphe, 0);
-                a[indice_e_demande].benefice_total -= faire_course(a[indice_e_demande].liste_camion[indice_c_demande], rv[cpt_requete]->origine, rv[cpt_requete]->destination, graphe, 1);
+                faire_course(a[indice_e_demande].liste_camion[indice_c_demande], pos_camion, rv[cpt_requete]->origine, graphe, 0);
+                faire_course(a[indice_e_demande].liste_camion[indice_c_demande], rv[cpt_requete]->origine, rv[cpt_requete]->destination, graphe, 1);
                 rv[cpt_requete]->a_vendre = 0;
 
                 //printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il la fera avec le camion %d\n", 
@@ -203,7 +203,6 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
             a[indice_e_offre_min].liste_camion[indice_c_offre_min]->taille_trajet = taille_new_trajet_min;
             a[indice_e_offre_min].liste_camion[indice_c_offre_min]->distance_parcouru += distance_requete_min;
 
-            a[indice_e_offre_min].benefice_total -= cout_requete_min;
             a[indice_e_offre_min].benefice_total += cout_requete_min + 1;
             a[indice_e_demande].benefice_total -= cout_requete_min + 1;
             rv[cpt_requete]->a_vendre = 0;
@@ -234,7 +233,6 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
                     
                 a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet = taille_new_trajet;
                 a[indice_e_demande].liste_camion[indice_c_demande]->distance_parcouru += distance_requete;
-                a[indice_e_demande].benefice_total -= cout_requete;
                 rv[cpt_requete]->a_vendre = 0;
 
                 //printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il la fera avec le camion %d\n", 

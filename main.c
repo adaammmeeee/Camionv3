@@ -16,7 +16,7 @@ entrepot retour_a_la_casa(entrepot a, int **graphe)
 	{
 		int taille = a.liste_camion[i]->taille_trajet;
 		int origine = a.liste_camion[i]->trajet[taille - 1];
-		a.benefice_total -= faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
+		faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
 	}
 	return a;
 }
@@ -30,8 +30,13 @@ entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 		{
 			a.benefice_total -= actuelle->perte;
 		}
+
 		actuelle = actuelle->suiv;
 	}
+
+	for(int i = 0; i < a.nb_camion; i++)
+		for(int j = 0; j < a.liste_camion[i]->taille_trajet - 1; j++)
+			a.benefice_total -= cout_distance(graphe[a.liste_camion[i]->trajet[j]][a.liste_camion[i]->trajet[j+1]]);
 
 	return a;
 }
@@ -212,6 +217,12 @@ int main(int argc, char **argv)
 			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
 				printf("-%d", a[id].liste_camion[i]->charge[j]);
 			printf("-\n");
+
+			printf("-\nCout trajet : ");
+			int distance_trajet = 0;
+			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
+				distance_trajet = cout_distance(graphe[a[id].liste_camion[i]->trajet[j]][a[id].liste_camion[i]->trajet[j + 1]]);
+			printf("%.2f distance parcourue %.2f\n", (float) distance_trajet / 10000, (float) a[id].liste_camion[i]->distance_parcouru/1000);//4581,24
 		}
 		printf("Souhaitez vous voir les trajets d'un autre acteur ? (y/n) \n");
 		fflush(stdout);
