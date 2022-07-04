@@ -17,7 +17,7 @@ test: main
 
 brute: main
 	echo $(CSRC)
-	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" brute
+	./main "matrice_distance.csv" brute
 
 brute_test: main
 	echo $(CSRC)
