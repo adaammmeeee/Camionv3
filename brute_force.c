@@ -17,7 +17,7 @@ void affiche_tableau(int *tableau, int taille)
     printf("\n");
 }
 
-void affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **graphe)
+float affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **graphe)
 {
     int kilometrage = 0;
     int cout_trajet = 0;
@@ -52,6 +52,7 @@ void affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **gr
     kilometrage += graphe[pos_camion][a.id_entrepot];
     cout_trajet += cout_distance(graphe[pos_camion][a.id_entrepot]);
     printf(" -v-> %d\nkm : %.2f\ngain brut: %.2f\ncout essence: %.2f\nbenefice : %.2f\n\n", a.id_entrepot, (float)kilometrage / 1000, (float)gain / 10000, (float)cout_trajet / 10000, (float)(gain - cout_trajet) / 10000);
+    return (float)(gain - cout_trajet) / 10000;
 }
 
 void incremente_tableau(int *tableau, int taille, int limite)
