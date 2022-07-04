@@ -130,8 +130,8 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
         {
             int taille_trajet = a.liste_camion[camion]->taille_trajet;
             int pos_camion = a.liste_camion[camion]->trajet[taille_trajet - 1];
-            benefice_total -= faire_course(a.liste_camion[camion], pos_camion, actuelle->origine, graphe, 0);
-            benefice_total -= faire_course(a.liste_camion[camion], actuelle->origine, actuelle->destination, graphe, 1);
+            faire_course(a.liste_camion[camion], pos_camion, actuelle->origine, graphe, 0);
+            faire_course(a.liste_camion[camion], actuelle->origine, actuelle->destination, graphe, 1);
             benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
@@ -273,7 +273,6 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
             a.liste_camion[camion]->taille_trajet = taille_new_trajet;
 
             a.liste_camion[camion]->distance_parcouru += distance;
-            benefice_total -= cout;
             benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
