@@ -40,7 +40,7 @@ float affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **g
             kilometrage += graphe[pos_camion][r[indice_requete].origine];
             cout_trajet += cout_distance(graphe[pos_camion][r[indice_requete].origine]);
             pos_camion = r[indice_requete].origine;
-            //printf("-v-> %d", pos_camion);
+          //  printf("-v-> %d", pos_camion);
         }
 
         kilometrage += graphe[pos_camion][r[indice_requete].destination];
@@ -51,7 +51,8 @@ float affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **g
     }
     kilometrage += graphe[pos_camion][a.id_entrepot];
     cout_trajet += cout_distance(graphe[pos_camion][a.id_entrepot]);
-    //printf(" -v-> %d\nkm : %.2f\ngain brut: %.2f\ncout essence: %.2f\nbenefice : %.2f\n\n", a.id_entrepot, (float)kilometrage / 1000, (float)gain / 10000, (float)cout_trajet / 10000, (float)(gain - cout_trajet) / 10000);
+    //if (a.id_entrepot == 0)
+    //    printf(" -v-> %d\nkm : %.2f\ngain brut: %.2f\ncout essence: %.2f\nbenefice : %.2f\n\n", a.id_entrepot, (float)kilometrage / 1000, (float)gain / 10000, (float)cout_trajet / 10000, (float)(gain - cout_trajet) / 10000);
     return (float)(gain - cout_trajet) / 10000;
 }
 

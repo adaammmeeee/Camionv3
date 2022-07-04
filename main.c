@@ -58,8 +58,7 @@ int main(int argc, char **argv)
 
 		if (argc == 3 && !strcmp(argv[2], "brute"))
 		{
-			struct entrepot *a2 = NULL;
-			a2 = charge_entrepots(nomfic, graphe);
+			
 			FILE *f = fopen("resultat_brute", "w");
 			if (f == NULL)
 			{
@@ -89,6 +88,9 @@ int main(int argc, char **argv)
 			}
 			fclose(f);
 
+			/*
+			struct entrepot *a2 = NULL;
+			a2 = charge_entrepots(nomfic, graphe);
 
 			f = fopen("resultat_insertion", "w");
 			if (f == NULL)
@@ -103,11 +105,12 @@ int main(int argc, char **argv)
 				fprintf(f, "acteur %d : %f\n", a2[i].id_entrepot, (float)(a2[i].benefice_total) / 10000);
 			}
 			fclose(f);
-
+			*/
+			
 			for (int i = 0; i < nb_entrepots; i++)
 			{
 				libere_acteur(a[i]);
-				libere_acteur(a2[i]);
+				//libere_acteur(a2[i]);
 			}
 
 			free(a);
