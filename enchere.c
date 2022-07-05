@@ -257,7 +257,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
     return a;
 }
 
-entrepot *confiance(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+entrepot *confiance_insertion(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
 {
     int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
     int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
@@ -345,6 +345,74 @@ entrepot *confiance(requete **rv, int nb_requete_vendre, int nb_entrepot, entrep
     }
     free(new_trajet);
     free(new_charge);
+    free(rv);
+
+    return a;
+}
+
+entrepot *confiance_fin(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+{
+    for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
+    {
+        int indice_e_demande = rv[cpt_requete]->id_entrepot;
+        int offre = 0;
+        int cout_requete_demande = rv[cpt_requete]->prix_propose_vente;
+
+        for (int cpt_entrepot = 0; cpt_entrepot < nb_entrepot; cpt_entrepot++)
+        {
+            int indice_e_offre = a[cpt_entrepot].id_entrepot;
+            if (indice_e_demande != indice_e_offre)
+            {
+                int camion_offre = -1;
+                int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
+                if(camion_offre == -1 && cout_requete)
+                {
+                    printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
+                    return NULL;
+                }
+
+                if (cout_requete && cout_requete < cout_requete_demande)
+                {
+                    int taille_trajet = a[indice_e_offre].liste_camion[camion_offre]->taille_trajet;
+                    int pos_camion = a[indice_e_offre].liste_camion[camion_offre]->trajet[taille_trajet - 1];
+
+                    faire_course(a[indice_e_offre].liste_camion[camion_offre], pos_camion, rv[cpt_requete]->origine, graphe, 0);
+                    faire_course(a[indice_e_offre].liste_camion[camion_offre], rv[cpt_requete]->origine, rv[cpt_requete]->destination, graphe, 1);
+                    a[indice_e_offre].benefice_total += cout_requete_demande;
+                    a[indice_e_demande].benefice_total -= cout_requete_demande;
+                    rv[cpt_requete]->a_vendre = 0;
+
+                    offre = 1;
+                    break;
+                }
+            }
+        }
+
+        if(!offre)
+        {
+            int camion_demande = -1;
+            int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_demande], &camion_demande, graphe);
+            if(camion_demande == -1 && cout_requete)
+            {
+                printf("ERREUR : lors du choix du camion faisant le trajet\n");
+                return NULL;
+            }
+            else if(camion_demande != -1 && cout_requete)
+            {
+                int indice_c_demande = camion_demande;
+                int taille_trajet = a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet;
+                int pos_camion = a[indice_e_demande].liste_camion[indice_c_demande]->trajet[taille_trajet - 1];
+
+                faire_course(a[indice_e_demande].liste_camion[indice_c_demande], pos_camion, rv[cpt_requete]->origine, graphe, 0);
+                faire_course(a[indice_e_demande].liste_camion[indice_c_demande], rv[cpt_requete]->origine, rv[cpt_requete]->destination, graphe, 1);
+                rv[cpt_requete]->a_vendre = 0;
+
+                //printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il la fera avec le camion %d\n", 
+                //        rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, a[indice_e_demande].liste_camion[indice_c_demande]->id_camion);
+            }
+        }
+        a[indice_e_demande].benefice_total += rv[cpt_requete]->gain;
+    }
     free(rv);
 
     return a;

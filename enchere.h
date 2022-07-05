@@ -8,4 +8,6 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
 
 entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe);
 
-entrepot *confiance(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe);
+entrepot *confiance_insertion(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe);
+
+entrepot *confiance_fin(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe);

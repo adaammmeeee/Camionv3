@@ -161,6 +161,23 @@ int main(int argc, char **argv)
 			if (nb_requete_vente && liste_vente)
 				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
+		else
+		{
+			printf("Souhaitez-vous utiliser les appels de confiance ? (y/n)\n");
+			fflush(stdout);
+			scanf("%[^\n]", buffer);
+			fgetc(stdin);
+			if (buffer[0] == 'y')
+			{
+				requete **liste_vente;
+				int nb_requete_vente = 0;
+				liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
+
+				if (nb_requete_vente && liste_vente)
+					a = confiance_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+			}
+		}
+
 		for (int i = 0; i < nb_entrepots; i++)
 		{
 			a[i] = retour_a_la_casa(a[i], graphe);
@@ -200,7 +217,7 @@ int main(int argc, char **argv)
 				liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
 
 				if (nb_requete_vente && liste_vente)
-					a = confiance(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+					a = confiance_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 			}
 		}
 
