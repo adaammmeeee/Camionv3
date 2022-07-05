@@ -43,56 +43,46 @@ for ligne in lignes:
 f.close()
 
 x = []
-y = []
+
 
 
 for i in range(nb_entrepot):
     x.append(a[i].id)
-    y.append(a[i].nb_requete)
 
-plt.subplot(212)
-
-plt.bar(x,y)
-plt.ylabel('Nombre de requêtes')
-plt.xlabel("Entrepot id")
-
-#Brute force vs initialisation classique
+valeur1 = [] # sans enchere
+valeur2 = [] # avec enchere
+valeur3 = [] # appel de confiancd
 
 
-
-valeur_brute = []
-valeur_insertion = []
-valeur_insertion_fin = []
-
-f = open("resultat_brute", "r")
+f = open("analyse1", "r")
 lignes = f.readlines()
 for ligne in lignes:
     tuple = ligne.partition(":")
-    valeur_brute.append(float(tuple[2]))
+    valeur1.append(float(tuple[2]))
 f.close()
 
-f = open("resultat_insertion_fin", "r")
+f = open("analyse2", "r")
 lignes = f.readlines()
 for ligne in lignes:
     tuple = ligne.partition(":")
-    valeur_insertion_fin.append(float(tuple[2]))
+    valeur2.append(float(tuple[2]))
 f.close()
 
-f = open("resultat_insertion", "r")
+f = open("analyse3", "r")
 lignes = f.readlines()
 for ligne in lignes:
     tuple = ligne.partition(":")
-    valeur_insertion.append(float(tuple[2]))
+    valeur3.append(float(tuple[2]))
 f.close()
 
+print(len(valeur1))
+print(len(valeur2))
+print(len(valeur3))
 
-df = pd.DataFrame({'insertion': valeur_insertion,
-                   'insertion_fin': valeur_insertion_fin,
-                   'brute force': valeur_brute}
+df = pd.DataFrame({'sans enchere': valeur1,
+                   'enchere': valeur2,
+                   'appel de confiance': valeur3}
                    , index=x)
 ax = df.plot.bar(rot=0)
 
-
 plt.show()
-
-

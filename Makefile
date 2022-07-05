@@ -38,5 +38,6 @@ clean:
 	rm -f main
 	rm -f gestionnaire
 	rm -f resultat_*
+	rm -f analyse*
 	rm -f trajet
 	ls

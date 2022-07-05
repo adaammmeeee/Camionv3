@@ -44,6 +44,7 @@ entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 int main(int argc, char **argv)
 {
 
+	int type_enchere = 1;
 	int nb_entrepots = 0;
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
@@ -154,6 +155,7 @@ int main(int argc, char **argv)
 		fgetc(stdin);
 		if (buffer[0] == 'y')
 		{
+			type_enchere = 2;
 			requete **liste_vente;
 			int nb_requete_vente = 0;
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
@@ -164,6 +166,7 @@ int main(int argc, char **argv)
 		else
 		{
 			printf("Souhaitez-vous utiliser les appels de confiance ? (y/n)\n");
+			type_enchere = 3;
 			fflush(stdout);
 			scanf("%[^\n]", buffer);
 			fgetc(stdin);
@@ -197,6 +200,7 @@ int main(int argc, char **argv)
 		fgetc(stdin);
 		if (buffer[0] == 'y')
 		{
+			type_enchere = 2;
 			requete **liste_vente;
 			int nb_requete_vente = 0;
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
@@ -212,6 +216,7 @@ int main(int argc, char **argv)
 			fgetc(stdin);
 			if (buffer[0] == 'y')
 			{
+				type_enchere = 3;
 				requete **liste_vente;
 				int nb_requete_vente = 0;
 				liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
@@ -226,7 +231,7 @@ int main(int argc, char **argv)
 	}
 
 	printf("Les données ont été exportés vers l'application\n");
-	analyse_donnees(a, nb_entrepots);
+	analyse_donnees(a, nb_entrepots, type_enchere);
 	exporte_trajet(a, nb_entrepots);
 	printf("Souhaitez vous voir les trajets de camions d'un entrepot ? (y/n)\n");
 	fflush(stdout);

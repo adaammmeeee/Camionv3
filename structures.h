@@ -1,4 +1,4 @@
-#define DISTANCE_MAX 2500000          //Attention a pas exceder 2147483647
+#define DISTANCE_MAX 2000000          //Attention a pas exceder 2147483647
 #define NB_MAX_CAMION 256
 #define TAILLE_MAX_TRAJET 256
 
@@ -46,6 +46,6 @@ void affichage_requete(liste_requete *LR, int **graphe);
 
 void affichage_entrepot(entrepot a, int **graphe);
 
-void analyse_donnees(entrepot *a, int nb_entrepot);
+void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere);
 
 void exporte_trajet(entrepot * a, int nb_entrepot);
