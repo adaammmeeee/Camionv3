@@ -37,7 +37,7 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
         int gain = 0;
         for (int j = 0; j < nombre_requetes; j++)
         {
-            int origine =  i;
+            int origine =  rand()%nb_entrepots;
             destination = rand() % nb_entrepots;
             while (destination == origine || graphe[origine][destination] > (1000*1000)) // 1000km en mètre
             {

@@ -24,11 +24,11 @@ float affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **g
     int gain = 0;
     if (tab[0] == -1)
     {
-       // printf("Pas de trajet possible\n");
+        // printf("Pas de trajet possible\n");
     }
 
     int pos_camion = a.id_entrepot;
-    //printf("%d ", pos_camion);
+    // printf("%d ", pos_camion);
 
     for (int i = 0; i < taille_tab; i++)
     {
@@ -40,18 +40,20 @@ float affichage_trajet(int *tab, int taille_tab, requete *r, entrepot a, int **g
             kilometrage += graphe[pos_camion][r[indice_requete].origine];
             cout_trajet += cout_distance(graphe[pos_camion][r[indice_requete].origine]);
             pos_camion = r[indice_requete].origine;
-            //printf("-v-> %d", pos_camion);
+            //  printf("-v-> %d", pos_camion);
         }
 
         kilometrage += graphe[pos_camion][r[indice_requete].destination];
         cout_trajet += cout_distance(graphe[pos_camion][r[indice_requete].destination]);
         pos_camion = r[indice_requete].destination;
         gain += r[indice_requete].gain;
-        //printf(" -> %d", pos_camion);
+        // printf(" -> %d", pos_camion);
     }
     kilometrage += graphe[pos_camion][a.id_entrepot];
     cout_trajet += cout_distance(graphe[pos_camion][a.id_entrepot]);
-    //printf(" -v-> %d\nkm : %.2f\ngain brut: %.2f\ncout essence: %.2f\nbenefice : %.2f\n\n", a.id_entrepot, (float)kilometrage / 1000, (float)gain / 10000, (float)cout_trajet / 10000, (float)(gain - cout_trajet) / 10000);
+    // if (a.id_entrepot == 0)
+    //     printf(" -v-> %d\nkm : %.2f\ngain brut: %.2f\ncout essence: %.2f\nbenefice : %.2f\n\n", a.id_entrepot, (float)kilometrage / 1000, (float)gain / 10000, (float)cout_trajet / 10000, (float)(gain - cout_trajet) / 10000);
+  
     return (float)(gain - cout_trajet) / 10000;
 }
 
@@ -279,7 +281,7 @@ int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **
                 {
                     memset(meilleure_assignation[i], -1, sizeof(int) * n);
                     memcpy(meilleure_assignation[i], camion_requete[i], sizeof(int) * pos_curseur[i]);
-                    //affiche_tableau(meilleure_assignation[i], n);
+                    // affiche_tableau(meilleure_assignation[i], n);
                 }
             }
             organisation_actuelle = 0;
@@ -321,58 +323,63 @@ float assignation_requete(entrepot a, int **graphe)
 
     // Maintenant pour chaque camion, on va assigner les requêtes à traiter
     int n = a.nb_requete; // nombre de requete
-    // int k = a.nb_camion;  // nombre de camion
-    int k = a.nb_camion; // nombre de camion
-                         // for (int k = 2; (k <= a.nb_camion) && (k < n); k++)
-    //{
-    int **camion_requete;
-    camion_requete = calloc(k, sizeof(int *));
-    for (int i = 0; i < k; i++)
+    //int k = a.nb_camion; // nombre de camion
+    float meilleur_benefice = INT_MIN + 1;
+
+    for (int k = 2; (k <= a.nb_camion) && (k < n); k++)
     {
-        camion_requete[i] = calloc(n, sizeof(int));
+        int **camion_requete;
+        camion_requete = calloc(k, sizeof(int *));
+        for (int i = 0; i < k; i++)
+        {
+            camion_requete[i] = calloc(n, sizeof(int));
+        }
+
+        int **meilleure_assignation = calloc(k, sizeof(int *));
+        for (int i = 0; i < k; i++)
+            meilleure_assignation[i] = calloc(n, sizeof(int));
+
+        // printf("\n\nNombre de requete : %d\n", n);
+        // printf("Nombre de camion  : %d\n", k);
+
+        int new_tab[k];
+        for (int i = 0; i < k - 1; i++)
+        {
+            new_tab[i] = 0;
+        }
+
+        int tab_ref[n];
+        for (int i = 0; i < n; i++)
+        {
+            tab_ref[i] = i;
+        }
+
+        int cout_meilleure_assignation = INT_MIN;
+        float benefice_total = 0;
+        combinaison(new_tab, tab_ref, n, k, 0, 0, camion_requete, meilleure_assignation, &cout_meilleure_assignation, r, a, graphe);
+        // printf("Voici la meilleure assignation possible des requêtes pour %d camions :  \n", k);
+        for (int i = 0; i < k; i++)
+        {
+            // printf("requête du camion %d: ", i);
+            // affiche_tableau(meilleure_assignation[i], n);
+            benefice_total += affichage_trajet(meilleure_assignation[i], n, r, a, graphe);
+        }
+        // printf("\nBenefice acteur %d : %f$\n", a.id_entrepot, benefice_total);
+        if (benefice_total > meilleur_benefice)
+        {
+            meilleur_benefice = benefice_total;
+        }
+
+        for (int i = 0; i < k; i++)
+        {
+            free(meilleure_assignation[i]);
+            free(camion_requete[i]);
+        }
+        free(camion_requete);
+        free(meilleure_assignation);
     }
+    // printf("nombre de combinaison : %d\n", nb_combinaison);
+    // printf("complexite : %d\n", complexite);
 
-    int **meilleure_assignation = calloc(k, sizeof(int *));
-    for (int i = 0; i < k; i++)
-        meilleure_assignation[i] = calloc(n, sizeof(int));
-
-    //printf("\n\nNombre de requete : %d\n", n);
-    //printf("Nombre de camion  : %d\n", k);
-
-    int new_tab[k];
-    for (int i = 0; i < k - 1; i++)
-    {
-        new_tab[i] = 0;
-    }
-
-    int tab_ref[n];
-    for (int i = 0; i < n; i++)
-    {
-        tab_ref[i] = i;
-    }
-
-    int cout_meilleure_assignation = INT_MIN;
-    float benefice_total = 0;
-    combinaison(new_tab, tab_ref, n, k, 0, 0, camion_requete, meilleure_assignation, &cout_meilleure_assignation, r, a, graphe);
-    //printf("Voici la meilleure assignation possible des requêtes pour %d camions :  \n", k);
-    for (int i = 0; i < k; i++)
-    {
-        //printf("requête du camion %d: ", i);
-        //affiche_tableau(meilleure_assignation[i], n);
-        benefice_total += affichage_trajet(meilleure_assignation[i], n, r, a, graphe);
-    }
-    //printf("\nBenefice acteur %d : %f$\n", a.id_entrepot, benefice_total);
-
-
-    for (int i = 0; i < k; i++)
-    {
-        free(meilleure_assignation[i]);
-        free(camion_requete[i]);
-    }
-    free(camion_requete);
-    free(meilleure_assignation);
-    //printf("nombre de combinaison : %d\n", nb_combinaison);
-    //printf("complexite : %d\n", complexite);
-    //}
-    return benefice_total;
+    return meilleur_benefice;
 }
