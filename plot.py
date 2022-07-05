@@ -1,4 +1,6 @@
+from unittest import result
 from matplotlib import pyplot as plt
+import pandas as pd
 from dataclasses import dataclass
 
 
@@ -38,18 +40,21 @@ for ligne in lignes:
         a.append(current)
         current = Entrepot(0,0,0,[])
 
+f.close()
 
 x = []
 y = []
 
+
 for i in range(nb_entrepot):
     x.append(a[i].id)
     y.append(a[i].nb_requete)
-
+"""
 plt.bar(x,y)
 plt.ylabel('Nombre de requêtes')
 plt.xlabel("Entrepot id")
-f.close()
+
+"""
 #Brute force vs initialisation classique
 
 
@@ -61,9 +66,7 @@ valeur_insertion_fin = []
 f1 = open("resultat_brute", "r")
 lignes = f1.readlines()
 for ligne in lignes:
-    print(ligne)
     tuple = ligne.partition(":")
-    print(tuple)
     valeur_brute.append(float(tuple[2]))
 f1.close()
 
@@ -75,17 +78,19 @@ for ligne in lignes:
 f2.close()
 
 f3 = open("resultat_insertion", "r")
-ligne = f3.readlines()
+lignes = f3.readlines()
 for ligne in lignes:
     tuple = ligne.partition(":")
     valeur_insertion.append(float(tuple[2]))
 f3.close()
 
+print(valeur_insertion)
 
-plt.plot(x, valeur_brute, label='brute force')
-plt.plot(x, valeur_insertion, label='Algo insertion')
-plt.plot(x, valeur_insertion_fin, label='Algo insertion fin')
-plt.legend()
-plt.title('Rentabilité des acteurs en fonction de la façon d\'assigner leurs requêtes')
-plt.grid(True)
+
+df = pd.DataFrame({'insertion': valeur_insertion,
+                   'insertion_fin': valeur_insertion_fin,
+                   'brute force': valeur_brute}
+                   , index=x)
+ax = df.plot.bar(rot=0)
+
 plt.show()
