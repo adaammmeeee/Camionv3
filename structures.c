@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <limits.h>
 #include "structures.h"
 
 int cout_distance(int distance)
@@ -58,8 +59,8 @@ void analyse_donnees(entrepot *a, int nb_entrepot)
 	float nb_entrepots = (float) nb_entrepot;
 	float somme_m = 0;
 	float somme_var = 0;
-	float min = MAX;
-	float max = 0;
+	float min = INT_MAX;
+	float max = INT_MIN;
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		if(a[i].benefice_total < min)
