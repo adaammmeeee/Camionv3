@@ -256,3 +256,96 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
 
     return a;
 }
+
+entrepot *confiance(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+{
+    int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
+    int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
+
+    for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
+    {
+        int indice_e_demande = rv[cpt_requete]->id_entrepot;
+        int cout_requete_demande = rv[cpt_requete]->prix_propose_vente;
+        int offre = 0;
+        
+        for (int cpt_entrepot = 0; cpt_entrepot < nb_entrepot; cpt_entrepot++)
+        {
+            int indice_e_offre = a[cpt_entrepot].id_entrepot;
+            if (indice_e_demande != indice_e_offre)
+            {
+                int camion_offre = -1;
+                int taille_new_trajet = 0;
+                int distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
+                int cout_requete = cout_distance(distance_requete);
+
+                if((camion_offre == -1 || !taille_new_trajet) && distance_requete != INT_MAX)
+                {
+                    printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
+                    return NULL;
+                }
+
+                if (distance_requete != INT_MAX && cout_requete < cout_requete_demande)
+                {
+                    for(int i = 0; i < taille_new_trajet; i++)
+                        a[indice_e_offre].liste_camion[camion_offre]->trajet[i] = new_trajet[i];
+
+                    for(int i = 0; i < taille_new_trajet; i++)
+                        a[indice_e_offre].liste_camion[camion_offre]->charge[i] = new_charge[i];
+                        
+                    a[indice_e_offre].liste_camion[camion_offre]->taille_trajet = taille_new_trajet;
+                    a[indice_e_offre].liste_camion[camion_offre]->distance_parcouru += distance_requete;
+
+                    a[indice_e_offre].benefice_total += cout_requete_demande;
+                    a[indice_e_demande].benefice_total -= cout_requete_demande;
+
+                    rv[cpt_requete]->a_vendre = 0;
+
+                    offre = 1;
+                    break;
+                }
+            }
+        }
+        if(!offre)
+        {
+            int camion_demande = -1;
+            int taille_new_trajet = 0;
+            int distance_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
+            int cout_requete = cout_distance(distance_requete);
+
+            if(camion_demande == -1 && distance_requete != INT_MAX)
+            {
+                printf("ERREUR : lors du choix du camion faisant le trajet\n");
+                return NULL;
+            }
+            else if(camion_demande != -1 && distance_requete != INT_MAX)
+            {
+                int indice_c_demande = camion_demande;
+                for(int i = 0; i < taille_new_trajet; i++)
+                    a[indice_e_demande].liste_camion[indice_c_demande]->trajet[i] = new_trajet[i];
+
+                for(int i = 0; i < taille_new_trajet - 1; i++)
+                    a[indice_e_demande].liste_camion[indice_c_demande]->charge[i] = new_charge[i];
+                    
+                a[indice_e_demande].liste_camion[indice_c_demande]->taille_trajet = taille_new_trajet;
+                a[indice_e_demande].liste_camion[indice_c_demande]->distance_parcouru += distance_requete;
+                rv[cpt_requete]->a_vendre = 0;
+
+                //printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il la fera avec le camion %d\n", 
+                //        rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, a[indice_e_demande].liste_camion[indice_c_demande]->id_camion);
+            }
+            else if(!cout_requete)
+            {
+                a[indice_e_demande].benefice_total -= rv[cpt_requete]->gain;
+                rv[cpt_requete]->a_vendre = 1;
+                //printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il ne peut pas la faire, il perdra %d\n", 
+                //        rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, rv[cpt_requete].perte);
+            }
+        }
+        a[indice_e_demande].benefice_total += rv[cpt_requete]->gain;
+    }
+    free(new_trajet);
+    free(new_charge);
+    free(rv);
+
+    return a;
+}
