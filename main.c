@@ -44,116 +44,54 @@ entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 int main(int argc, char **argv)
 {
 
-	int type_enchere = 1;
+	int type_enchere = 0;
 	int nb_entrepots = 0;
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	int **graphe;
 	struct entrepot *a = NULL;
-	if (argc < 2)
+	if (argc < 3)
 	{
-		printf("besoin d'arguments %s nom_fichier.csv <option>brute\n", argv[0]);
+		printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion/brute)\n", argv[0]);
 		return -1;
 	}
-	else
+
+	graphe = charge_graphe(argv[1], &nb_entrepots);
+	genere_acteur(nomfic, graphe, nb_entrepots);
+	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
+	a = charge_entrepots(nomfic, graphe);
+
+	if(!strcmp(argv[2],"fin"))
 	{
-		graphe = charge_graphe(argv[1], &nb_entrepots);
-		genere_acteur(nomfic, graphe, nb_entrepots);
-		printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
-		a = charge_entrepots(nomfic, graphe);
-
-		if (argc == 3 && !strcmp(argv[2], "brute"))
+		if(argc < 4)
 		{
-
-			FILE *f = fopen("resultat_brute", "w");
-			if (f == NULL)
-			{
-				printf("Erreur d'ouverture du fichier\n");
-				return -1;
-			}
-
-			for (int i = 0; i < nb_entrepots; i++)
-			{
-				float benefice = assignation_requete(a[i], graphe);
-				fprintf(f, "acteur %d : %f\n", a[i].id_entrepot, benefice);
-			}
-			fclose(f);
-
-			f = fopen("resultat_insertion_fin", "w");
-			if (f == NULL)
-			{
-				printf("Erreur d'ouverture du fichier\n");
-				return -1;
-			}
-
-			for (int i = 0; i < nb_entrepots; i++)
-			{
-				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
-				a[i] = retour_a_la_casa(a[i], graphe);
-				a[i] = le_deficit_ou_pas(a[i], graphe);
-				fprintf(f, "acteur %d : %f\n", a[i].id_entrepot, (float)(a[i].benefice_total) / 10000);
-			}
-			fclose(f);
-
-			struct entrepot *a2 = NULL;
-			a2 = charge_entrepots(nomfic, graphe);
-
-			f = fopen("resultat_insertion", "w");
-			if (f == NULL)
-			{
-				printf("Erreur d'ouverture du fichier\n");
-				return -1;
-			}
-
-			for (int i = 0; i < nb_entrepots; i++)
-			{
-				a2[i] = init_insertion(a2[i].LR, a2[i], a2[i].nb_requete, graphe);
-				a2[i] = le_deficit_ou_pas(a2[i], graphe);
-				fprintf(f, "acteur %d : %f\n", a2[i].id_entrepot, (float)(a2[i].benefice_total) / 10000);
-			}
-			fclose(f);
-
 			for (int i = 0; i < nb_entrepots; i++)
 			{
 				libere_acteur(a[i]);
-				// libere_acteur(a2[i]);
-			}
-
-			free(a);
-
-			for (int i = 0; i < nb_entrepots; i++)
-			{
 				free(graphe[i]);
 			}
+			free(a);
 			free(graphe);
 
-			return 0;
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			return -1;
 		}
-	}
-	printf("//////////////////////////////////////////////\n");
 
-	printf("chargement des requêtes que les acteurs ne veulent pas dans le dépot commun\n");
-
-	printf("On va maintenant assigner les requêtes de chaque acteur à chaque camion avec l'aide d'un algo glouton : \n");
-
-	char buffer[64];
-	printf("Quel type de glouton voulez-vous utiliser, ajout à la fin ou par insertion ? (0/1) \n");
-	fflush(stdout);
-	scanf("%[^\n]", buffer);
-	fgetc(stdin);
-
-	if (buffer[0] == '0')
-	{
-		printf("On va maintenant faire l'ajout de requête à la fin d'un trajet existant\n");
 		for (int i = 0; i < nb_entrepots; i++)
 			if (a[i].nb_requete)
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
 
-		printf("Souhaitez vous utiliser l'enchère ? (y/n)\n");
-		fflush(stdout);
-		scanf("%[^\n]", buffer);
-		fgetc(stdin);
-		if (buffer[0] == 'y')
+		if(!strcmp(argv[3],"confiance"))
+		{
+			type_enchere = 1;
+			requete **liste_vente;
+			int nb_requete_vente = 0;
+			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
+
+			if (nb_requete_vente && liste_vente)
+				a = confiance_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+		}
+		else if(!strcmp(argv[3],"enchere"))
 		{
 			type_enchere = 2;
 			requete **liste_vente;
@@ -163,22 +101,18 @@ int main(int argc, char **argv)
 			if (nb_requete_vente && liste_vente)
 				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else
+		else if(strcmp(argv[3],"sans"))
 		{
-			printf("Souhaitez-vous utiliser les appels de confiance ? (y/n)\n");
-			type_enchere = 3;
-			fflush(stdout);
-			scanf("%[^\n]", buffer);
-			fgetc(stdin);
-			if (buffer[0] == 'y')
+			for (int i = 0; i < nb_entrepots; i++)
 			{
-				requete **liste_vente;
-				int nb_requete_vente = 0;
-				liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
-
-				if (nb_requete_vente && liste_vente)
-					a = confiance_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+				libere_acteur(a[i]);
+				free(graphe[i]);
 			}
+			free(a);
+			free(graphe);
+
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			return -1;
 		}
 
 		for (int i = 0; i < nb_entrepots; i++)
@@ -187,18 +121,37 @@ int main(int argc, char **argv)
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 		}
 	}
-	else if (buffer[0] == '1')
+	else if(!strcmp(argv[2],"insertion"))
 	{
-		printf("On va maintenant faire l'ajout de requête par insertion\n");
+		if(argc < 4)
+		{
+			for (int i = 0; i < nb_entrepots; i++)
+			{
+				libere_acteur(a[i]);
+				free(graphe[i]);
+			}
+			free(a);
+			free(graphe);
+
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			return -1;
+		}
+
 		for (int i = 0; i < nb_entrepots; i++)
 			if (a[i].nb_requete)
 				a[i] = init_insertion(a[i].LR, a[i], a[i].nb_requete, graphe);
 
-		printf("Souhaitez vous utiliser l'enchère ? (y/n)\n");
-		fflush(stdout);
-		scanf("%[^\n]", buffer);
-		fgetc(stdin);
-		if (buffer[0] == 'y')
+		if(!strcmp(argv[3],"confiance"))
+		{
+			type_enchere = 1;
+			requete **liste_vente;
+			int nb_requete_vente = 0;
+			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
+
+			if (nb_requete_vente && liste_vente)
+				a = confiance_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+		}
+		else if(!strcmp(argv[3],"enchere"))
 		{
 			type_enchere = 2;
 			requete **liste_vente;
@@ -208,74 +161,107 @@ int main(int argc, char **argv)
 			if (nb_requete_vente && liste_vente)
 				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else
+		else if(strcmp(argv[3],"sans"))
 		{
-			printf("Souhaitez-vous utiliser les appels de confiance ? (y/n)\n");
-			fflush(stdout);
-			scanf("%[^\n]", buffer);
-			fgetc(stdin);
-			if (buffer[0] == 'y')
+			for (int i = 0; i < nb_entrepots; i++)
 			{
-				type_enchere = 3;
-				requete **liste_vente;
-				int nb_requete_vente = 0;
-				liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
-
-				if (nb_requete_vente && liste_vente)
-					a = confiance_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+				libere_acteur(a[i]);
+				free(graphe[i]);
 			}
-		}
+			free(a);
+			free(graphe);
 
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			return -1;
+		}
 		for (int i = 0; i < nb_entrepots; i++)
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 	}
+	else if(!strcmp(argv[2],"brute"))
+	{
+		FILE *f = fopen("resultat_brute", "w");
+		if (f == NULL)
+		{
+			printf("Erreur d'ouverture du fichier\n");
+			return -1;
+		}
 
+		for (int i = 0; i < nb_entrepots; i++)
+		{
+			float benefice = assignation_requete(a[i], graphe);
+			fprintf(f, "acteur %d : %f\n", a[i].id_entrepot, benefice);
+		}
+		fclose(f);
+
+		f = fopen("resultat_insertion_fin", "w");
+		if (f == NULL)
+		{
+			printf("Erreur d'ouverture du fichier\n");
+			return -1;
+		}
+
+		for (int i = 0; i < nb_entrepots; i++)
+		{
+			a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
+			a[i] = retour_a_la_casa(a[i], graphe);
+			a[i] = le_deficit_ou_pas(a[i], graphe);
+			fprintf(f, "acteur %d : %f\n", a[i].id_entrepot, (float)(a[i].benefice_total) / 10000);
+		}
+		fclose(f);
+
+		struct entrepot *a2 = NULL;
+		a2 = charge_entrepots(nomfic, graphe);
+
+		f = fopen("resultat_insertion", "w");
+		if (f == NULL)
+		{
+			printf("Erreur d'ouverture du fichier\n");
+			return -1;
+		}
+
+		for (int i = 0; i < nb_entrepots; i++)
+		{
+			a2[i] = init_insertion(a2[i].LR, a2[i], a2[i].nb_requete, graphe);
+			a2[i] = le_deficit_ou_pas(a2[i], graphe);
+			fprintf(f, "acteur %d : %f\n", a2[i].id_entrepot, (float)(a2[i].benefice_total) / 10000);
+		}
+		fclose(f);
+
+		for (int i = 0; i < nb_entrepots; i++)
+		{
+			libere_acteur(a[i]);
+			//libere_acteur(a2[i]);
+			free(graphe[i]);
+		}
+		free(a);
+		//free(a2);
+		free(graphe);
+
+		return 0;
+	}
+	else
+	{
+		for (int i = 0; i < nb_entrepots; i++)
+		{
+			libere_acteur(a[i]);
+			free(graphe[i]);
+		}
+		free(a);
+		free(graphe);
+
+		printf("Ce type d'algorithme n'existe pas, type_algo : fin, insertion ou brute\n");
+		return -1;
+	}
 	printf("Les données ont été exportés vers l'application\n");
 	analyse_donnees(a, nb_entrepots, type_enchere);
 	exporte_trajet(a, nb_entrepots);
-	printf("Souhaitez vous voir les trajets de camions d'un entrepot ? (y/n)\n");
-	fflush(stdout);
-	scanf("%[^\n]", buffer);
-	fgetc(stdin);
-	while (buffer[0] == 'y')
-	{
-		memset(buffer, 0, 64);
-		printf("Quel acteur souhaitez vous observer ? Entrez son id :\n");
-		fflush(stdout);
-		scanf("%[^\n]", buffer);
-		fgetc(stdin);
-		int id = atoi(buffer);
-		for (int i = 0; i < a[id].nb_camion; i++)
-		{
-			printf("trajet du camion %d : ", a[id].liste_camion[i]->id_camion);
-			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet; j++)
-				printf("-%d", a[id].liste_camion[i]->trajet[j]);
-
-			printf("-\ncharge du camion %d : ", a[id].liste_camion[i]->id_camion);
-			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
-				printf("-%d", a[id].liste_camion[i]->charge[j]);
-			printf("-\n");
-
-			printf("-\nCout trajet : ");
-			int distance_trajet = 0;
-			for (int j = 0; j < a[id].liste_camion[i]->taille_trajet - 1; j++)
-				distance_trajet = cout_distance(graphe[a[id].liste_camion[i]->trajet[j]][a[id].liste_camion[i]->trajet[j + 1]]);
-			printf("%.2f distance parcourue %.2f\n", (float)distance_trajet / 10000, (float)a[id].liste_camion[i]->distance_parcouru / 1000); // 4581,24
-		}
-		printf("Souhaitez vous voir les trajets d'un autre acteur ? (y/n) \n");
-		fflush(stdout);
-		scanf("%[^\n]", buffer);
-		fgetc(stdin);
-	}
 
 	for (int i = 0; i < nb_entrepots; i++)
+	{
 		libere_acteur(a[i]);
-	free(a);
-
-	for (int i = 0; i < nb_entrepots; i++)
-	{
 		free(graphe[i]);
 	}
+	free(a);
 	free(graphe);
 
 	return 0;
