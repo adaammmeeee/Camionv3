@@ -230,11 +230,11 @@ int main(int argc, char **argv)
 		for (int i = 0; i < nb_entrepots; i++)
 		{
 			libere_acteur(a[i]);
-			//libere_acteur(a2[i]);
+			libere_acteur(a2[i]);
 			free(graphe[i]);
 		}
 		free(a);
-		//free(a2);
+		free(a2);
 		free(graphe);
 
 		return 0;

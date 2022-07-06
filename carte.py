@@ -114,9 +114,9 @@ def gestionnaire_entrepot(numero):
         liste.insert(i, "Camion " + str(i))
     liste.place(x=0, y=0)
    
-
+    ligne_trajets = []
     def affiche_trajet():
-        try:
+        try: 
             cnv.delete("all")
             selection = liste.selection_get()
             selection = digit_in_str(selection)
@@ -138,8 +138,11 @@ def gestionnaire_entrepot(numero):
                 pass
             """
             ligne_trajet =  map_widget.set_path([marker_list[trajet[i]].position for i in range(len(trajet))], color='red')
+            ligne_trajets.append(ligne_trajet)
+            print(len(ligne_trajets))
             def clear_trajet():
-                ligne_trajet.delete()
+                for i in ligne_trajets:
+                    i.delete()
                 entrepot.destroy()
             entrepot.protocol("WM_DELETE_WINDOW", clear_trajet)
         except:

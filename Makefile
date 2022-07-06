@@ -25,22 +25,22 @@ brute_test: main
 	echo $(CSRC)
 	./main "matrice_distance_10_sommets.csv" brute
 
-insert_sans:
+insert_sans: main
 	./main "matrice_distance.csv" insertion sans
 
-insert_enchere:
+insert_enchere: main
 	./main "matrice_distance.csv" insertion enchere
 
-insert_confiance:
+insert_confiance: main
 	./main "matrice_distance.csv" insertion confiance
 
-fin_sans:
+fin_sans: main
 	./main "matrice_distance.csv" fin sans
 
-fin_enchere:
+fin_enchere: main
 	./main "matrice_distance.csv" fin enchere
 
-fin_confiance:
+fin_confiance: main
 	./main "matrice_distance.csv" fin confiance
 
 debug: main
