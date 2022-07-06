@@ -7,11 +7,13 @@ OBJS = main.c\
 	structures.o init.o chemins_gloutons.o enchere.o generateur.o brute_force.o
 
 .PHONY: run
-run: main
+all_insert: main
 	echo $(CSRC)
-	./main "matrice_distance.csv"
+	./main "matrice_distance.csv" insertion sans
+	./main "matrice_distance.csv" insertion enchere
+	./main "matrice_distance.csv" insertion confiance
 
-test: main
+all_insert_test: main
 	echo $(CSRC)
 	./main "matrice_distance_10_sommets.csv"
 
@@ -23,8 +25,28 @@ brute_test: main
 	echo $(CSRC)
 	./main "matrice_distance_10_sommets.csv" brute
 
+insert_sans:
+	./main "matrice_distance.csv" insertion sans
+
+insert_enchere:
+	./main "matrice_distance.csv" insertion enchere
+
+insert_confiance:
+	./main "matrice_distance.csv" insertion confiance
+
+fin_sans:
+	./main "matrice_distance.csv" fin sans
+
+fin_enchere:
+	./main "matrice_distance.csv" fin enchere
+
+fin_confiance:
+	./main "matrice_distance.csv" fin confiance
+
 debug: main
-	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv"
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion sans
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion enchere
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion confiance
 	
 main: $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS) 
