@@ -51,37 +51,59 @@ for i in range(nb_entrepot):
 
 valeur1 = [] # sans enchere
 valeur2 = [] # avec enchere
-valeur3 = [] # appel de confiancd
+valeur3 = [] # appel de confiance
+
+stats1 = [] # sans enchere
+stats2 = [] # avec enchere
+stats3 = [] # appel de confiance
 
 
 f = open("analyse1", "r")
 lignes = f.readlines()
-for ligne in lignes:
-    tuple = ligne.partition(":")
-    valeur1.append(float(tuple[2]))
+for i in range(len(lignes)):
+    tuple = lignes[i].partition(":")
+    if (i>=(len(lignes)-5)):
+        stats1.append(float(tuple[2]))
+    else:
+        valeur1.append(float(tuple[2]))
 f.close()
 
 f = open("analyse2", "r")
 lignes = f.readlines()
-for ligne in lignes:
-    tuple = ligne.partition(":")
-    valeur2.append(float(tuple[2]))
+for i in range(len(lignes)):
+    tuple = lignes[i].partition(":")
+    if (i>=(len(lignes)-5)):
+        stats2.append(float(tuple[2]))
+    else:
+        valeur2.append(float(tuple[2]))
 f.close()
 
 f = open("analyse3", "r")
 lignes = f.readlines()
-for ligne in lignes:
-    tuple = ligne.partition(":")
-    valeur3.append(float(tuple[2]))
+for i in range(len(lignes)):
+    tuple = lignes[i].partition(":")
+    if (i>=(len(lignes)-5)):
+        stats3.append(float(tuple[2]))
+    else:
+        valeur3.append(float(tuple[2]))
 f.close()
 
-print(len(valeur1))
-print(len(valeur2))
-print(len(valeur3))
+plt.subplot(111)
 
 df = pd.DataFrame({'sans enchere': valeur1,
                    'enchere': valeur2,
                    'appel de confiance': valeur3}
+                   , index=x)
+ax = df.plot.bar(rot=0)
+
+x = ["gain global","moyenne", "max", "min", "ecart-type"]
+
+
+plt.subplot(212)
+
+df = pd.DataFrame({'sans enchere': stats1,
+                   'enchere': stats2,
+                   'appel de confiance': stats3}
                    , index=x)
 ax = df.plot.bar(rot=0)
 

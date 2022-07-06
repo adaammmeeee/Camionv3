@@ -93,6 +93,14 @@ df = pd.DataFrame({'insertion': valeur_insertion,
 ax = df.plot.bar(rot=0)
 
 
+
+df = pd.DataFrame({'insertion': valeur_insertion,
+                   'insertion_fin': valeur_insertion_fin,
+                   'brute force': valeur_brute}
+                   , index=x)
+ax = df.plot.bar(rot=0)
+
+
 plt.show()
 
 

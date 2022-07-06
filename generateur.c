@@ -16,8 +16,8 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
     }
     fprintf(f, "nombre d'entrepot : %d\n\n", nb_entrepots);
 
-    //srand(getpid());
-    srand(3);
+    srand(getpid());
+    //srand(3);
 
     for (int i = 0; i < nb_entrepots; i++)
     {
@@ -45,7 +45,7 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
             }
             gain = cout_distance(graphe[origine][destination]);
             gain = gain * 2.5;
-            int perte = gain * 10;
+            int perte = 0;
 
             fprintf(f, "origine : %d\ndestination : %d\ngains : %d\nperte : %d\n\n", origine, destination, gain, perte);
         }

@@ -82,14 +82,16 @@ void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere)
 		somme_var = somme_var + ((float)a[i].benefice_total / 10000) * ((float)a[i].benefice_total / 10000);
 
 		fprintf(fichier, "acteur %d : %.2f\n", a[i].id_entrepot, (float)a[i].benefice_total / 10000);
-		printf( "acteur %d : %.2f\n", a[i].id_entrepot, (float)a[i].benefice_total / 10000);
 	}
-	fclose(fichier);
 	float moyenne = somme_m / nb_entrepots;
 	float variance = somme_var / nb_entrepots - moyenne * moyenne;
 	float ecart_type = sqrt(variance);
-	printf("\nGain global %.2f, moyenne par acteur : %.2f\n", somme_m, moyenne);
-	printf("Le gain le plus haut : %.2f, le gain le plus bas : %.2f et un ecart-type : %.2f\n\n", (float)max / 10000, (float)min / 10000, ecart_type);
+	fprintf(fichier,"Gain global : %.2f\n", somme_m);
+	fprintf(fichier,"moyenne par acteur : %.2f\n", moyenne);
+	fprintf(fichier,"gain max : %.2f\n", (float) max / 10000);
+	fprintf(fichier,"gain min : %.2f\n", (float) min / 10000);
+	fprintf(fichier,"ecart-type : %.2f\n", ecart_type);
+	fclose(fichier);
 }
 
 void exporte_trajet(entrepot *a, int nb_entrepot)
