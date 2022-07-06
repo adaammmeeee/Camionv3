@@ -86,7 +86,6 @@ void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere)
 	float moyenne = somme_m / nb_entrepots;
 	float variance = somme_var / nb_entrepots - moyenne * moyenne;
 	float ecart_type = sqrt(variance);
-	fprintf(fichier,"Gain global : %.2f\n", somme_m);
 	fprintf(fichier,"moyenne par acteur : %.2f\n", moyenne);
 	fprintf(fichier,"gain max : %.2f\n", (float) max / 10000);
 	fprintf(fichier,"gain min : %.2f\n", (float) min / 10000);

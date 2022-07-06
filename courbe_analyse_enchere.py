@@ -62,7 +62,7 @@ f = open("analyse1", "r")
 lignes = f.readlines()
 for i in range(len(lignes)):
     tuple = lignes[i].partition(":")
-    if (i>=(len(lignes)-5)):
+    if (i>=(len(lignes)-4)):
         stats1.append(float(tuple[2]))
     else:
         valeur1.append(float(tuple[2]))
@@ -72,7 +72,7 @@ f = open("analyse2", "r")
 lignes = f.readlines()
 for i in range(len(lignes)):
     tuple = lignes[i].partition(":")
-    if (i>=(len(lignes)-5)):
+    if (i>=(len(lignes)-4)):
         stats2.append(float(tuple[2]))
     else:
         valeur2.append(float(tuple[2]))
@@ -82,13 +82,12 @@ f = open("analyse3", "r")
 lignes = f.readlines()
 for i in range(len(lignes)):
     tuple = lignes[i].partition(":")
-    if (i>=(len(lignes)-5)):
+    if (i>=(len(lignes)-4)):
         stats3.append(float(tuple[2]))
     else:
         valeur3.append(float(tuple[2]))
 f.close()
 
-plt.subplot(111)
 
 df = pd.DataFrame({'sans enchere': valeur1,
                    'enchere': valeur2,
@@ -96,7 +95,7 @@ df = pd.DataFrame({'sans enchere': valeur1,
                    , index=x)
 ax = df.plot.bar(rot=0)
 
-x = ["gain global","moyenne", "max", "min", "ecart-type"]
+x = ["moyenne", "max", "min", "ecart-type"]
 
 
 plt.subplot(212)

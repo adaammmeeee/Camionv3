@@ -117,7 +117,6 @@ def gestionnaire_entrepot(numero):
 
     def affiche_trajet():
         try:
-            global ligne_trajet
             cnv.delete("all")
             selection = liste.selection_get()
             selection = digit_in_str(selection)
@@ -132,10 +131,12 @@ def gestionnaire_entrepot(numero):
             affichage = affichage + "Charge : " + str(a[numero].liste_camion[selection].charge)
 
             cnv.create_text(largeur_liste +185, 25, text= affichage , fill="black", font=("Arial",10), justify= 'left', )
+            """
             try: 
                 ligne_trajet.delete()
             except:
                 pass
+            """
             ligne_trajet =  map_widget.set_path([marker_list[trajet[i]].position for i in range(len(trajet))], color='red')
             def clear_trajet():
                 ligne_trajet.delete()
