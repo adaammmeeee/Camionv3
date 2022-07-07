@@ -8,16 +8,18 @@
 int complexite = 0;
 int nb_combinaison = 0;
 
+// Affiche un tableau d'une certaine taille
 void affiche_tableau(int *tableau, int taille)
 {
     for (int i = 0; i < taille; i++)
     {
         (tableau[i] >= 0) ? (printf("%d ", tableau[i])) : (0);
     }
-    printf("fin affichage tableau");
     printf("\n");
 }
 
+// soit tab un tableau contenant des indices de requetes, on calcule le benefice de toutes ces requêtes
+// elles sont effectués par un seul camion qui part de son entrepot ID
 int calcul_cout_tab_requete(int *tab, int taille_tab, requete *r, entrepot a, int **graphe)
 {
     int benefice = 0;
@@ -26,6 +28,7 @@ int calcul_cout_tab_requete(int *tab, int taille_tab, requete *r, entrepot a, in
     int cout_trajet_total = 0;
     int cout_trajet = 0;
     int pos_camion = a.id_entrepot;
+    int pos_avant = a.id_entrepot;
     if (tab[0] == -1)
     {
         // printf("Pas de trajet possible\n");
@@ -52,10 +55,14 @@ int calcul_cout_tab_requete(int *tab, int taille_tab, requete *r, entrepot a, in
         {
             gain += r[indice_requete].gain;
             cout_trajet_total += cout_trajet;
+            pos_avant = pos_camion; // On valide la position du camion
         }
 
         else
+        {
             gain -= r[indice_requete].perte;
+            pos_camion = pos_avant;
+        }
 
         // printf("%d -> ", pos_camion);
     }
@@ -72,6 +79,7 @@ int calcul_cout_tab_requete(int *tab, int taille_tab, requete *r, entrepot a, in
     return benefice;
 }
 
+// Incremente le tableau, en base limite
 void incremente_tableau(int *tableau, int taille, int limite)
 {
     if (tableau[taille - 1] == limite)
@@ -92,6 +100,7 @@ void incremente_tableau(int *tableau, int taille, int limite)
     }
 }
 
+// Calcul tous les ordres possibles d'un tableau tab, et renvoi l'ordre de requête avec le meilleur benefice dans best_tab
 int different_ordre(int *tab, int taille_tab, int *new_tab, int *best_tab, int *case_noir, int cpt, int *meilleur_cout, requete *r, entrepot a, int **graphe)
 {
     // On a un ordre
@@ -164,6 +173,7 @@ int int_pow(int base, int exp)
     }
     return result;
 }
+
 
 int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **camion_requete, int **meilleure_assignation, int *cout_meilleure_assignation, requete *r, entrepot a, int **graphe)
 {
@@ -273,7 +283,8 @@ int combinaison(int *tab, int *tab_ref, int n, int k, int index, int cpt, int **
 // brut force
 float assignation_requete(entrepot a, int **graphe)
 {
-
+    printf("\n\n\n\n");
+    printf("Entrepot : %d\n\n", a.id_entrepot);
     // chaque indice du tab_requete représente le numéro de requête, la valeur dans cette case représente le numéro de camion qui traite la demande
 
     requete r[a.nb_requete];
@@ -292,9 +303,11 @@ float assignation_requete(entrepot a, int **graphe)
     int n = a.nb_requete; // nombre de requete
     // int k = a.nb_camion; // nombre de camion
     float meilleur_benefice = INT_MIN + 1;
+    int meilleur_k = 0;
 
     for (int k = 1; (k <= a.nb_camion) && (k < n); k++)
     {
+        printf("On va assigner les requêtes à %d camions\n", k);
         int **camion_requete;
         camion_requete = calloc(k, sizeof(int *));
         for (int i = 0; i < k; i++)
@@ -327,14 +340,17 @@ float assignation_requete(entrepot a, int **graphe)
         // printf("Voici la meilleure assignation possible des requêtes pour %d camions :  \n", k);
         for (int i = 0; i < k; i++)
         {
-            // printf("requête du camion %d: ", i);
-            // affiche_tableau(meilleure_assignation[i], n);
-            benefice_total += (float)calcul_cout_tab_requete(meilleure_assignation[i], n, r, a, graphe) / 10000;
+            printf("requête du camion %d: ", i);
+            affiche_tableau(meilleure_assignation[i], n);
+            float buffer = (float)calcul_cout_tab_requete(meilleure_assignation[i], n, r, a, graphe) / 10000;
+            printf("Benefice : %f$\n", buffer);
+            benefice_total += buffer;
         }
         // printf("\nBenefice acteur %d : %f$\n", a.id_entrepot, benefice_total);
         if (benefice_total > meilleur_benefice)
         {
             meilleur_benefice = benefice_total;
+            meilleur_k = k;
         }
 
         for (int i = 0; i < k; i++)
@@ -347,6 +363,6 @@ float assignation_requete(entrepot a, int **graphe)
     }
     // printf("nombre de combinaison : %d\n", nb_combinaison);
     // printf("complexite : %d\n", complexite);
-
+    printf("meilleur k : %d\n", meilleur_k);
     return meilleur_benefice;
 }
