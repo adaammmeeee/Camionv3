@@ -43,6 +43,11 @@ fin_enchere: main
 fin_confiance: main
 	./main "matrice_distance.csv" fin confiance
 
+comparaison_echange: main
+	./main "matrice_distance.csv" insertion sans 100
+	./main "matrice_distance.csv" insertion enchere 100
+	./main "matrice_distance.csv" insertion confiance 100
+
 debug: main
 	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion sans
 	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion enchere

@@ -46,6 +46,8 @@ int main(int argc, char **argv)
 
 	int type_enchere = 0;
 	int nb_entrepots = 0;
+	int nb_tours = 0;
+	int grand_echantillon = 0;
 	char nomfic[64] = "gestionnaire";
 	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	int **graphe;
@@ -57,8 +59,17 @@ int main(int argc, char **argv)
 	}
 
 	graphe = charge_graphe(argv[1], &nb_entrepots);
-	genere_acteur(nomfic, graphe, nb_entrepots);
+
+	int nb_requetes[nb_entrepots];
+    int nb_camions[nb_entrepots];
+	genere_alea(nb_entrepots, nb_requetes, nb_camions);
+
+	repetition :
+	nb_tours++;
+	genere_acteur(nomfic, graphe, nb_entrepots, nb_requetes, nb_camions);
 	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
+	if(a)
+		free(a);
 	a = charge_entrepots(nomfic, graphe);
 
 	if(!strcmp(argv[2],"fin"))
@@ -73,7 +84,7 @@ int main(int argc, char **argv)
 			free(a);
 			free(graphe);
 
-			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) <option>nb_repetitions\n", argv[0]);
 			return -1;
 		}
 
@@ -111,7 +122,7 @@ int main(int argc, char **argv)
 			free(a);
 			free(graphe);
 
-			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) <option>nb_repetitions\n", argv[0]);
 			return -1;
 		}
 
@@ -133,7 +144,7 @@ int main(int argc, char **argv)
 			free(a);
 			free(graphe);
 
-			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) <option>nb_repetitions\n", argv[0]);
 			return -1;
 		}
 
@@ -171,7 +182,7 @@ int main(int argc, char **argv)
 			free(a);
 			free(graphe);
 
-			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) sortie(unique/multiple)\n", argv[0]);
+			printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion) type_echanges(sans/confiance/enchere) <option>nb_repetitions\n", argv[0]);
 			return -1;
 		}
 		for (int i = 0; i < nb_entrepots; i++)
@@ -252,9 +263,17 @@ int main(int argc, char **argv)
 		printf("Ce type d'algorithme n'existe pas, type_algo : fin, insertion ou brute\n");
 		return -1;
 	}
+
+	if(argc == 5 && nb_tours < atoi(argv[4]))
+	{
+		grand_echantillon = 1;
+		goto repetition;
+	}
+
 	printf("Les données ont été exportés vers l'application\n");
-	analyse_donnees(a, nb_entrepots, type_enchere);
-	exporte_trajet(a, nb_entrepots);
+	analyse_donnees(a, nb_entrepots, type_enchere, grand_echantillon);
+	if(!grand_echantillon)
+		exporte_trajet(a, nb_entrepots);
 
 	for (int i = 0; i < nb_entrepots; i++)
 	{
