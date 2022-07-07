@@ -57,6 +57,8 @@ int main(int argc, char **argv)
 		printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion/brute)\n", argv[0]);
 		return -1;
 	}
+	else if(argc == 5)
+		grand_echantillon = 1;
 
 	graphe = charge_graphe(argv[1], &nb_entrepots);
 
@@ -264,16 +266,13 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	if(argc == 5 && nb_tours < atoi(argv[4]))
-	{
-		grand_echantillon = 1;
-		goto repetition;
-	}
-
 	printf("Les données ont été exportés vers l'application\n");
 	analyse_donnees(a, nb_entrepots, type_enchere, grand_echantillon);
 	if(!grand_echantillon)
 		exporte_trajet(a, nb_entrepots);
+
+	if(argc == 5 && nb_tours < atoi(argv[4]))
+		goto repetition;
 
 	for (int i = 0; i < nb_entrepots; i++)
 	{
