@@ -15,8 +15,8 @@ entrepot retour_a_la_casa(entrepot a, int **graphe)
 	for (int i = 0; i < a.nb_camion; i++)
 	{
 		int taille = a.liste_camion[i]->taille_trajet;
-		int origine = a.liste_camion[i]->trajet[taille - 1];
-		faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
+		int pos_camion = a.liste_camion[i]->trajet[taille - 1];
+		faire_course(a.liste_camion[i], pos_camion, a.id_entrepot, graphe, 0);
 	}
 	return a;
 }
@@ -27,9 +27,9 @@ entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 	while (actuelle)
 	{
 		if (actuelle->a_vendre)
-		{
 			a.benefice_total -= actuelle->perte;
-		}
+		else
+			a.benefice_total += actuelle->gain;
 
 		actuelle = actuelle->suiv;
 	}
