@@ -272,6 +272,7 @@ repetition:
 	if(argc == 5 && nb_tours < atoi(argv[4]))
 		goto repetition;
 
+	//printf("distance 74-16 %d, 16-85 %d, 74-85 %d, addition %d\n", graphe[74][16], graphe[16][85], graphe[74][85], graphe[74][16] + graphe[16][85]);
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		libere_acteur(a[i]);
