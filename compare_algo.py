@@ -3,6 +3,21 @@ from matplotlib import pyplot as plt
 import pandas as pd
 from dataclasses import dataclass
 
+def tri_table(table_tri, table1, table2):
+    for i in range(len(table_tri)):
+        for j in range(len(table_tri)):
+            if table_tri[i] < table_tri[j]:
+                buffer = table_tri[i]
+                table_tri[i] = table_tri[j]
+                table_tri[j] = buffer
+                buffer = table1[i]
+                table1[i] = table1[j]
+                table1[j] = buffer
+                buffer = table2[i]
+                table2[i] = table2[j]
+                table2[j] = buffer
+
+
 
 @dataclass
 class Entrepot:
@@ -50,7 +65,6 @@ for i in range(nb_entrepot):
     x.append(a[i].id)
     y.append(a[i].nb_requete)
 
-plt.subplot(212)
 
 plt.bar(x,y)
 plt.ylabel('Nombre de requêtes')
@@ -86,20 +100,19 @@ for ligne in lignes:
 f.close()
 
 
+tri_table(valeur_brute, valeur_insertion, valeur_insertion_fin)
+
+"""
 df = pd.DataFrame({'insertion': valeur_insertion,
                    'insertion_fin': valeur_insertion_fin,
                    'brute force': valeur_brute}
                    , index=x)
 ax = df.plot.bar(rot=0)
-
-
-
-df = pd.DataFrame({'insertion': valeur_insertion,
-                   'insertion_fin': valeur_insertion_fin,
-                   'brute force': valeur_brute}
-                   , index=x)
-ax = df.plot.bar(rot=0)
-
+"""
+plt.plot(x, valeur_brute, label="Brute force")
+plt.plot(x, valeur_insertion, label="Insertion")
+plt.plot(x, valeur_insertion_fin, label="Insertion fin")
+plt.legend()
 
 plt.show()
 
