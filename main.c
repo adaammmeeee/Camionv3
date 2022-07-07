@@ -49,7 +49,6 @@ int main(int argc, char **argv)
 	int nb_tours = 0;
 	int grand_echantillon = 0;
 	char nomfic[64] = "gestionnaire";
-	printf("recuperation des information sur le graphe dans le fichier matrice_distance.csv...\n");
 	int **graphe;
 	struct entrepot *a = NULL;
 	if (argc < 3)
@@ -57,24 +56,25 @@ int main(int argc, char **argv)
 		printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion/brute)\n", argv[0]);
 		return -1;
 	}
+	else if (argc == 5)
+		grand_echantillon = 1;
 
 	graphe = charge_graphe(argv[1], &nb_entrepots);
 
 	int nb_requetes[nb_entrepots];
-    int nb_camions[nb_entrepots];
+	int nb_camions[nb_entrepots];
 	genere_alea(nb_entrepots, nb_requetes, nb_camions);
 
-	repetition :
+repetition:
 	nb_tours++;
 	genere_acteur(nomfic, graphe, nb_entrepots, nb_requetes, nb_camions);
-	printf("recuperation des informations sur les entrepots dans le fichier %s...\n", nomfic);
-	if(a)
+	if (a)
 		free(a);
 	a = charge_entrepots(nomfic, graphe);
 
-	if(!strcmp(argv[2],"fin"))
+	if (!strcmp(argv[2], "fin"))
 	{
-		if(argc < 4)
+		if (argc < 4)
 		{
 			for (int i = 0; i < nb_entrepots; i++)
 			{
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 			if (a[i].nb_requete)
 				a[i] = evaluation_meilleure_solution(a[i].LR, a[i], a[i].nb_requete, graphe);
 
-		if(!strcmp(argv[3],"confiance"))
+		if (!strcmp(argv[3], "confiance"))
 		{
 			type_enchere = 1;
 			requete **liste_vente;
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
 			if (nb_requete_vente && liste_vente)
 				a = confiance_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else if(!strcmp(argv[3],"enchere"))
+		else if (!strcmp(argv[3], "enchere"))
 		{
 			type_enchere = 2;
 			requete **liste_vente;
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 			if (nb_requete_vente && liste_vente)
 				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else if(strcmp(argv[3],"sans"))
+		else if (strcmp(argv[3], "sans"))
 		{
 			for (int i = 0; i < nb_entrepots; i++)
 			{
@@ -132,9 +132,9 @@ int main(int argc, char **argv)
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 		}
 	}
-	else if(!strcmp(argv[2],"insertion"))
+	else if (!strcmp(argv[2], "insertion"))
 	{
-		if(argc < 4)
+		if (argc < 4)
 		{
 			for (int i = 0; i < nb_entrepots; i++)
 			{
@@ -152,7 +152,7 @@ int main(int argc, char **argv)
 			if (a[i].nb_requete)
 				a[i] = init_insertion(a[i].LR, a[i], a[i].nb_requete, graphe);
 
-		if(!strcmp(argv[3],"confiance"))
+		if (!strcmp(argv[3], "confiance"))
 		{
 			type_enchere = 1;
 			requete **liste_vente;
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
 			if (nb_requete_vente && liste_vente)
 				a = confiance_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else if(!strcmp(argv[3],"enchere"))
+		else if (!strcmp(argv[3], "enchere"))
 		{
 			type_enchere = 2;
 			requete **liste_vente;
@@ -172,7 +172,7 @@ int main(int argc, char **argv)
 			if (nb_requete_vente && liste_vente)
 				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else if(strcmp(argv[3],"sans"))
+		else if (strcmp(argv[3], "sans"))
 		{
 			for (int i = 0; i < nb_entrepots; i++)
 			{
@@ -188,7 +188,7 @@ int main(int argc, char **argv)
 		for (int i = 0; i < nb_entrepots; i++)
 			a[i] = le_deficit_ou_pas(a[i], graphe);
 	}
-	else if(!strcmp(argv[2],"brute"))
+	else if (!strcmp(argv[2], "brute"))
 	{
 		FILE *f = fopen("resultat_brute", "w");
 		if (f == NULL)
@@ -264,16 +264,12 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	if(argc == 5 && nb_tours < atoi(argv[4]))
-	{
-		grand_echantillon = 1;
-		goto repetition;
-	}
-
-	printf("Les données ont été exportés vers l'application\n");
 	analyse_donnees(a, nb_entrepots, type_enchere, grand_echantillon);
-	if(!grand_echantillon)
+	if (!grand_echantillon)
 		exporte_trajet(a, nb_entrepots);
+
+	if (argc == 5 && nb_tours < atoi(argv[4]))
+		goto repetition;
 
 	for (int i = 0; i < nb_entrepots; i++)
 	{

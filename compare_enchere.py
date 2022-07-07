@@ -57,7 +57,6 @@ stats1 = [] # sans enchere
 stats2 = [] # avec enchere
 stats3 = [] # appel de confiance
 
-
 f = open("analyse0", "r")
 lignes = f.readlines()
 for i in range(len(lignes)):

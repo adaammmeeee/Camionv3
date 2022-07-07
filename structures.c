@@ -65,12 +65,12 @@ void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere, int grand_e
 	char nomfic[255];
 	sprintf(nomfic, "analyse%d", type_enchere);
 	FILE *fichier = fopen(nomfic, "a");
+
 	if (!fichier)
 	{
 		printf("Erreur d'ouverture du fichier\n");
 		exit(1);
 	}
-
 	for (int i = 0; i < nb_entrepots; i++)
 	{
 		if (a[i].benefice_total < min)

@@ -67,8 +67,7 @@ for i in range(nb_entrepot):
 
 
 plt.bar(x,y)
-plt.ylabel('Nombre de requêtes')
-plt.xlabel("Entrepot id")
+plt.ylabel('Bénéfice de l\'acteur')
 
 #Brute force vs initialisation classique
 
