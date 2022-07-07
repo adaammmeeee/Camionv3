@@ -58,7 +58,7 @@ stats2 = [] # avec enchere
 stats3 = [] # appel de confiance
 
 
-f = open("analyse1", "r")
+f = open("analyse0", "r")
 lignes = f.readlines()
 for i in range(len(lignes)):
     tuple = lignes[i].partition(":")
@@ -78,7 +78,7 @@ for i in range(len(lignes)):
         valeur2.append(float(tuple[2]))
 f.close()
 
-f = open("analyse3", "r")
+f = open("analyse1", "r")
 lignes = f.readlines()
 for i in range(len(lignes)):
     tuple = lignes[i].partition(":")
@@ -98,7 +98,6 @@ ax = df.plot.bar(rot=0)
 x = ["moyenne", "max", "min", "ecart-type"]
 
 
-plt.subplot(212)
 
 df = pd.DataFrame({'sans enchere': stats1,
                    'enchere': stats2,

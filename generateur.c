@@ -44,7 +44,7 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots)
             }
             gain = cout_distance(graphe[origine][destination]);
             gain = gain * 2.5;
-            int perte = 0;
+            int perte = gain;
 
             fprintf(f, "origine : %d\ndestination : %d\ngains : %d\nperte : %d\n\n", origine, destination, gain, perte);
         }
