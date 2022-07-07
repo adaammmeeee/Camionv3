@@ -15,8 +15,8 @@ entrepot retour_a_la_casa(entrepot a, int **graphe)
 	for (int i = 0; i < a.nb_camion; i++)
 	{
 		int taille = a.liste_camion[i]->taille_trajet;
-		int origine = a.liste_camion[i]->trajet[taille - 1];
-		faire_course(a.liste_camion[i], origine, a.id_entrepot, graphe, 0);
+		int pos_camion = a.liste_camion[i]->trajet[taille - 1];
+		faire_course(a.liste_camion[i], pos_camion, a.id_entrepot, graphe, 0);
 	}
 	return a;
 }
@@ -27,9 +27,9 @@ entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 	while (actuelle)
 	{
 		if (actuelle->a_vendre)
-		{
 			a.benefice_total -= actuelle->perte;
-		}
+		else
+			a.benefice_total += actuelle->gain;
 
 		actuelle = actuelle->suiv;
 	}
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 		printf("besoin d'arguments %s nom_fichier.csv type_algo(fin/insertion/brute)\n", argv[0]);
 		return -1;
 	}
-	else if (argc == 5)
+	else if(argc == 5)
 		grand_echantillon = 1;
 
 	graphe = charge_graphe(argv[1], &nb_entrepots);
@@ -264,11 +264,12 @@ repetition:
 		return -1;
 	}
 
+	printf("Les données ont été exportés vers l'application\n");
 	analyse_donnees(a, nb_entrepots, type_enchere, grand_echantillon);
 	if (!grand_echantillon)
 		exporte_trajet(a, nb_entrepots);
 
-	if (argc == 5 && nb_tours < atoi(argv[4]))
+	if(argc == 5 && nb_tours < atoi(argv[4]))
 		goto repetition;
 
 	for (int i = 0; i < nb_entrepots; i++)

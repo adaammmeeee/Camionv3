@@ -150,14 +150,12 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
             }
             else if (!cout_requete)
             {
-                a[indice_e_demande].benefice_total -= rv[cpt_requete]->gain;
                 rv[cpt_requete]->a_vendre = 1;
 
                 // printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il ne peut pas la faire, il perdra %d\n",
                 //         rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, rv[cpt_requete].perte);
             }
         }
-        a[indice_e_demande].benefice_total += rv[cpt_requete]->gain;
     }
     free(rv);
 
@@ -266,13 +264,11 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
             }
             else if (!cout_requete)
             {
-                a[indice_e_demande].benefice_total -= rv[cpt_requete]->gain;
                 rv[cpt_requete]->a_vendre = 1;
                 // printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il ne peut pas la faire, il perdra %d\n",
                 //         rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, rv[cpt_requete].perte);
             }
         }
-        a[indice_e_demande].benefice_total += rv[cpt_requete]->gain;
     }
     free(new_trajet);
     free(new_charge);
@@ -364,13 +360,11 @@ entrepot *confiance_insertion(requete **rv, int nb_requete_vendre, int nb_entrep
             }
             else if (!cout_requete)
             {
-                a[indice_e_demande].benefice_total -= rv[cpt_requete]->gain;
                 rv[cpt_requete]->a_vendre = 1;
                 // printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il ne peut pas la faire, il perdra %d\n",
                 //         rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, rv[cpt_requete].perte);
             }
         }
-        a[indice_e_demande].benefice_total += rv[cpt_requete]->gain;
     }
     free(new_trajet);
     free(new_charge);
@@ -443,7 +437,6 @@ entrepot *confiance_fin(requete **rv, int nb_requete_vendre, int nb_entrepot, en
                 //         rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, a[indice_e_demande].liste_camion[indice_c_demande]->id_camion);
             }
         }
-        a[indice_e_demande].benefice_total += rv[cpt_requete]->gain;
     }
     free(rv);
 

@@ -20,9 +20,9 @@ int faire_course(camion *c, int origine, int destination, int **graphe, int plei
         c->trajet[c->taille_trajet] = destination;
         c->charge[c->taille_trajet - 1] = plein;
         c->taille_trajet++;
+        c->distance_parcouru += graphe[origine][destination];
     }
 
-    c->distance_parcouru += graphe[origine][destination];
     return cout_distance(graphe[origine][destination]);
 }
 
@@ -115,7 +115,6 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
     }
 
     // Debut du glouton
-    int benefice_total = 0;
     requete *actuelle = LR->prem;
     while (actuelle && nb_requete)
     {
@@ -132,7 +131,6 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
             int pos_camion = a.liste_camion[camion]->trajet[taille_trajet - 1];
             faire_course(a.liste_camion[camion], pos_camion, actuelle->origine, graphe, 0);
             faire_course(a.liste_camion[camion], actuelle->origine, actuelle->destination, graphe, 1);
-            benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
         else{
@@ -148,7 +146,6 @@ entrepot evaluation_meilleure_solution(liste_requete *LR, entrepot a, int nb_req
         printf("Attention la liste de requete contient moins de requete que le nombre indiqué en argument\n");
         return err;
     }
-    a.benefice_total = benefice_total;
     return a;
 }
 
@@ -245,7 +242,6 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
     }
 
     // Debut du glouton
-    int benefice_total = 0;
     requete *actuelle = LR->prem;
     int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
     int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
@@ -272,7 +268,6 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
             a.liste_camion[camion]->taille_trajet = taille_new_trajet;
 
             a.liste_camion[camion]->distance_parcouru += distance;
-            benefice_total += actuelle->gain;
             actuelle->a_vendre = 0;
         }
         else if(distance == INT_MAX)
@@ -289,7 +284,6 @@ entrepot init_insertion(liste_requete *LR, entrepot a, int nb_requete, int **gra
     }
     free(new_trajet);
     free(new_charge);
-    a.benefice_total = benefice_total;
 
     return a;
 }
