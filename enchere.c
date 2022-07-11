@@ -25,6 +25,21 @@ int *tab_melange(int k)
     return tab;
 }
 
+int marge(entrepot a)
+{
+    int moy_prix = 0;
+    for(int i = 0; i < a.nb_camion; i++)
+    {
+        if(a.liste_camion[i]->nb_requetes_faites)
+            a.liste_camion[i]->benefice_camion_moy /= a.liste_camion[i]->nb_requetes_faites;
+            
+        moy_prix += a.liste_camion[i]->benefice_camion_moy;
+    }
+    moy_prix /= a.nb_camion;
+
+    return moy_prix;
+}
+
 int nb_vente(entrepot *a, int nb_entrepot)
 {
     int nb_requete = 0;
@@ -94,7 +109,7 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
             if (indice_e_demande != indice_e_offre)
             {
                 int camion_offre = -1;
-                int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
+                int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe) + marge(a[indice_e_offre]);
                 if (camion_offre == -1 && cout_requete)
                 {
                     printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
@@ -119,8 +134,8 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
 
             faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min], pos_camion, rv[cpt_requete]->origine, graphe, 0);
             faire_course(a[indice_e_offre_min].liste_camion[indice_c_offre_min], rv[cpt_requete]->origine, rv[cpt_requete]->destination, graphe, 1);
-            a[indice_e_offre_min].benefice_total += cout_requete_min + 1;
-            a[indice_e_demande].benefice_total -= cout_requete_min + 1;
+            a[indice_e_offre_min].benefice_total += cout_requete_min;
+            a[indice_e_demande].benefice_total -= cout_requete_min;
             rv[cpt_requete]->a_vendre = 0;
 
             // printf("ENCHERES : La requete %d->%d de l'acteur %d a été vendue à l'acteur %d au prix de %d, il la fera avec le camion %d\n",
@@ -190,7 +205,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
                 int camion_offre = -1;
                 int taille_new_trajet = 0;
                 int distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
-                int cout_requete = cout_distance(distance_requete);
+                int cout_requete = cout_distance(distance_requete) + marge(a[indice_e_offre]);
 
                 if ((camion_offre == -1 || !taille_new_trajet) && distance_requete != INT_MAX)
                 {
@@ -227,8 +242,8 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
             a[indice_e_offre_min].liste_camion[indice_c_offre_min]->taille_trajet = taille_new_trajet_min;
             a[indice_e_offre_min].liste_camion[indice_c_offre_min]->distance_parcouru += distance_requete_min;
 
-            a[indice_e_offre_min].benefice_total += cout_requete_min + 1;
-            a[indice_e_demande].benefice_total -= cout_requete_min + 1;
+            a[indice_e_offre_min].benefice_total += cout_requete_min;
+            a[indice_e_demande].benefice_total -= cout_requete_min;
             rv[cpt_requete]->a_vendre = 0;
 
             // printf("ENCHERES : La requete %d->%d de l'acteur %d a été vendue à l'acteur %d au prix de %d, il la fera avec le camion %d\n",
@@ -239,7 +254,6 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
             int camion_demande = -1;
             int taille_new_trajet = 0;
             int distance_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
-            int cout_requete = cout_distance(distance_requete);
 
             if (camion_demande == -1 && distance_requete != INT_MAX)
             {
@@ -262,7 +276,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
                 // printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il la fera avec le camion %d\n",
                 //         rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, a[indice_e_demande].liste_camion[indice_c_demande]->id_camion);
             }
-            else if (!cout_requete)
+            else if (distance_requete == INT_MAX)
             {
                 rv[cpt_requete]->a_vendre = 1;
                 // printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il ne peut pas la faire, il perdra %d\n",
