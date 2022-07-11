@@ -4,6 +4,7 @@ import pandas as pd
 from dataclasses import dataclass
 
 
+
 @dataclass
 class Entrepot:
     id : int
@@ -11,6 +12,13 @@ class Entrepot:
     nb_requete : int
     liste_camion : list
 
+def tri_entrepot(entrepot):
+    for i in range(len(entrepot)):
+        for j in range(len(entrepot)):
+            if entrepot[i].nb_requete < entrepot[j].nb_requete:
+                buffer = entrepot[i]
+                entrepot[i] = entrepot[j]
+                entrepot[j] = buffer
 
 def digit_in_str(str):
     string = ""
@@ -42,13 +50,21 @@ for ligne in lignes:
 
 f.close()
 
-x = []
+tri_entrepot(a)
 
+x = []
+y = []
 
 
 for i in range(nb_entrepot):
-    x.append(a[i].id)
+    x.append(i)
+    y.append(a[i].nb_requete)
 
+plt.plot(x, y)
+
+plt.legend()
+
+"""
 valeur1 = [] # sans enchere
 valeur2 = [] # avec enchere
 valeur3 = [] # appel de confiance
@@ -87,21 +103,6 @@ for i in range(len(lignes)):
         valeur3.append(float(tuple[2]))
 f.close()
 
-
-df = pd.DataFrame({'sans enchere': valeur1,
-                   'enchere': valeur2,
-                   'appel de confiance': valeur3}
-                   , index=x)
-ax = df.plot.bar(rot=0)
-
-x = ["moyenne", "max", "min", "ecart-type"]
-
-
-
-df = pd.DataFrame({'sans enchere': stats1,
-                   'enchere': stats2,
-                   'appel de confiance': stats3}
-                   , index=x)
-ax = df.plot.bar(rot=0)
+"""
 
 plt.show()

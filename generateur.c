@@ -14,11 +14,11 @@ void genere_alea(int nb_entrepots, int *nb_requetes, int *nb_camions)
         int comparateur = rand()%100;
         if (comparateur < 85)
         { 
-            nb_requetes[i] = rand()%8+3; // Petit acteur
+            nb_requetes[i] = rand()%8+5; // Petit acteur
         }
         else
         {
-            nb_requetes[i] = rand()%8 + 3; // Grand acteur
+            nb_requetes[i] = rand()%50 + 20; // Grand acteur
         }
         nb_camions[i] = nb_requetes[i]/2 + 1;   // 2 requetes par camion
     }
