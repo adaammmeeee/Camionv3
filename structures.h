@@ -46,6 +46,9 @@ void affichage_requete(liste_requete *LR, int **graphe);
 
 void affichage_entrepot(entrepot a, int **graphe);
 
+// genere dans un fichier analyseN (N un entier) la moyenne des benefices pour chaque entrepot
+// type enchere N : 0 = pas d'enchère, 1 = enchère, 2 = appel confiance
 void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere, int grand_echantillon);
 
+// Dans le fichier trajet, écris tous les trajets de tous les camions pour chaque entrepot
 void exporte_trajet(entrepot * a, int nb_entrepot);

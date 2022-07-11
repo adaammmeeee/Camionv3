@@ -54,7 +54,8 @@ void affichage_entrepot(entrepot a, int **graphe)
 	printf("-\nGain théorique %.2f, Cout_total %.2f, Benefice : %.2f\n", (float)gain_theorique / 10000, (float)cout_entrepot / 10000, (float)a.benefice_total / 10000);
 	affichage_requete(a.LR, graphe);
 }
-// type enchere : 0 = pas d'enchère, 1 = enchère, 2 = appel confiance
+
+
 void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere, int grand_echantillon)
 {
 	float nb_entrepots = (float)nb_entrepot;

@@ -21,6 +21,7 @@ entrepot retour_a_la_casa(entrepot a, int **graphe)
 	return a;
 }
 
+// Calcul le benefice pour un entrepot a
 entrepot le_deficit_ou_pas(entrepot a, int **graphe)
 {
 	requete *actuelle = a.LR->prem;
