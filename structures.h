@@ -26,6 +26,8 @@ typedef struct camion
     int id_camion; //pour l'affichage
     int distance_parcouru;
     int taille_trajet;
+    int benefice_camion_moy;
+    int nb_requetes_faites;
     int *trajet;
     int *charge;
 } camion;

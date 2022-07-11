@@ -194,6 +194,8 @@ entrepot *charge_entrepots(char *nomfic, int **graphe)
         {
             a[i].liste_camion[j]->id_camion = j;
             a[i].liste_camion[j]->distance_parcouru = 0;
+            a[i].liste_camion[j]->benefice_camion_moy = 0;
+            a[i].liste_camion[j]->nb_requetes_faites = 0;
             a[i].liste_camion[j]->taille_trajet = 1;
             a[i].liste_camion[j]->trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
             a[i].liste_camion[j]->trajet[0] = a[i].id_entrepot;
