@@ -62,8 +62,9 @@ for i in range(nb_entrepot):
 
 plt.plot(x, y)
 plt.title("Nombre de requete par entrepot")
+plt.savefig("repartition_test_enchere.svg")
+
 plt.legend()
-plt.savefig("repartition.svg")
 
 """
 valeur1 = [] # sans enchere

@@ -14,11 +14,11 @@ void genere_alea(int nb_entrepots, int *nb_requetes, int *nb_camions)
         int comparateur = rand()%100;
         if (comparateur < 85)
         { 
-            nb_requetes[i] = rand()%8+10; // Petit acteur
+            nb_requetes[i] = rand()%7+3; // Petit acteur
         }
         else
         {
-            nb_requetes[i] = rand()%50 + 30; // Grand acteur
+            nb_requetes[i] = rand()%70 + 20; // Grand acteur
         }
         nb_camions[i] = nb_requetes[i]/2 + 1;   // 2 requetes par camion
     }
@@ -43,7 +43,7 @@ int genere_acteur(char *nomfic, int **graphe, int nb_entrepots, int *nb_requetes
         int gain = 0;
         for (int j = 0; j < nb_requetes[i]; j++)
         {
-            int origine =  rand()%nb_entrepots;
+            int origine =  i;
             destination = rand()%nb_entrepots;
             while (destination == origine || graphe[origine][destination] > (1000*1000)) // 1000km en mètre
             {

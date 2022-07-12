@@ -117,6 +117,9 @@ plt.plot(x, valeur_brute, label="Brute force (moyenne : " + str(moyenne_brute) +
 plt.plot(x, valeur_insertion, label="Insertion (moyenne : " + str(moyenne_insertion)+ ")")
 plt.plot(x, valeur_insertion_fin, label="Insertion fin (moyenne : " + str(moyenne_insertion_fin)+ ")" )
 plt.legend()
+plt.title("Comparaison des assignations (tri croissant et kilometrage illimité)")
+plt.savefig("tri_croissant_sans_limite_km.svg")
+
 
 plt.show()
 

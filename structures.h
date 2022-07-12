@@ -1,4 +1,4 @@
-#define DISTANCE_MAX 2500000          //Attention a pas exceder 2147483647
+#define DISTANCE_MAX 99500000          //Attention a pas exceder 2147483647
 #define NB_MAX_CAMION 256
 #define TAILLE_MAX_TRAJET 256
 
