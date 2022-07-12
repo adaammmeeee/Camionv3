@@ -6,7 +6,7 @@
 
 int cout_distance(int distance)
 {
-	if (distance)
+	if (distance > 0)
 		return 11 * distance + 500000;
 	else
 		return 0;
