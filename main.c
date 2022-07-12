@@ -103,7 +103,7 @@ repetition:
 			if (nb_requete_vente && liste_vente)
 				a = confiance_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else if (!strcmp(argv[3], "enchere"))
+		else if (!strcmp(argv[3], "enchere0"))
 		{
 			type_enchere = 2;
 			requete **liste_vente;
@@ -111,7 +111,27 @@ repetition:
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
 
 			if (nb_requete_vente && liste_vente)
-				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, 0, graphe);
+		}
+		else if (!strcmp(argv[3], "enchere1"))
+		{
+			type_enchere = 2;
+			requete **liste_vente;
+			int nb_requete_vente = 0;
+			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
+
+			if (nb_requete_vente && liste_vente)
+				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, 1, graphe);
+		}
+		else if (!strcmp(argv[3], "enchere2"))
+		{
+			type_enchere = 2;
+			requete **liste_vente;
+			int nb_requete_vente = 0;
+			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
+
+			if (nb_requete_vente && liste_vente)
+				a = enchere_echange_fin(liste_vente, nb_requete_vente, nb_entrepots, a, 2, graphe);
 		}
 		else if (strcmp(argv[3], "sans"))
 		{
@@ -163,7 +183,7 @@ repetition:
 			if (nb_requete_vente && liste_vente)
 				a = confiance_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
 		}
-		else if (!strcmp(argv[3], "enchere"))
+		else if (!strcmp(argv[3], "enchere0"))
 		{
 			type_enchere = 2;
 			requete **liste_vente;
@@ -171,7 +191,27 @@ repetition:
 			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
 
 			if (nb_requete_vente && liste_vente)
-				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, graphe);
+				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, 0, graphe);
+		}
+		else if (!strcmp(argv[3], "enchere1"))
+		{
+			type_enchere = 2;
+			requete **liste_vente;
+			int nb_requete_vente = 0;
+			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
+
+			if (nb_requete_vente && liste_vente)
+				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, 1, graphe);
+		}
+		else if (!strcmp(argv[3], "enchere2"))
+		{
+			type_enchere = 2;
+			requete **liste_vente;
+			int nb_requete_vente = 0;
+			liste_vente = mise_en_vente(a, nb_entrepots, &nb_requete_vente);
+
+			if (nb_requete_vente && liste_vente)
+				a = enchere_echange_insertion(liste_vente, nb_requete_vente, nb_entrepots, a, 2, graphe);
 		}
 		else if (strcmp(argv[3], "sans"))
 		{

@@ -25,9 +25,10 @@ int *tab_melange(int k)
     return tab;
 }
 
-int marge(entrepot a)
+int marge(entrepot a, int type_marge)
 {
     int moy_prix = 0;
+    int ret = 0;
     for(int i = 0; i < a.nb_camion; i++)
     {
         if(a.liste_camion[i]->nb_requetes_faites)
@@ -37,11 +38,29 @@ int marge(entrepot a)
     }
     moy_prix /= a.nb_camion;
 
-    if(moy_prix < 0)
-        moy_prix = 0;
+    switch (type_marge)
+    {
+    case 0:
+        ret = 1;
+        break;
 
-//8000000 en marge constante
-    return 8000000;
+    case 1:
+        ret = 8000000;
+        break;
+
+    case 2:
+        if(moy_prix < 0)
+            ret = 0;
+        else
+            ret = moy_prix;
+        break;
+
+    default:
+        ret = 1;
+        break;
+    }
+
+    return ret;
 }
 
 int nb_vente(entrepot *a, int nb_entrepot)
@@ -94,7 +113,7 @@ requete **mise_en_vente(entrepot *a, int nb_entrepot, int *nb_requete_vente)
     return liste_vente;
 }
 
-entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int type_marge, int **graphe)
 {
     for (int cpt_requete = 0; cpt_requete < nb_requete_vendre; cpt_requete++)
     {
@@ -120,9 +139,9 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
                     return NULL;
                 }
 
-                if (cout_requete && (cout_requete + marge(a[indice_e_offre])) < cout_requete_min)
+                if (cout_requete && (cout_requete + marge(a[indice_e_offre], type_marge)) < cout_requete_min)
                 {
-                    cout_requete += marge(a[indice_e_offre]);
+                    cout_requete += marge(a[indice_e_offre], type_marge);
                     cout_requete_min = cout_requete;
                     indice_e_offre_min = indice_e_offre;
                     indice_c_offre_min = camion_offre;
@@ -182,7 +201,7 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
     return a;
 }
 
-entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int **graphe)
+entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_entrepot, entrepot *a, int type_marge, int **graphe)
 {
     int *new_trajet = calloc(TAILLE_MAX_TRAJET, sizeof(int));
     int *new_charge = calloc(TAILLE_MAX_TRAJET - 1, sizeof(int));
@@ -210,7 +229,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
                 int camion_offre = -1;
                 int taille_new_trajet = 0;
                 int distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
-                int cout_requete = cout_distance(distance_requete) + marge(a[indice_e_offre]);
+                int cout_requete = cout_distance(distance_requete) + marge(a[indice_e_offre], type_marge);
                 
                 if ((camion_offre == -1 || !taille_new_trajet) && distance_requete != INT_MAX)
                 {

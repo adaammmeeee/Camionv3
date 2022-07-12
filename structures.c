@@ -88,8 +88,7 @@ void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere, int grand_e
 	float variance = somme_var / nb_entrepots - moyenne * moyenne;
 	float ecart_type = sqrt(variance);
 	fprintf(fichier, "moyenne benefice : %.2f\n", moyenne);
-	printf("benefice total : %.2f\n", somme_m);
-	printf("ecart-type : %.2f\n", ecart_type);
+	//printf("ecart-type : %.2f\n", ecart_type);
 
 	if (!grand_echantillon)
 	{
