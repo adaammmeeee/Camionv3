@@ -49,9 +49,9 @@ comparaison_echange: main
 	./main "matrice_distance.csv" insertion confiance 100
 
 debug: main
-	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion sans
-	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion enchere
-	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion confiance
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" fin sans
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" fin enchere
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" fin confiance
 	
 main: $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS) 

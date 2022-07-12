@@ -11,22 +11,25 @@ from tkinter import messagebox
 from matplotlib import pyplot as plt
 from dataclasses import dataclass
 import time
-import string 
+import string
+from random import randint
+
+
 
 @dataclass
 class Camion:
-    id_camion : int
-    kilometrage : float
-    trajet : list
-    charge : list
+    id_camion: int
+    kilometrage: float
+    trajet: list
+    charge: list
 
 
 @dataclass
 class Entrepot:
-    id : int
-    nb_camion : int
-    nb_requete : int
-    liste_camion : list
+    id: int
+    nb_camion: int
+    nb_requete: int
+    liste_camion: list
 
 
 def digit_in_str(str):
@@ -35,6 +38,7 @@ def digit_in_str(str):
         if i.isdigit():
             string = string + i
     return int(string)
+
 
 def float_in_str(str):
     string = ""
@@ -54,37 +58,36 @@ def numbers_in_str(str):
             if number != "":
                 numbers.append(int(number))
                 number = ""
-    
+
     if (number != ""):
         numbers.append(int(number))
     return numbers
 
 
-
 def extraction_trajet():
     a = []
     with open("trajet", "r") as f:
-       
+
         while True:
-            current_a = Entrepot(0,0,0,[])
+            current_a = Entrepot(0, 0, 0, [])
             line = f.readline()
-            if not line :
+            if not line:
                 break
             current_a.id = digit_in_str(line)
             line = f.readline()
             current_a.nb_camion = digit_in_str(line)
             for i in range(current_a.nb_camion):
-                c = Camion(0,0,[],[])
-                #Lecture de l'id camion
+                c = Camion(0, 0, [], [])
+                # Lecture de l'id camion
                 line = f.readline()
                 c.id_camion = digit_in_str(line)
-                #Lecture de la distance parcouru
+                # Lecture de la distance parcouru
                 line = f.readline()
                 c.kilometrage = float_in_str(line)
-                #Lecture du trajet
+                # Lecture du trajet
                 line = f.readline()
                 c.trajet = numbers_in_str(line)
-                #Lecture de la charge
+                # Lecture de la charge
                 line = f.readline()
                 c.charge = numbers_in_str(line)
                 current_a.liste_camion.append(c)
@@ -99,12 +102,12 @@ def gestionnaire_entrepot(numero):
     entrepot = Tk()
     x = 300
     y = 16*nombre_camion + 200
-    entrepot.configure(width = x, height = y)
+    entrepot.configure(width=x, height=y)
     entrepot.title("Entrepot " + str(numero))
     largeur_liste = 17
 
     # Création du canvas
-    cnv=Canvas(entrepot, width=x, height=y, bg = "white")
+    cnv = Canvas(entrepot, width=x, height=y, bg="white")
     cnv.pack()
 
     # Création de la liste de camion
@@ -113,12 +116,18 @@ def gestionnaire_entrepot(numero):
     for i in range(nombre_camion):
         liste.insert(i, "Camion " + str(i))
     liste.place(x=0, y=0)
-   
+    
+    colors = []
+    for i in range(nombre_camion):
+        colors.append('#%06X' % randint(0, 0xFFFFFF))
+
     ligne_trajets = []
-    def affiche_trajet():
-        try: 
+
+    def affiche_trajet(event):
+        try:
             cnv.delete("all")
-            selection = liste.selection_get()
+            selection = str(liste.curselection())
+            print(selection)
             selection = digit_in_str(selection)
             trajet = a[numero].liste_camion[selection].trajet
             affichage = ""
@@ -126,45 +135,39 @@ def gestionnaire_entrepot(numero):
                 affichage = affichage + str(trajet[i]) + "->"
             affichage = affichage + str(trajet[len(trajet)-1])
             affichage = affichage + "\n"
-            affichage = affichage + "Distance parcourue : " + str(a[numero].liste_camion[selection].kilometrage)
+            affichage = affichage + "Distance parcourue : " + \
+                str(a[numero].liste_camion[selection].kilometrage)
             affichage = affichage + "km\n"
-            affichage = affichage + "Charge : " + str(a[numero].liste_camion[selection].charge)
+            affichage = affichage + "Charge : " + \
+                str(a[numero].liste_camion[selection].charge)
 
-            cnv.create_text(largeur_liste +185, 25, text= affichage , fill="black", font=("Arial",10), justify= 'left', )
+            cnv.create_text(largeur_liste + 185, 25, text=affichage,
+                            fill="black", font=("Arial", 10), justify='left', )
             """
             try: 
                 ligne_trajet.delete()
             except:
                 pass
             """
-            ligne_trajet =  map_widget.set_path([marker_list[trajet[i]].position for i in range(len(trajet))], color='red')
+            ligne_trajet = map_widget.set_path(
+                [marker_list[trajet[i]].position for i in range(len(trajet))], color=colors[len(ligne_trajets)])
             ligne_trajets.append(ligne_trajet)
             print(len(ligne_trajets))
+
             def clear_trajet():
                 for i in ligne_trajets:
                     i.delete()
                 entrepot.destroy()
             entrepot.protocol("WM_DELETE_WINDOW", clear_trajet)
         except:
-           print("Erreur")
+            print("Erreur")
 
-
-
-    but = Button(entrepot, text="Voir le trajet", command=affiche_trajet, width=largeur_liste-3)
-    but.place(x=0, y=16*nombre_camion+2)
-
-
-
-    
-
+    liste.bind('<<ListboxSelect>>', affiche_trajet)
 
 
 def click_sur_icone_entrepot(marker):
     values = ['Voir requêtes', 'Voir trajet']
     gestionnaire_entrepot(digit_in_str(marker.text))
-
-
-
 
 
 # Lecture du fichier pour récupérer la position de tous les agents qu'on stockera dans la variable position
@@ -193,7 +196,7 @@ map_widget.set_zoom(6.1)
 # Placement de tous les entrepots sur la carte
 cpt = 0
 marker_list = []
-for position in positions:  
+for position in positions:
     marker = map_widget.set_marker(float(position[0]), float(position[2]), command=click_sur_icone_entrepot, text="Entrepot " + str(
         cpt), text_color="black", marker_color_outside="#A9A9A9", marker_color_circle="#808080", font=10)
     marker_list.append(marker)
@@ -208,7 +211,9 @@ for i in range(len(positions)):
     liste.place(x=0, y=0)
 
 global old
-def items_selected(event):
+
+
+def entrepot_selectionne(event):
     global old
     # get selected indices
     selected_indice = digit_in_str(str(liste.curselection()))
@@ -222,11 +227,9 @@ def items_selected(event):
         pass
 
     old = selected_indice
-    
 
-    
-    
-liste.bind('<<ListboxSelect>>', items_selected)
+
+liste.bind('<<ListboxSelect>>', entrepot_selectionne)
 
 
 root_tk.mainloop()

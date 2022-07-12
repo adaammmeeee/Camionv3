@@ -28,14 +28,17 @@ int *tab_melange(int k)
 int marge(entrepot a)
 {
     int moy_prix = 0;
-    for(int i = 0; i < a.nb_camion; i++)
+    for (int i = 0; i < a.nb_camion; i++)
     {
-        if(a.liste_camion[i]->nb_requetes_faites)
+        if (a.liste_camion[i]->nb_requetes_faites)
             a.liste_camion[i]->benefice_camion_moy /= a.liste_camion[i]->nb_requetes_faites;
-            
+
         moy_prix += a.liste_camion[i]->benefice_camion_moy;
     }
     moy_prix /= a.nb_camion;
+
+    if (moy_prix < 0)
+        moy_prix = 0;
 
     return moy_prix;
 }
@@ -101,7 +104,7 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
         int indice_e_offre_min;
         int cout_requete_min = rv[cpt_requete]->prix_propose_vente;
 
-        int * tab = tab_melange(nb_entrepot);
+        int *tab = tab_melange(nb_entrepot);
         for (int i = 0; i < nb_entrepot; i++)
         {
             int cpt_entrepot = tab[i];
@@ -109,15 +112,15 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
             if (indice_e_demande != indice_e_offre)
             {
                 int camion_offre = -1;
-                int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe) + marge(a[indice_e_offre]);
+                int cout_requete = cout_requete_fin_trajet(rv[cpt_requete], a[indice_e_offre], &camion_offre, graphe);
                 if (camion_offre == -1 && cout_requete)
                 {
                     printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);
                     return NULL;
                 }
-
                 if (cout_requete && cout_requete < cout_requete_min)
                 {
+                    cout_requete += +marge(a[indice_e_offre]);
                     cout_requete_min = cout_requete;
                     indice_e_offre_min = indice_e_offre;
                     indice_c_offre_min = camion_offre;
@@ -195,7 +198,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
         int cout_requete_min = rv[cpt_requete]->prix_propose_vente;
         int distance_requete_min = 0;
 
-        int * tab = tab_melange(nb_entrepot);
+        int *tab = tab_melange(nb_entrepot);
         for (int i = 0; i < nb_entrepot; i++)
         {
             int cpt_entrepot = tab[i];
@@ -304,7 +307,7 @@ entrepot *confiance_insertion(requete **rv, int nb_requete_vendre, int nb_entrep
         int cout_requete_demande = rv[cpt_requete]->prix_propose_vente;
         int offre = 0;
 
-        int * tab = tab_melange(nb_entrepot);
+        int *tab = tab_melange(nb_entrepot);
         for (int i = 0; i < nb_entrepot; i++)
         {
             int cpt_entrepot = tab[i];
@@ -349,7 +352,6 @@ entrepot *confiance_insertion(requete **rv, int nb_requete_vendre, int nb_entrep
             int camion_demande = -1;
             int taille_new_trajet = 0;
             int distance_requete = insertion(rv[cpt_requete], a[indice_e_demande], &camion_demande, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
-            int cout_requete = cout_distance(distance_requete);
 
             if (camion_demande == -1 && distance_requete != INT_MAX)
             {
@@ -372,7 +374,7 @@ entrepot *confiance_insertion(requete **rv, int nb_requete_vendre, int nb_entrep
                 // printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il la fera avec le camion %d\n",
                 //         rv[cpt_requete].origine, rv[cpt_requete].destination, a[indice_e_demande].id_entrepot, a[indice_e_demande].liste_camion[indice_c_demande]->id_camion);
             }
-            else if (!cout_requete)
+            else if (distance_requete == INT_MAX)
             {
                 rv[cpt_requete]->a_vendre = 1;
                 // printf("ENCHERES : La requete %d->%d de l'acteur %d n'a pas été vendue, il ne peut pas la faire, il perdra %d\n",
@@ -395,7 +397,7 @@ entrepot *confiance_fin(requete **rv, int nb_requete_vendre, int nb_entrepot, en
         int offre = 0;
         int cout_requete_demande = rv[cpt_requete]->prix_propose_vente;
 
-        int * tab = tab_melange(nb_entrepot);
+        int *tab = tab_melange(nb_entrepot);
         for (int i = 0; i < nb_entrepot; i++)
         {
             int cpt_entrepot = tab[i];
