@@ -108,9 +108,14 @@ df = pd.DataFrame({'insertion': valeur_insertion,
                    , index=x)
 ax = df.plot.bar(rot=0)
 """
-plt.plot(x, valeur_brute, label="Brute force")
-plt.plot(x, valeur_insertion, label="Insertion")
-plt.plot(x, valeur_insertion_fin, label="Insertion fin")
+
+moyenne_brute = round(sum(valeur_brute)/len(valeur_brute),2)
+moyenne_insertion = round(sum(valeur_insertion)/len(valeur_insertion),2)
+moyenne_insertion_fin = round(sum(valeur_insertion_fin)/len(valeur_insertion_fin),2)
+
+plt.plot(x, valeur_brute, label="Brute force (moyenne : " + str(moyenne_brute) + ")")
+plt.plot(x, valeur_insertion, label="Insertion (moyenne : " + str(moyenne_insertion)+ ")")
+plt.plot(x, valeur_insertion_fin, label="Insertion fin (moyenne : " + str(moyenne_insertion_fin)+ ")" )
 plt.legend()
 
 plt.show()

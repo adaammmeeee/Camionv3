@@ -55,7 +55,6 @@ void affichage_entrepot(entrepot a, int **graphe)
 	affichage_requete(a.LR, graphe);
 }
 
-
 void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere, int grand_echantillon)
 {
 	float nb_entrepots = (float)nb_entrepot;
@@ -82,18 +81,19 @@ void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere, int grand_e
 		somme_m += (float)a[i].benefice_total / 10000;
 		somme_var = somme_var + ((float)a[i].benefice_total / 10000) * ((float)a[i].benefice_total / 10000);
 
-		if(!grand_echantillon)
+		if (!grand_echantillon)
 			fprintf(fichier, "acteur %d : %.2f\n", a[i].id_entrepot, (float)a[i].benefice_total / 10000);
 	}
 	float moyenne = somme_m / nb_entrepots;
 	float variance = somme_var / nb_entrepots - moyenne * moyenne;
 	float ecart_type = sqrt(variance);
-	fprintf(fichier,"moyenne benefice : %.2f\n", moyenne);
-	if(!grand_echantillon)
+	fprintf(fichier, "moyenne benefice : %.2f\n", moyenne);
+	printf("ecart-type : %.2f\n", ecart_type);
+
+	if (!grand_echantillon)
 	{
-		fprintf(fichier,"gain max : %.2f\n", (float) max / 10000);
-		fprintf(fichier,"gain min : %.2f\n", (float) min / 10000);
-		fprintf(fichier,"ecart-type : %.2f\n", ecart_type);
+		fprintf(fichier, "gain max : %.2f\n", (float)max / 10000);
+		fprintf(fichier, "gain min : %.2f\n", (float)min / 10000);
 	}
 	fclose(fichier);
 }
