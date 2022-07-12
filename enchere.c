@@ -40,7 +40,8 @@ int marge(entrepot a)
     if(moy_prix < 0)
         moy_prix = 0;
 
-    return moy_prix;
+//8000000 en marge constante
+    return 8000000;
 }
 
 int nb_vente(entrepot *a, int nb_entrepot)
@@ -119,7 +120,7 @@ entrepot *enchere_echange_fin(requete **rv, int nb_requete_vendre, int nb_entrep
                     return NULL;
                 }
 
-                if (cout_requete && cout_requete < cout_requete_min)
+                if (cout_requete && (cout_requete + marge(a[indice_e_offre])) < cout_requete_min)
                 {
                     cout_requete += marge(a[indice_e_offre]);
                     cout_requete_min = cout_requete;
@@ -210,7 +211,7 @@ entrepot *enchere_echange_insertion(requete **rv, int nb_requete_vendre, int nb_
                 int taille_new_trajet = 0;
                 int distance_requete = insertion(rv[cpt_requete], a[indice_e_offre], &camion_offre, new_trajet, new_charge, &taille_new_trajet, 0, graphe);
                 int cout_requete = cout_distance(distance_requete) + marge(a[indice_e_offre]);
-
+                
                 if ((camion_offre == -1 || !taille_new_trajet) && distance_requete != INT_MAX)
                 {
                     printf("ERREUR : lors du choix du camion faisant le trajet, error in %s\n", __FUNCTION__);

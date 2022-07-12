@@ -265,7 +265,6 @@ repetition:
 		return -1;
 	}
 
-	printf("Les données ont été exportés vers l'application\n");
 	analyse_donnees(a, nb_entrepots, type_enchere, grand_echantillon);
 	if (!grand_echantillon)
 		exporte_trajet(a, nb_entrepots);
