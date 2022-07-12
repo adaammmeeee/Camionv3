@@ -45,7 +45,7 @@ int marge(entrepot a, int type_marge)
         break;
 
     case 1:
-        ret = 8000000;
+        ret = 6000000;
         break;
 
     case 2:

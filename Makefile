@@ -10,7 +10,7 @@ OBJS = main.c\
 all_insert: main
 	echo $(CSRC)
 	./main "matrice_distance.csv" insertion sans
-	./main "matrice_distance.csv" insertion enchere2
+	./main "matrice_distance.csv" insertion enchere1
 	./main "matrice_distance.csv" insertion confiance
 
 all_insert_test: main
@@ -29,7 +29,7 @@ insert_sans: main
 	./main "matrice_distance.csv" insertion sans
 
 insert_enchere: main
-	./main "matrice_distance.csv" insertion enchere2
+	./main "matrice_distance.csv" insertion enchere1
 
 insert_confiance: main
 	./main "matrice_distance.csv" insertion confiance
@@ -38,14 +38,14 @@ fin_sans: main
 	./main "matrice_distance.csv" fin sans
 
 fin_enchere: main
-	./main "matrice_distance.csv" fin enchere2
+	./main "matrice_distance.csv" fin enchere1
 
 fin_confiance: main
 	./main "matrice_distance.csv" fin confiance
 
 comparaison_echange: main
 	./main "matrice_distance.csv" insertion sans 100
-	./main "matrice_distance.csv" insertion enchere2 100
+	./main "matrice_distance.csv" insertion enchere1 100
 	./main "matrice_distance.csv" insertion confiance 100
 
 marge: main
@@ -55,7 +55,7 @@ marge: main
 
 debug: main
 	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion sans
-	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion enchere2
+	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion enchere1
 	valgrind --leak-check=full --show-leak-kinds=all ./main "matrice_distance.csv" insertion confiance
 	
 main: $(OBJS)
