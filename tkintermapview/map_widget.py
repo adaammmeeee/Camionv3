@@ -24,6 +24,8 @@ from .canvas_polygon import CanvasPolygon
 
 
 class TkinterMapView(tkinter.Frame):
+    
+    
     def __init__(self, *args,
                  width: int = 300,
                  height: int = 200,
@@ -35,17 +37,20 @@ class TkinterMapView(tkinter.Frame):
                  **kwargs):
         super().__init__(*args, **kwargs)
 
+
         self.width = width
         self.height = height
         self.corner_radius = corner_radius if corner_radius <= 30 else 30  # corner_radius can't be greater than 30
         self.configure(width=self.width, height=self.height)
+
+        
 
         # detect color of master widget for rounded corners
         if bg_color is None:
             # map widget is placed in a CTkFrame from customtkinter library
             if hasattr(self.master, "canvas") and hasattr(self.master, "fg_color"):
                 if type(self.master.fg_color) == tuple or type(self.master.fg_color) == list:
-                    self.bg_color: str = self.master.fg_color[self.master.appearance_mode]
+                    self.bg_color: str = self.master.fg_color[self.master._appearance_mode]
                 else:
                     self.bg_color: str = self.master.fg_color
 
@@ -104,6 +109,8 @@ class TkinterMapView(tkinter.Frame):
         self.tile_size: int = 256  # in pixel
         self.last_zoom: float = self.zoom
 
+
+    
         # canvas objects, image cache and standard empty images
         self.canvas_tile_array: List[List[CanvasTile]] = []
         self.canvas_marker_list: List[CanvasPositionMarker] = []
@@ -389,6 +396,7 @@ class TkinterMapView(tkinter.Frame):
     def request_image(self, zoom: int, x: int, y: int, db_cursor=None) -> ImageTk.PhotoImage:
 
         # if database is available check first if tile is in database, if not try to use server
+        
         if db_cursor is not None:
             try:
                 db_cursor.execute("SELECT t.tile_image FROM tiles t WHERE t.zoom=? AND t.x=? AND t.y=? AND t.server=?;",
@@ -416,12 +424,30 @@ class TkinterMapView(tkinter.Frame):
 
         # try to get the tile from the server
         try:
+            headers = {
+                "Host": "a.tile.openstreetmap.org",
+                "Connection": "keep-alive",
+                "Pragma": "no-cache",
+                "Cache-Control": "no-cache",
+                "sec-ch-ua": "\".Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"103\", \"Chromium\";v=\"103\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"Windows\"",
+                "Upgrade-Insecure-Requests": "1",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Sec-Fetch-Site": "none",
+                "Sec-Fetch-Mode": "navigate",
+                "Sec-Fetch-User": "?1",
+                "Sec-Fetch-Dest": "document",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "en,en-US;q=0.9,zh;q=0.8,zh-CN;q=0.7,de;q=0.6"
+            }
             url = self.tile_server.replace("{x}", str(x)).replace("{y}", str(y)).replace("{z}", str(zoom))
-            image = Image.open(requests.get(url, stream=True).raw)
+            image = Image.open(requests.get(url, stream=True,headers = headers).raw)
 
             if self.overlay_tile_server is not None:
                 url = self.overlay_tile_server.replace("{x}", str(x)).replace("{y}", str(y)).replace("{z}", str(zoom))
-                image_overlay = Image.open(requests.get(url, stream=True).raw)
+                image_overlay = Image.open(requests.get(url, stream=True,headers = headers).raw)
                 image = image.convert("RGBA")
                 image_overlay = image_overlay.convert("RGBA")
 
