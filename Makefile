@@ -29,7 +29,7 @@ insert_sans: main
 	./main "matrice_distance.csv" insertion sans
 
 insert_enchere: main
-	./main "matrice_distance.csv" insertion enchere
+	./main "matrice_distance.csv" insertion enchere 100
 
 insert_confiance: main
 	./main "matrice_distance.csv" insertion confiance

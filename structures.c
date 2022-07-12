@@ -6,7 +6,7 @@
 
 int cout_distance(int distance)
 {
-	if (distance)
+	if (distance > 0)
 		return 11 * distance + 500000;
 	else
 		return 0;
@@ -88,7 +88,8 @@ void analyse_donnees(entrepot *a, int nb_entrepot, int type_enchere, int grand_e
 	float variance = somme_var / nb_entrepots - moyenne * moyenne;
 	float ecart_type = sqrt(variance);
 	fprintf(fichier, "moyenne benefice : %.2f\n", moyenne);
-	fprintf(fichier,"ecart-type : %.2f\n", ecart_type);
+	printf("benefice total : %.2f\n", somme_m);
+	fprintf(fichier, "ecart-type : %.2f\n", ecart_type);
 
 	if (!grand_echantillon)
 	{
