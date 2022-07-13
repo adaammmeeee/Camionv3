@@ -27,7 +27,7 @@ ecartype0 = []  # sans enchere
 ecartype1 = []  # appel de confiance
 ecartype2 = []  # enchere
 
-f = open("analyse0", "r")
+f = open("analyse_gros0", "r")
 lignes = f.readlines()
 for i in range(0, len(lignes), 2):
     tuple = lignes[i].partition(":")
@@ -36,7 +36,7 @@ for i in range(0, len(lignes), 2):
     ecartype0.append(float(tuple1[2]))
 f.close()
 
-f = open("analyse2", "r")
+f = open("analyse_gros2", "r")
 lignes = f.readlines()
 for i in range(0, len(lignes), 2):
     tuple = lignes[i].partition(":")
@@ -45,7 +45,7 @@ for i in range(0, len(lignes), 2):
     ecartype2.append(float(tuple1[2]))
 f.close()
 
-f = open("analyse1", "r")
+f = open("analyse_gros1", "r")
 lignes = f.readlines()
 for i in range(0, len(lignes), 2):
     tuple = lignes[i].partition(":")
@@ -66,22 +66,22 @@ plt.plot(x, liste_moyenne0, label="Sans échanges (moyenne = "+str(moyenne0)+ ")
 plt.plot(x, liste_moyenne1, label="Appel de confiance (moyenne = "+str(moyenne1) + ")")
 plt.plot(x, liste_moyenne2, label="Enchères (moyenne = "+str(moyenne2) + ")")
 plt.legend()
-plt.ylabel("Bénéfice moyen d'une itération (90 acteurs)")
-plt.title("Comparaison différents type d'échanges sur 100 itérations")
-plt.savefig("comparaison_echange_benefice.svg")
+plt.ylabel("Bénéfice moyen d'une itération (gros acteur)")
+plt.title("Comparaison différents type d'échanges (gros acteur) sur 100 itérations")
+plt.savefig("comparaison_echange_benefice_gros.svg")
 plt.show()
 
 ecartypem0 = round(sum(ecartype0)/len(ecartype0),2)
 ecartypem1 = round(sum(ecartype1)/len(ecartype1),2)
 ecartypem2 = round(sum(ecartype2)/len(ecartype2),2)
 
-tri_table(ecartype2, ecartype1, ecartype0)
+tri_table(ecartype0, ecartype2, ecartype1)
 
-plt.ylabel("Ecart-type d'une itération (90 acteurs)")
-plt.title("Comparaison différents type d'échanges sur 100 itérations")
+plt.ylabel("Ecart-type d'une itération (gros acteur)")
+plt.title("Comparaison différents type d'échanges (gros acteur) sur 100 itérations")
 plt.plot(x, ecartype0, label="Sans échanges (moyenne = "+str(ecartypem0)+ ")")
 plt.plot(x, ecartype1, label="Appel de confiance (moyenne = "+str(ecartypem1) + ")")
 plt.plot(x, ecartype2, label="Enchères (moyenne = "+str(ecartypem2) + ")")
 plt.legend()
-plt.savefig("comparaison_echange_ecart_type.svg")
+plt.savefig("comparaison_echange_ecart_type_gros.svg")
 plt.show()

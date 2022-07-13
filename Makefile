@@ -10,8 +10,9 @@ OBJS = main.c\
 all_insert: main
 	echo $(CSRC)
 	./main "matrice_distance.csv" insertion sans
-	./main "matrice_distance.csv" insertion enchere1
 	./main "matrice_distance.csv" insertion confiance
+	./main "matrice_distance.csv" insertion enchere2
+
 
 all_insert_test: main
 	echo $(CSRC)
@@ -45,7 +46,7 @@ fin_confiance: main
 
 comparaison_echange: main
 	./main "matrice_distance.csv" insertion sans 100
-	./main "matrice_distance.csv" insertion enchere1 100
+	./main "matrice_distance.csv" insertion enchere0 100
 	./main "matrice_distance.csv" insertion confiance 100
 
 marge: main
